@@ -1,0 +1,15 @@
+{
+  "name": "palworld-server-discord-bot",
+  "version": "1.0.0",
+  "description": "A Discord bot that handles and controls Palworld Server settings and operations",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "MyTyranosaur",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.14.1"
+  }
+}
