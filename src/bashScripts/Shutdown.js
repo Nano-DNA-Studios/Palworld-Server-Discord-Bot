@@ -9,6 +9,8 @@ const Shutdown = new BashScript(
 pkill "${process.env.SERVER_START_SCRIPT}"
 
 killall "PalServer-Linux-Test"
+
+killall "steamcmd"
 `
 );
 

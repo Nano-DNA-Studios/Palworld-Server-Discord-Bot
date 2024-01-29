@@ -50,21 +50,43 @@ client.on("interactionCreate", async (interaction) => {
   console.log(interaction.commandName);
 
   if (interaction.commandName === "restart") {
-    
-    //RunBashScript([Shutdown, Update, Start]);
-    await RunBashScript(Update);
-
-    //RunBashScript([Shutdown, Start]);
+    try{
+      await RunBashScript(Update);
+      interaction.reply("Server has been Restarted");
+    } catch (error) {
+      interaction.reply("An Error Occured");
+      console.log(error);
+    }
   }
 
   if (interaction.commandName === "shutdown") {
-    
-    RunBashScript(Shutdown);
+    try{
+      await RunBashScript(Shutdown);
+      interaction.reply("Server has been Shutdown");
+    } catch (error) {
+      interaction.reply("An Error Occured");
+      console.log(error);
+    }
   }
 
   if (interaction.commandName === "start") {
-    
-    RunBashScript(Start);
+    try{
+      await RunBashScript(Start);
+      interaction.reply("Server has been Started");
+    } catch (error) {
+      interaction.reply("An Error Occured");
+      console.log(error);
+    }
+  }
+
+  if (interaction.commandName === "update") {
+    try{
+      await RunBashScript(Update);
+      interaction.reply("Server has been Updated");
+    } catch (error) {
+      interaction.reply("An Error Occured");
+      console.log(error);
+    }
   }
 
 
