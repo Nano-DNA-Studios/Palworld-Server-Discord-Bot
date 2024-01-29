@@ -43,6 +43,8 @@ async function RunBashScript(Scripts) {
 
   RunScript += Scripts.GetBashCommands();
 
+  RunScript += `rm -rf ~/${process.env.SERVER_TEMP_SCRIPT_DIR}`;
+
   ServerConnection.exec(`${RunScript}`, (err, stream) => {
     if (err) throw err;
 
@@ -59,50 +61,7 @@ async function RunBashScript(Scripts) {
       });
   });
 
-  // if (Array.isArray(Scripts)) {
-
-  //   for (const script of Scripts) {
-  //      // console.log(`${script.GetBashCommands()}`);
-
-  //     //  console.log("Saving Script");
-  //     //   await ServerConnection.exec(`${script.SaveScript()}`, (err, stream) => {
-  //     //       if (err) throw err;
-
-  //     //       stream
-  //     //         .on("close", (code, signal) => {
-  //     //           console.log(`Stream :: close :: code: ${code}, signal: ${signal}`);
-  //     //           //ServerConnection.end(); // Close the connection when done
-  //     //         })
-  //     //         .on("data", (data) => {
-  //     //           console.log("STDOUT: " + data);
-  //     //         })
-  //     //         .stderr.on("data", (data) => {
-  //     //           console.error("STDERR: " + data);
-  //     //         });
-  //     //     });
-
-  //     //     console.log("Running Script");
-  //     //     await ServerConnection.exec(script.RunScript(), (err, stream) => {
-  //     //       if (err) throw err;
-
-  //     //       stream
-  //     //         .on("close", (code, signal) => {
-  //     //           console.log(`Stream :: close :: code: ${code}, signal: ${signal}`);
-  //     //           //ServerConnection.end(); // Close the connection when done
-  //     //         })
-  //     //         .on("data", (data) => {
-  //     //           console.log("STDOUT: " + data);
-  //     //         })
-  //     //         .stderr.on("data", (data) => {
-  //     //           console.error("STDERR: " + data);
-  //     //         });
-  //     //     });
-
-  //       // await RunCommand(ServerConnection, script.GetBashCommands());
-  //       // Log += "Running Script: " + script.BashCommandName;
-  //   }
-
-  // }
+  
 
   // DeleteTempFolder(ServerConnection);
 }

@@ -52,20 +52,19 @@ client.on("interactionCreate", async (interaction) => {
   if (interaction.commandName === "restart") {
     
     //RunBashScript([Shutdown, Update, Start]);
-    RunBashScript(Update);
-
+    await RunBashScript(Update);
 
     //RunBashScript([Shutdown, Start]);
   }
 
   if (interaction.commandName === "shutdown") {
     
-    RunBashScript([Shutdown]);
+    RunBashScript(Shutdown);
   }
 
   if (interaction.commandName === "start") {
     
-    RunBashScript([Start]);
+    RunBashScript(Start);
   }
 
 

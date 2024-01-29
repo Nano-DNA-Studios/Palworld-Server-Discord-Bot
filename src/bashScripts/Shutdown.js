@@ -6,10 +6,9 @@ const BashScript = require("./BashScript");
 const Shutdown = new BashScript(
   'Shutdown',
   `#!/bin/bash
-pkill "PalServer.sh"
+pkill "${process.env.SERVER_START_SCRIPT}"
 
 killall "PalServer-Linux-Test"
-
 `
 );
 
