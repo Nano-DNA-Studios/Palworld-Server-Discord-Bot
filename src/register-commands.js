@@ -18,6 +18,10 @@ const commands = [
     name: 'update',
     description: 'Updates the Server',
   },
+  {
+    name: 'backup',
+    description: 'Backups the Server Save',
+  },
 
 ];
 

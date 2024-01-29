@@ -4,6 +4,8 @@ const RunBashScript = require("./bashScripts/BashScriptRunner");
 const Update = require("./bashScripts/Update");
 const Shutdown = require("./bashScripts/Shutdown");
 const Start = require("./bashScripts/Start");
+const Restart = require("./bashScripts/Restart");
+const Backup = require("./bashScripts/Backup");
 const MakeTempFolder = require("./bashScripts/MakeTempFolder");
 const DeleteTempFolder = require("./bashScripts/DeleteTempFolder");
 //const ConnectToServer = require("./bashScripts/RunScriptOnServer");
@@ -51,8 +53,11 @@ client.on("interactionCreate", async (interaction) => {
 
   if (interaction.commandName === "restart") {
     try{
-      await RunBashScript(Update);
-      interaction.reply("Server has been Restarted");
+      await RunBashScript(Restart);
+      const channel = client.channels.cache.get(process.env.LOG_CHANNEL_ID);
+      channel.send("Server has been Restarted");
+
+      interaction.reply({content: "Server has been Restarted", ephemeral: true});
     } catch (error) {
       interaction.reply("An Error Occured");
       console.log(error);
@@ -89,8 +94,17 @@ client.on("interactionCreate", async (interaction) => {
     }
   }
 
-
-
+  if (interaction.commandName === "backup") {
+    try{
+      const channel = client.channels.cache.get(process.env.LOG_CHANNEL_ID);
+      channel.send("Server has been Backed Up");
+      await RunBashScript(Backup);
+      interaction.reply({content: "Server has been Restarted", ephemeral: true});
+    } catch (error) {
+      interaction.reply("An Error Occured");
+      console.log(error);
+    }
+  }
 
 });
 

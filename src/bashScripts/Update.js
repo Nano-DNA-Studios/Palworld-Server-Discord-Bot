@@ -26,10 +26,6 @@ const Update = new BashScript(
   # Implement a check here to confirm the server is running, if possible
   
   echo "Server is Live"
-
- 
-  
-  echo "Script Completed"
 `
 );
 
