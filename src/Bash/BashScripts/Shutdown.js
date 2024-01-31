@@ -2,29 +2,16 @@ require("dotenv").config();
 const BashScript = require("../BashScript");
 const Scripts = require("../Scripts");
 
-//Shut down Works
-
-// const Shutdown = new BashScript(
-//   'Shutdown',
-//   `#!/bin/bash
-// pkill "${process.env.SERVER_START_SCRIPT}"
-
-// killall "PalServer-Linux-Test"
-
-// killall "steamcmd"
-// `
-// );
-
 const Shutdown = {
   CommandName: Scripts.Shutdown,
   CommandDescription: "Stops the server",
   CustomCode: 
   `
-  pkill "${process.env.SERVER_START_SCRIPT}"
+pkill "${process.env.SERVER_START_SCRIPT}"
 
-  killall "PalServer-Linux-Test"
-  
-  killall "steamcmd"
+killall "PalServer-Linux-Test"
+
+killall "steamcmd"
   `,
   Tag: this.CommandName,
   SubCommands: [Scripts.Custom],

@@ -24,9 +24,9 @@ class BashScriptFactory {
   
           if ('CommandName' in module)
           {
-            if (module.CommandName === this.ScriptTag)
+            if (module.CommandName === command)
             {
-              console.log(`Found a match! : ${module}`);
+              console.log(`Found a match! : ${module.CommandName}`);
               return module;
             }
           }
@@ -45,14 +45,16 @@ class BashScriptFactory {
   }
 
   async GetBashScriptToRun() {
-    let ScriptToRun = "\n";
+    let ScriptToRun = "";
 
     const BashAction = this.GetBashCommandObject(this.ScriptTag);
 
     if (Array.isArray(BashAction.SubCommands)) {
       BashAction.SubCommands.forEach((commandTag) => {
+        console.log(commandTag);
         if (commandTag === Scripts.Custom) {
-          ScriptToRun += BashAction.CustomCode;
+          const BashCommand = new BashScript(BashAction);
+          ScriptToRun += BashCommand.GetCode();
         } else {
           const BashCommand = new BashScript(
             this.GetBashCommandObject(commandTag)
@@ -65,6 +67,7 @@ class BashScriptFactory {
       console.log(typeof BashAction.SubCommands);
       ScriptToRun += "echo 'Something went wrong with the SubCommands'";
     }
+    console.log(ScriptToRun);
 
     return ScriptToRun;
   }

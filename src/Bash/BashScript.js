@@ -19,7 +19,7 @@ class BashScript {
   }
 
   GetCode() {
-    return this.CustomCode;
+    return this.CustomCode.replace('\t', '');
   }
 
   SaveScript() {

@@ -5,9 +5,9 @@ const Restart =
 {
   CommandName: Scripts.Restart,
   CommandDescription: 'Restarts the server',
-  CustomCode: ``,
+  CustomCode: `sleep 10`,
   Tag: this.CommandName,
-  SubCommands: [Scripts.Shutdown, Scripts.Start],
+  SubCommands: [Scripts.Shutdown, Scripts.Custom, Scripts.Start],
   ReplyMessage: 'Server is Restarting',
   LogMessage: 'Server is being Restarted',
   ErrorMessage: 'Server could not be Restarted',

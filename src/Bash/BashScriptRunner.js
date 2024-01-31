@@ -10,7 +10,7 @@ async function RunBashScript(Script) {
 
   const ServerConnection = await ConnectToServer();
 
-  ServerConnection.exec(`${Script}`, (err, stream) => {
+  await ServerConnection.exec(`${Script}`, (err, stream) => {
     if (err) throw err;
 
     stream
