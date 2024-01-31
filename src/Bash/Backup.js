@@ -1,5 +1,6 @@
 require("dotenv").config();
 const BashScript = require("./BashScript");
+const Scripts = require("./Scripts");
 
 const Backup = new BashScript(
   "Update",

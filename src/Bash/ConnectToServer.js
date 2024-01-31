@@ -7,22 +7,19 @@ function ConnectToServer() {
         const conn = new Client();
         conn.on('ready', () => {
 
-            
-
             console.log('SSH Client :: ready');
 
-            conn.exec(`steamcmd`, (err, stream) => {
-                if (err) throw err;
-                stream.on('close', (code, signal) => {
-                    console.log('Stream :: close :: code: ' + code + ', signal: ' + signal);
-                    conn.end();
-                }).on('data', (data) => {
-                    console.log('STDOUT: ' + data);
-                }).stderr.on('data', (data) => {
-                    console.log('STDERR: ' + data);
-                });
-            });
-
+            // conn.exec(`steamcmd`, (err, stream) => {
+            //     if (err) throw err;
+            //     stream.on('close', (code, signal) => {
+            //         console.log('Stream :: close :: code: ' + code + ', signal: ' + signal);
+            //         conn.end();
+            //     }).on('data', (data) => {
+            //         console.log('STDOUT: ' + data);
+            //     }).stderr.on('data', (data) => {
+            //         console.log('STDERR: ' + data);
+            //     });
+            // });
 
             resolve(conn); // Resolve with the connection instance
         }).on('error', (err) => {

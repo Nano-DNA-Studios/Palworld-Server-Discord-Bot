@@ -1,21 +1,34 @@
+require("dotenv").config();
+
 class BashScript {
-  constructor(name, content) {
+  constructor(data) {
     require("dotenv").config();
-    this.BashCommandName = name;
-    this.content = content;
+    this.CommandName = data.CommandName;
+    this.CommandDescription = data.CommandDescription;
+    this.CustomCode = data.CustomCode;
+    this.Tag = data.Tag;
+    this.SubCommands = data.SubCommands;
+    this.ReplyMessage = data.ReplyMessage;
+    this.LogMessage = data.LogMessage;
+    this.ErrorMessage = data.ErrorMessage;
+    this.SuccessMessage = data.SuccessMessage;
+
+    this.content;
     this.TempFolder = process.env.SERVER_TEMP_SCRIPT_DIR;
     this.fileName = `${this.BashCommandName}.sh`;
   }
 
-  SaveScript()
-  {
+  GetCode() {
+    return this.CustomCode;
+  }
+
+  SaveScript() {
     return `
     echo "${this.content}" > "${this.TempFolder}/${this.fileName}"
     `;
   }
 
-  RunScript()
-  {
+  RunScript() {
     console.log(`bash ${this.TempFolder}/${this.fileName}`);
 
     return `
