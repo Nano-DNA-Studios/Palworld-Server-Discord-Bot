@@ -44,7 +44,7 @@ client.on("interactionCreate", async (interaction) => {
 
   console.log(interaction.commandName);
 
-  await HandleCommand(interaction.commandName);
+  await HandleCommand(interaction);
 
 });
 

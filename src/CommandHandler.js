@@ -2,9 +2,9 @@ const RunBashScript = require("./Bash/BashScriptRunner");
 const Scripts = require("./Bash/Scripts");
 const BashScriptFactory = require("./Bash/BashScriptFactory");
 
-async function HandleCommand (command)  {
+async function HandleCommand (interaction)  {
     try {
-        const Factory = new BashScriptFactory(command);
+        const Factory = new BashScriptFactory(interaction.commandName);
 
         const Bash = Factory.GetBashScript();
     
