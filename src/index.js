@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-const HandleCommand = require("./CommandHandler");
+const {HandleCommand, RegisterCommands} = require("./CommandHandler");
 // const RunBashScript = require("./Bash/BashScriptRunner");
 // const Update = require("./Bash/Update");
 // const Shutdown = require("./Bash/Shutdown");
@@ -27,17 +27,9 @@ const client = new Client({
 client.on("ready", (c) => {
   console.log(`Bot is ready ${c.user.tag}`);
   //console.log(c.guilds.fetch().then((guilds) => console.log(guilds)));  Gets Guild ID
+  RegisterCommands();
   c.mes
 });
-
-// client.on("messageCreate", (message) => {
-//   if (message.author.bot) return;
-
-//   console.log(message);
-//   if (message.content === "ping") {
-//     message.reply("pong");
-//   }
-// });
 
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.isChatInputCommand()) return;

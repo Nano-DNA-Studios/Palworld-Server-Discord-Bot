@@ -1,6 +1,5 @@
 //Enum of all Scripts
 
-
 Scripts = 
 {
 Start: 'start',

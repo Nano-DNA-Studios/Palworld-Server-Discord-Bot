@@ -3,6 +3,7 @@ require("dotenv").config();
 const Scripts = require("./Scripts");
 const fs = require("fs");
 const path = require("path");
+const { GetBashCommands} = require("../FileSearch.js");
 
 class BashScriptFactory {
   constructor(scriptTag) {
@@ -16,21 +17,17 @@ class BashScriptFactory {
     const directoryPath = path.join(__dirname, "BashScripts"); // path to your directory
 
     try {
-      const files = fs.readdirSync(directoryPath);
-  
-      for (const file of files) {
-        if (path.extname(file) === ".js") {
-          const module = require(`${directoryPath}/${file}`);
-  
-          if ('CommandName' in module)
-          {
-            if (module.CommandName === command)
+
+      const Commands  = GetBashCommands();
+
+      console.log(Commands);
+
+      for (const bashCommand of Commands) {
+        if (bashCommand.CommandName === command)
             {
-              console.log(`Found a match! : ${module.CommandName}`);
-              return module;
+              console.log(`Found a match! : ${bashCommand.CommandName}`);
+              return bashCommand;
             }
-          }
-        }
       }
     } catch (err) {
       console.log("Unable to scan directory: " + err);

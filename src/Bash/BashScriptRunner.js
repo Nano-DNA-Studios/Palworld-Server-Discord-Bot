@@ -12,7 +12,7 @@ async function RunBashScript(Script) {
 
   await ServerConnection.exec(`${Script}`, (err, stream) => {
     if (err) throw err;
-
+    
     stream
       .on("close", (code, signal) => {
         console.log(`Stream :: close :: code: ${code}, signal: ${signal}`);
