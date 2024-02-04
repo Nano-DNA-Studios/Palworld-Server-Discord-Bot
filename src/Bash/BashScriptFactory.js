@@ -20,12 +20,9 @@ class BashScriptFactory {
 
       const Commands  = GetBashCommands();
 
-      console.log(Commands);
-
       for (const bashCommand of Commands) {
         if (bashCommand.CommandName === command)
             {
-              console.log(`Found a match! : ${bashCommand.CommandName}`);
               return bashCommand;
             }
       }
@@ -64,8 +61,6 @@ class BashScriptFactory {
       console.log(typeof BashAction.SubCommands);
       ScriptToRun += "echo 'Something went wrong with the SubCommands'";
     }
-    console.log(ScriptToRun);
-
     return ScriptToRun;
   }
 }

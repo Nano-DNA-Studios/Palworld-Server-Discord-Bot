@@ -1,8 +1,5 @@
 require("dotenv").config();
-
 const ConnectToServer = require("./ConnectToServer");
-const BashScript = require("./BashScript");
-const BashScriptFactory = require("./BashScriptFactory");
 
 async function RunBashScript(Script) {
 
@@ -10,20 +7,27 @@ async function RunBashScript(Script) {
 
   const ServerConnection = await ConnectToServer();
 
-  await ServerConnection.exec(`${Script}`, (err, stream) => {
-    if (err) throw err;
-    
-    stream
-      .on("close", (code, signal) => {
-        console.log(`Stream :: close :: code: ${code}, signal: ${signal}`);
-        //ServerConnection.end(); // Close the connection when done
-      })
-      .on("data", (data) => {
-        console.log("STDOUT: " + data);
-      })
-      .stderr.on("data", (data) => {
-        console.error("STDERR: " + data);
-      });
+  return new Promise((resolve, reject) => {
+
+    ServerConnection.exec(`${Script}`, (err, stream) => {
+      if (err) throw err;
+      
+      let dataBuffer = "";
+
+      stream
+        .on("close", (code, signal) => {
+          console.log(`Stream :: close :: code: ${code}, signal: ${signal}`);
+          resolve(dataBuffer);
+        })
+        .on("data", (data) => {
+          dataBuffer += data;
+          console.log("STDOUT: " + data);
+        })
+        .stderr.on("data", (data) => {
+          console.error("STDERR: " + data);
+        });
+    });
+
   });
 
 }

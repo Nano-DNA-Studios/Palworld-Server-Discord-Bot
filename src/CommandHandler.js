@@ -4,17 +4,22 @@ const BashScriptFactory = require("./Bash/BashScriptFactory");
 const { GetBashCommands} = require("./FileSearch.js");
 const { REST, Routes } = require("discord.js");
 
-async function HandleCommand (interaction)  {
+//Handles the Command inputted by the user
+  async function HandleCommand (interaction, client)  {
     try {
         const Factory = new BashScriptFactory(interaction.commandName);
 
         const Bash = Factory.GetBashScript();
+
+        let logChannel = client.channels.cache.get(process.env.LOG_CHANNEL_ID);
+        interaction.reply({ content: `${Bash.LogMessage}`, ephemeral: true });
+        logChannel.send(Bash.LogMessage)
     
         try{
           await RunBashScript(await Factory.GetBashScriptToRun());
-          interaction.reply(Bash.SuccessMessage);
+          logChannel.send(Bash.SuccessMessage);
         } catch (error) {
-          interaction.reply(Bash.ErrorMessage);
+          logChannel.send(`${Bash.ErrorMessage} \n ${error}`);
           console.log(error);
         }
     } catch (error) {
@@ -22,6 +27,7 @@ async function HandleCommand (interaction)  {
     }
   };
 
+  //Register the commands to the Discord Server
   async function RegisterCommands ()
   {
     const Commands  = GetBashCommands();

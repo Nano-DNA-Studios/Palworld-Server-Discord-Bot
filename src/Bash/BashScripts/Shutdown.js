@@ -15,10 +15,10 @@ killall "steamcmd"
   `,
   Tag: this.CommandName,
   SubCommands: [Scripts.Custom],
-  ReplyMessage: "Server is Shutting Down",
-  LogMessage: "Server is being Shut Down",
-  ErrorMessage: "Server could not be Shut Down",
-  SuccessMessage: "Server has been Shut Down",
+  ReplyMessage: "Server is Shutting Down :arrows_clockwise:",
+  LogMessage: "Server is being Shut Down :arrows_clockwise:",
+  ErrorMessage: ":warning: Server could not be Shut Down :warning:",
+  SuccessMessage: ":white_check_mark: Server has been Shut Down :white_check_mark:",
 };
 
 module.exports = Shutdown;

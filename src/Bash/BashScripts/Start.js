@@ -8,15 +8,18 @@ const Scripts = require("../Scripts");
     CommandDescription: "Starts the Server",
     CustomCode: 
 `
-./${process.env.SERVER_INSTALL_DIR}/${process.env.SERVER_START_SCRIPT} &
+nohup ./${process.env.SERVER_INSTALL_DIR}/${process.env.SERVER_START_SCRIPT} &
+
+sleep 3
+
+exit
 `,
     Tag: this.CommandName,
-    SubCommands: [Scripts.Custom],
-    ReplyMessage: "Server is Starting",
-    LogMessage: "Server is Starting",
-    ErrorMessage: "Server could not Start",
-    SuccessMessage: "Server has been Started",
+    SubCommands: [Scripts.Custom, Scripts.Ping],
+    ReplyMessage: "Server is Starting :arrows_clockwise:",
+    LogMessage: "Server is Starting :arrows_clockwise:",
+    ErrorMessage: ":warning: Server could not Start :warning:",
+    SuccessMessage: ":white_check_mark: Server has been Started :white_check_mark:",
   };
 
 module.exports = Start;
-

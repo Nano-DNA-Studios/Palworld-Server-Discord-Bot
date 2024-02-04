@@ -1,15 +1,6 @@
 require("dotenv").config();
 
 const {HandleCommand, RegisterCommands} = require("./CommandHandler");
-// const RunBashScript = require("./Bash/BashScriptRunner");
-// const Update = require("./Bash/Update");
-// const Shutdown = require("./Bash/Shutdown");
-// const Start = require("./Bash/Start");
-// const Restart = require("./Bash/Restart");
-// const Backup = require("./Bash/Backup");
-// const MakeTempFolder = require("./bashScripts/MakeTempFolder");
-// const DeleteTempFolder = require("./bashScripts/DeleteTempFolder");
-//const ConnectToServer = require("./bashScripts/RunScriptOnServer");
 const { exec } = require("child_process");
 const { Client, IntentsBitField } = require("discord.js");
 const { Server } = require("http");
@@ -36,7 +27,7 @@ client.on("interactionCreate", async (interaction) => {
 
   console.log(interaction.commandName);
 
-  await HandleCommand(interaction);
+  await HandleCommand(interaction, client);
 
 });
 
