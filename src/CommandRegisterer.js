@@ -11,6 +11,7 @@ class CommandRegisterer {
         this.Commands = [];
     }
 
+    //Registers all the commands to the Discord Server
     RegisterAllCommands()
     {
         this.RegisterBashCommands();

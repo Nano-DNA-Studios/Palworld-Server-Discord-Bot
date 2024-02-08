@@ -1,82 +1,113 @@
 const fs = require('fs');
 require("dotenv").config();
+const readline = require('readline');
 
 class DataManager {
-  constructor(guildID) {
-    
-  //Just Load everything from Environment Variables?
+  constructor() {
+    this.DATA_SAVE_PATH = 'src/Resources/data.json';
 
     //Constants
-    this.GUILD_ID;
-    this.SERVER_PROCESS_NAME = "PalServer-Linux-Test";
-    this.SERVER_START_SCRIPT = "PalServer.sh";
+    this.DISCORD_BOT_TOKEN = "";
+    this.GUILD_ID = "";
+    this.SERVER_PROCESS_NAME = "";
+    this.SERVER_START_SCRIPT = "";
 
-    this.Data = this.LoadJSONFile(guildID);
-
-
-    this.CLIENT_ID = this.Data.ClientID;
-    this.RUN_LOCALLY = this.Data.RunLocally;
-    this.SERVER_IP = this.Data.ServerIP;
-    this.SERVER_USER = this.Data.ServerUser;
-    this.SERVER_PORT = this.Data.ServerPort;
-    this.SERVER_PASSWORD = this.Data.ServerPassword;
-    this.SERVER_USER_DIR = this.Data.ServerUserDir;
-    this.STEAM_INSTALL_DIR = this.Data.SteamInstallDir;
-
-    console.log(this.Data);
-
-   
-    //Load from JSON and set variables
+    this.CLIENT_ID = "";
+    this.RUN_LOCALLY = "";
+    this.SERVER_IP = "";
+    this.SERVER_USER = "";
+    this.SERVER_PORT = "";
+    this.SERVER_PASSWORD = "";
+    //this.SERVER_USER_DIR;
+    this.STEAM_INSTALL_DIR = "";
   }
 
-  LoadJSONFile (guildID)
-  {
-    let Data;
-
-    try 
-    {
-      //Try to load
-      let rawData = fs.readFileSync(`src/Resources/data.json`);
-      Data = JSON.parse(rawData);
-      console.log('Data Loaded');
-      //Extract all data from JSON
-    } catch (error)
-    {
-      this.GUILD_ID = guildID;
-      Data = this.GetDefaultJSONData();
-      fs.writeFileSync('src/Resources/data.json', Data);
+  //Loads the Data from the JSON File into memory of the class
+  async LoadData() {
+  
+    if (this.FileExists()) {
+      this.LoadDataFromFile();
     }
-
-    return Data;
+    else {
+      await this.RegisterServerController();
+      this.LoadDataFromFile();
+    }
   }
 
-  GetDefaultJSONData ()
+  //Checks if the file exists
+  FileExists()
   {
+    return fs.existsSync(this.DATA_SAVE_PATH);
+  }
+
+  SaveData() {
+    let jsonData = this.GetJSONFormat();
+    fs.writeFileSync(this.DATA_SAVE_PATH, jsonData);
+  }
+
+  LoadDataFromFile() {
+    let dataJSON = fs.readFileSync(this.DATA_SAVE_PATH);
+    let data = JSON.parse(dataJSON);
+
+    //Load all  data from JSON and put it in class variables 
+    this.DISCORD_BOT_TOKEN = data.DiscordBotToken;
+    this.GUILD_ID = data.GuildID;
+    this.CLIENT_ID = data.ClientID;
+    this.SERVER_PROCESS_NAME = data.ServerProcessName;
+    this.SERVER_START_SCRIPT = data.ServerStartScript;
+    this.LOG_CHANNEL_ID = data.LogChannelID;
+    this.RUN_LOCALLY = data.RunLocally;
+    this.SERVER_IP = data.ServerIP;
+    this.SERVER_USER = data.ServerUser;
+    this.SERVER_PORT = data.ServerPort;
+    this.SERVER_PASSWORD = data.ServerPassword;
+    this.STEAM_INSTALL_DIR = data.SteamInstallDir;
+  }
+
+  //Registers the Server Controller by creating the Default Data
+  async RegisterServerController() {
+
+    const setupReader = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout
+    });
+
+    //Setup Question format
+    const prompt = (query) => new Promise((resolve) => setupReader.question(query, resolve));
+
+    // Prompt for bot token and guild ID asynchronously
+    let botToken = await prompt('Enter the Discord Bot Token: ');
+
+    // Close the readline interface after collecting all necessary inputs
+    setupReader.close();
+
     let data =
     {
-      'GuildID': this.GUILD_ID,
-      'ClientID': '0',
-      'ServerProcessName': this.SERVER_PROCESS_NAME,
-      'ServerStartScript': this.SERVER_START_SCRIPT,
-      'LogChannelID': '0',
+      'DiscordBotToken': botToken,
+      'GuildID': '',
+      'ClientID': '',
+      'ServerProcessName': "PalServer-Linux-Test",
+      'ServerStartScript': "PalServer.sh",
+      'LogChannelID': '',
       'RunLocally': true,
 
-      'ServerIP': '0',
-      'ServerUser': 'm',
-      'ServerPort': '0',
-      'ServerPassword': 'p',
+      'ServerIP': '',
+      'ServerUser': '',
+      'ServerPort': '',
+      'ServerPassword': '',
 
       'ServerInstallDir': '/home/user/PalworldServer',
-
     };
 
-    return JSON.stringify(data, null, 4)
+    //Save the data to the file
+    let JSONData = JSON.stringify(data, null, 4);
+    fs.writeFileSync(this.DATA_SAVE_PATH, JSONData);
   }
 
-  GetJSONFormat()
-  {
+  GetJSONFormat() {
     let data =
     {
+      'DiscordBotToken': this.DISCORD_BOT_TOKEN,
       'GuildID': this.GUILD_ID,
       'ClientID': this.CLIENT_ID,
       'ServerProcessName': this.SERVER_PROCESS_NAME,
@@ -93,6 +124,14 @@ class DataManager {
     };
 
     return JSON.stringify(data, null, 4)
+  }
+
+  SetClientID(clientID) {
+    if (this.CLIENT_ID != clientID)
+    {
+      this.CLIENT_ID = clientID;
+      this.SaveData();
+    }
   }
 
 }
