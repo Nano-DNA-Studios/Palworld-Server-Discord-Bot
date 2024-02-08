@@ -1,5 +1,5 @@
 require("dotenv").config();
-const Scripts = require("../Scripts");
+const Scripts = require("../BashScriptsEnum");
 
 const Restart = 
 {

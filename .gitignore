@@ -89,3 +89,4 @@ build/
 *.swp
 *.lock
 # End of https://www.gitignore.io/api/node,visualstudiocode
+src/Resources/data.json

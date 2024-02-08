@@ -1,6 +1,6 @@
 const BashScript = require("./BashScript.js");
 require("dotenv").config();
-const Scripts = require("./Scripts");
+const Scripts = require("./BashScriptsEnum.js");
 const fs = require("fs");
 const path = require("path");
 const { GetBashCommands} = require("../FileSearch.js");

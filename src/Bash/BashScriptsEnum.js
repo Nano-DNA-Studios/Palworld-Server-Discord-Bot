@@ -1,6 +1,6 @@
 //Enum of all Scripts
 
-Scripts = 
+const BashScriptsEnum = 
 {
 Start: 'start',
 Restart: 'restart',
@@ -11,4 +11,4 @@ Custom: 'custom',
 Ping: 'ping',
 };
 
-module.exports = Scripts;
+module.exports = BashScriptsEnum;

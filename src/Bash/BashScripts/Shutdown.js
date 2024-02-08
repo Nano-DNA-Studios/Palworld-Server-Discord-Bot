@@ -1,6 +1,6 @@
 require("dotenv").config();
 const BashScript = require("../BashScript");
-const Scripts = require("../Scripts");
+const Scripts = require("../BashScriptsEnum");
 
 const Shutdown = {
   CommandName: Scripts.Shutdown,
