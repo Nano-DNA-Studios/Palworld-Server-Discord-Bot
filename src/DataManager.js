@@ -92,26 +92,6 @@ class DataManager {
       'ServerInstallDir': this.SERVER_INSTALL_DIR,
     };
 
-     // DISCORD_BOT_TOKEN = MTIwMTE5ODM0NDE5ODk2NzMxNg.GFy5xA.rBKm_67luPTGRF7s2veGcga_tsVkROoh31xrAE
-    // GUILD_ID = 698385755977809990
-    // CLIENT_ID = 1201198344198967316
-    
-    // LOG_CHANNEL_ID = 1201331389598007446
-    
-    // SERVER_IP = 69.60.237.4
-    // SERVER_USER = mrdna
-    // SERVER_PORT = 55515
-    // SERVER_PASSWORD = 299792458
-    
-    // SERVER_USER_DIR = ~/
-    // SERVER_TEMP_SCRIPT_DIR = PalServerCache
-    // STEAM_INSTALL_DIR = /home/mrdna/PalworldServer
-    
-    // SERVER_INSTALL_DIR =  PalworldServer
-    // SERVER_START_SCRIPT = PalServer.sh
-    
-    // SERVER_PROCESS_NAME = PalServer-Linux-Test
-
     return JSON.stringify(data, null, 4)
   }
 
