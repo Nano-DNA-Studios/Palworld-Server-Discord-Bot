@@ -12,9 +12,11 @@ pkill "${process.env.SERVER_START_SCRIPT}"
 killall "PalServer-Linux-Test"
 
 killall "steamcmd"
+
+sleep 10
   `,
   Tag: this.CommandName,
-  SubCommands: [Scripts.Custom],
+  SubCommands: [Scripts.Custom, Scripts.Ping],
   ReplyMessage: "Server is Shutting Down :arrows_clockwise:",
   LogMessage: "Server is being Shut Down :arrows_clockwise:",
   ErrorMessage: ":warning: Server could not be Shut Down :warning:",

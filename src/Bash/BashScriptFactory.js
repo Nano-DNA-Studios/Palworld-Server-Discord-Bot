@@ -3,39 +3,68 @@ require("dotenv").config();
 const Scripts = require("./BashScriptsEnum.js");
 const fs = require("fs");
 const path = require("path");
-const { GetBashCommands} = require("../FileSearch.js");
+const { GetBashCommands } = require("../FileSearch.js");
 
 class BashScriptFactory {
   constructor(scriptTag) {
     this.ScriptTag = scriptTag;
-    const directoryPath = path.join(__dirname, "BashScripts"); 
+    const directoryPath = path.join(__dirname, "BashScripts");
     this.files = fs.readdirSync(directoryPath);
   }
 
   GetBashCommandObject(command) {
-    
+
     const directoryPath = path.join(__dirname, "BashScripts"); // path to your directory
 
     try {
 
-      const Commands  = GetBashCommands();
+      const Commands = GetBashCommands();
 
       for (const bashCommand of Commands) {
-        if (bashCommand.CommandName === command)
-            {
-              return bashCommand;
-            }
+        if (bashCommand.CommandName === command) {
+          return bashCommand;
+        }
       }
     } catch (err) {
       console.log("Unable to scan directory: " + err);
     }
   }
 
-  GetBashScript()
-  {
+  GetBashScript() {
     const CommandObject = this.GetBashCommandObject(this.ScriptTag);
 
     return new BashScript(CommandObject);
+  }
+
+  HasMaxOutTimer() {
+    if (this.ScriptTag == Scripts.Start) {
+      console.log("Start has a max out timer");
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  GetFactoriesToRun() {
+    let Factories = [];
+
+    const BashAction = this.GetBashCommandObject(this.ScriptTag);
+
+    if (Array.isArray(BashAction.SubCommands)) {
+
+      BashAction.SubCommands.forEach((commandTag) => {
+        console.log(commandTag);
+        if (commandTag === Scripts.Custom) {
+          Factories.push(this);
+        } else {
+          Factories.push(new BashScriptFactory(commandTag));
+        }
+      });
+    } else {
+      console.log(typeof BashAction.SubCommands);
+    }
+
+    return Factories;
   }
 
   async GetBashScriptToRun() {

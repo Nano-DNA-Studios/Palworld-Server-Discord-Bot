@@ -1,11 +1,14 @@
 require("dotenv").config();
+const BashScriptFactory = require("./BashScriptFactory");
 const ConnectToServer = require("./ConnectToServer");
 
-async function RunBashScript(Script) {
+async function RunBashScript(Factory) {
 
   Log = "";
 
   const ServerConnection = await ConnectToServer();
+
+  const Script = await Factory.GetBashScript().GetCode();
 
   return new Promise((resolve, reject) => {
 
@@ -13,6 +16,15 @@ async function RunBashScript(Script) {
       if (err) throw err;
       
       let dataBuffer = "";
+
+      if (Factory.HasMaxOutTimer()) {
+        
+        setTimeout(() => {
+          console.log("Max Timeout Reached");
+          resolve(dataBuffer);
+          stream.end();
+        }, 5000);
+      }
 
       stream
         .on("close", (code, signal) => {

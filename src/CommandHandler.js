@@ -16,27 +16,49 @@ async function HandleCommand(interaction, client) {
   }
 };
 
-
 async function HandleBashCommand(interaction, client) {
   try {
     const Factory = new BashScriptFactory(interaction.commandName);
 
     const Bash = Factory.GetBashScript();
 
-    let logChannel = client.channels.cache.get(process.env.LOG_CHANNEL_ID);
-    interaction.reply({ content: `${Bash.LogMessage}`, ephemeral: true });
-    logChannel.send(Bash.LogMessage)
+    const Factories = Factory.GetFactoriesToRun();
 
-    try {
-      await RunBashScript(await Factory.GetBashScriptToRun());
-      logChannel.send(Bash.SuccessMessage);
-    } catch (error) {
-      logChannel.send(`${Bash.ErrorMessage} \n ${error}`);
-      console.log(error);
+    let ResponseMessage = `$Test \n`;
+
+    const Response = await interaction.reply({ content: ResponseMessage, ephemeral: true });
+
+    const logChannel = client.channels.cache.get(process.env.LOG_CHANNEL_ID);
+
+
+    for (const factoryInstance of Factories) 
+    {
+
+      const bashInstance = factoryInstance.GetBashScript();
+
+      logChannel.send(bashInstance.LogMessage);
+      ResponseMessage += `${bashInstance.LogMessage} \n`;
+
+      try {
+        await RunBashScript(factoryInstance);
+        logChannel.send(bashInstance.SuccessMessage);
+        ResponseMessage += `${bashInstance.SuccessMessage} \n`;
+        Response.edit({ content: ResponseMessage, ephemeral: true });
+      } catch (error) {
+        logChannel.send(`${Bash.ErrorMessage} \n ${error}`);
+        console.log(error);
+      }
     }
+
   } catch (error) {
     console.log(`Error Occured : ${error}`);
   }
 }
 
-module.exports = { HandleCommand};
+  async function RunScript (factoryInstance)
+  {
+    await RunBashScript(factoryInstance);
+  }
+
+
+module.exports = { HandleCommand };

@@ -8,7 +8,7 @@ const Scripts = require("../BashScriptsEnum");
     CommandDescription: "Pings the Server to determine if it is Online",
     CustomCode: 
 `
-pidof ${process.env.SERVER_PROCESS_NAME}
+pidof ${process.env.SERVER_PROCESS_NAME} && echo "Process is running" || echo "Process not found"
 `,
     Tag: this.CommandName,
     SubCommands: [Scripts.Custom],
@@ -19,3 +19,5 @@ pidof ${process.env.SERVER_PROCESS_NAME}
   };
 
 module.exports = Ping;
+
+//pidof ${process.env.SERVER_PROCESS_NAME}

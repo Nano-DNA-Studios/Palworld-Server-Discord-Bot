@@ -11,7 +11,7 @@ const Scripts = require("../BashScriptsEnum");
 steamcmd +force_install_dir ${process.env.STEAM_INSTALL_DIR} +login anonymous +app_update 2394010 validate +quit
 `,
     Tag: this.CommandName,
-    SubCommands: [Scripts.Shutdown, Scripts.Backup, Scripts.Custom, Scripts.Start],
+    SubCommands: [Scripts.Shutdown, Scripts.Backup, Scripts.Custom, Scripts.Start, Scripts.Ping],
     ReplyMessage: "Server is Updating :arrows_clockwise:",
     LogMessage: "Server is Updating :arrows_clockwise:",
     ErrorMessage: ":warning: Server could not Update :warning:",
