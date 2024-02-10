@@ -31,8 +31,6 @@ async function StartBot() {
 StartBot();
 
 client.on("ready", (c) => {
- 
-
   console.log(`Bot is ready ${c.user.tag}`);
   //console.log(c.guilds.fetch().then((guilds) => console.log(guilds)));  //Gets Guild ID
   let registerer = new CommandRegisterer();

@@ -1,5 +1,6 @@
 require("dotenv").config();
 const Scripts = require("../BashScriptsEnum");
+const OptionTypes = require("../../CommandOptionTypes");
 
 //Start works
  const Update = 
@@ -16,7 +17,8 @@ steamcmd +force_install_dir ${process.env.STEAM_INSTALL_DIR} +login anonymous +a
     LogMessage: "Server is Updating :arrows_clockwise:",
     ErrorMessage: ":warning: Server could not Update :warning:",
     SuccessMessage: ":white_check_mark: Server has been Updated :white_check_mark:",
-    FailMessages: []
+    FailMessages: [],
+    Options: []
   };
 
 module.exports = Update;

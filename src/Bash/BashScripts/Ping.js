@@ -1,5 +1,6 @@
 require("dotenv").config();
 const Scripts = require("../BashScriptsEnum");
+const OptionTypes = require("../../CommandOptionTypes");
 
 //Start works
 const Ping =
@@ -16,7 +17,8 @@ pidof ${process.env.SERVER_PROCESS_NAME} && echo "Server Is Live" || echo "Serve
   LogMessage: "Server is being Pinged :arrows_clockwise:",
   ErrorMessage: ":warning: Server is not Online :warning:",
   SuccessMessage: ":white_check_mark: Server is Online :white_check_mark:",
-  FailMessages: ["Server Not Live"]
+  FailMessages: ["Server Not Live"],
+  Options: []
 };
 
 module.exports = Ping;

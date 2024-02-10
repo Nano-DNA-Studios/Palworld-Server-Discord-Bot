@@ -1,5 +1,6 @@
 require("dotenv").config();
 const Scripts = require("../BashScriptsEnum");
+const OptionTypes = require("../../CommandOptionTypes");
 
 const Restart = 
 {
@@ -12,7 +13,8 @@ const Restart =
   LogMessage: 'Server is being Restarted :arrows_clockwise:',
   ErrorMessage: ':warning: Server could not be Restarted :warning:',
   SuccessMessage: ':white_check_mark: Server has been Restarted :white_check_mark:',
-  FailMessages: []
+  FailMessages: [],
+  Options: []
 };
 
 module.exports = Restart;

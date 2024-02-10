@@ -1,5 +1,6 @@
 require("dotenv").config();
 const Scripts = require("../BashScriptsEnum");
+const OptionTypes = require("../../CommandOptionTypes");
 
 //Start works
  const Start = 
@@ -20,7 +21,8 @@ exit
     LogMessage: "Server is Starting :arrows_clockwise:",
     ErrorMessage: ":warning: Server could not Start :warning:",
     SuccessMessage: ":white_check_mark: Server has been Started :white_check_mark:",
-    FailMessages: []
+    FailMessages: [],
+    Options: []
   };
 
 module.exports = Start;

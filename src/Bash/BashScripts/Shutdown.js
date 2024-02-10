@@ -1,6 +1,6 @@
 require("dotenv").config();
-const BashScript = require("../BashScript");
 const Scripts = require("../BashScriptsEnum");
+const OptionTypes = require("../../CommandOptionTypes");
 
 const Shutdown = {
   CommandName: Scripts.Shutdown,
@@ -21,7 +21,8 @@ sleep 10
   LogMessage: "Server is being Shut Down :arrows_clockwise:",
   ErrorMessage: ":warning: Server could not be Shut Down :warning:",
   SuccessMessage: ":white_check_mark: Server has been Shut Down :white_check_mark:",
-  FailMessages: []
+  FailMessages: [],
+  Options: []
 };
 
 module.exports = Shutdown;

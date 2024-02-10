@@ -26,12 +26,17 @@ class CommandRegisterer {
         Commands.forEach(element => {
             CommandArray.push({
                 name: element.CommandName,
-                description: element.CommandDescription
+                description: element.CommandDescription,
+                options: element.Options.map(option => ({
+                    type: option.type,
+                    name: option.name,
+                    description: option.description,
+                    required: option.required || false,
+                }))
             });
         });
 
         this.RegisterCommands(CommandArray);
-       
     }
 
     //Runs the Register Command itself
