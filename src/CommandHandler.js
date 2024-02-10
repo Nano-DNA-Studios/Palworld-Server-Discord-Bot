@@ -24,26 +24,36 @@ async function HandleBashCommand(interaction, client) {
 
     const Factories = Factory.GetFactoriesToRun();
 
-    let ResponseMessage = `$Test \n`;
+    let ResponseMessage = `Running ${interaction.commandName} :arrows_clockwise: \n`;
 
     const Response = await interaction.reply({ content: ResponseMessage, ephemeral: true });
 
     const logChannel = client.channels.cache.get(process.env.LOG_CHANNEL_ID);
 
-
     for (const factoryInstance of Factories) 
     {
-
       const bashInstance = factoryInstance.GetBashScript();
 
       logChannel.send(bashInstance.LogMessage);
       ResponseMessage += `${bashInstance.LogMessage} \n`;
 
       try {
-        await RunBashScript(factoryInstance);
-        logChannel.send(bashInstance.SuccessMessage);
-        ResponseMessage += `${bashInstance.SuccessMessage} \n`;
-        Response.edit({ content: ResponseMessage, ephemeral: true });
+        let BashResult = await RunBashScript(factoryInstance);
+
+        if (BashResult)
+        {
+          //Successfuly Ran
+          logChannel.send(bashInstance.SuccessMessage);
+          ResponseMessage += `${bashInstance.SuccessMessage} \n`;
+          Response.edit({ content: ResponseMessage, ephemeral: true });
+        } else 
+        {
+          //Failure Occured
+          logChannel.send(bashInstance.ErrorMessage);
+          ResponseMessage += `${bashInstance.ErrorMessage} \n`;
+          Response.edit({ content: ResponseMessage, ephemeral: true });
+        }
+        
       } catch (error) {
         logChannel.send(`${Bash.ErrorMessage} \n ${error}`);
         console.log(error);

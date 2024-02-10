@@ -7,7 +7,7 @@ function ConnectToServer() {
         const conn = new Client();
         conn.on('ready', () => {
 
-            console.log('SSH Client :: ready');
+            //console.log('SSH Client :: ready');
 
             // conn.exec(`steamcmd`, (err, stream) => {
             //     if (err) throw err;

@@ -20,6 +20,7 @@ exit
     LogMessage: "Server is Starting :arrows_clockwise:",
     ErrorMessage: ":warning: Server could not Start :warning:",
     SuccessMessage: ":white_check_mark: Server has been Started :white_check_mark:",
+    FailMessages: []
   };
 
 module.exports = Start;

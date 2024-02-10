@@ -18,6 +18,7 @@ cp -r ${process.env.SERVER_INSTALL_DIR}/Pal/Saved ~/Backups/Saved-${new Date().t
     LogMessage: "A Backup is being made :arrows_clockwise:",
     ErrorMessage: ":warning: Server could not Back Up :warning:",
     SuccessMessage: ":white_check_mark: Server has been Backed Up :white_check_mark:",
+    FailMessages: []
   };
 
 module.exports = Backup;

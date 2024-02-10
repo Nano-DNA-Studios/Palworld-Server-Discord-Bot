@@ -21,6 +21,7 @@ sleep 10
   LogMessage: "Server is being Shut Down :arrows_clockwise:",
   ErrorMessage: ":warning: Server could not be Shut Down :warning:",
   SuccessMessage: ":white_check_mark: Server has been Shut Down :white_check_mark:",
+  FailMessages: []
 };
 
 module.exports = Shutdown;

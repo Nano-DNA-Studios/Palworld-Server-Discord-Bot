@@ -12,6 +12,7 @@ const Restart =
   LogMessage: 'Server is being Restarted :arrows_clockwise:',
   ErrorMessage: ':warning: Server could not be Restarted :warning:',
   SuccessMessage: ':white_check_mark: Server has been Restarted :white_check_mark:',
+  FailMessages: []
 };
 
 module.exports = Restart;

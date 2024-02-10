@@ -12,6 +12,7 @@ class BashScript {
     this.LogMessage = data.LogMessage;
     this.ErrorMessage = data.ErrorMessage;
     this.SuccessMessage = data.SuccessMessage;
+    this.FailMessages = data.FailMessages;
 
     this.content;
     this.TempFolder = process.env.SERVER_TEMP_SCRIPT_DIR;

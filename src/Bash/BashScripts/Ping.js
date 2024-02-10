@@ -2,21 +2,22 @@ require("dotenv").config();
 const Scripts = require("../BashScriptsEnum");
 
 //Start works
- const Ping = 
- {
-    CommandName: Scripts.Ping,
-    CommandDescription: "Pings the Server to determine if it is Online",
-    CustomCode: 
-`
-pidof ${process.env.SERVER_PROCESS_NAME} && echo "Process is running" || echo "Process not found"
+const Ping =
+{
+  CommandName: Scripts.Ping,
+  CommandDescription: "Pings the Server to determine if it is Online",
+  CustomCode:
+    `
+pidof ${process.env.SERVER_PROCESS_NAME} && echo "Server Is Live" || echo "Server Not Live"
 `,
-    Tag: this.CommandName,
-    SubCommands: [Scripts.Custom],
-    ReplyMessage: "Server is being Pinged :arrows_clockwise:",
-    LogMessage: "Server is being Pinged :arrows_clockwise:",
-    ErrorMessage: ":warning: Server is not Online :warning:",
-    SuccessMessage: ":white_check_mark: Server is Online :white_check_mark:",
-  };
+  Tag: this.CommandName,
+  SubCommands: [Scripts.Custom],
+  ReplyMessage: "Server is being Pinged :arrows_clockwise:",
+  LogMessage: "Server is being Pinged :arrows_clockwise:",
+  ErrorMessage: ":warning: Server is not Online :warning:",
+  SuccessMessage: ":white_check_mark: Server is Online :white_check_mark:",
+  FailMessages: ["Server Not Live"]
+};
 
 module.exports = Ping;
 
