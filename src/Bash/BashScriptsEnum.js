@@ -1,14 +1,12 @@
-//Enum of all Scripts
-
-const BashScriptsEnum = 
-{
-Start: 'start',
-Restart: 'restart',
-Shutdown: 'shutdown',
-Backup: 'backup',
-Update: 'update',
-Custom: 'custom',
-Ping: 'ping',
-};
-
+"use strict";
+var BashScriptsEnum;
+(function (BashScriptsEnum) {
+    BashScriptsEnum["Start"] = "start";
+    BashScriptsEnum["Restart"] = "restart";
+    BashScriptsEnum["Shutdown"] = "shutdown";
+    BashScriptsEnum["Backup"] = "backup";
+    BashScriptsEnum["Update"] = "update";
+    BashScriptsEnum["Custom"] = "custom";
+    BashScriptsEnum["Ping"] = "ping";
+})(BashScriptsEnum || (BashScriptsEnum = {}));
 module.exports = BashScriptsEnum;

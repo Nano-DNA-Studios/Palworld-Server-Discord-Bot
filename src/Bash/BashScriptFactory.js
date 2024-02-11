@@ -5,6 +5,10 @@ const fs = require("fs");
 const path = require("path");
 const { GetBashCommands } = require("../FileSearch.js");
 
+/**
+ * Represents a factory for creating Bash scripts.
+ * @class
+ */
 class BashScriptFactory {
   constructor(scriptTag) {
     this.ScriptTag = scriptTag;

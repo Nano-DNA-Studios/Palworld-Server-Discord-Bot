@@ -134,6 +134,16 @@ class DataManager {
     }
   }
 
+  SetServerSettings (Server_Ip, Server_User, Server_Port, Server_Password)
+  {
+    this.SERVER_IP = Server_Ip;
+    this.SERVER_USER = Server_User;
+    this.SERVER_PORT = Server_Port;
+    this.SERVER_PASSWORD = Server_Password;
+
+    this.SaveData();
+  }
+
 }
 
 module.exports = DataManager;
