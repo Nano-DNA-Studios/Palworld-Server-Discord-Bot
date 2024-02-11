@@ -1,30 +1,16 @@
-
-const TypeMapping = {
-  "SUB_COMMAND": 1,
-  "SUB_COMMAND_GROUP": 2,
-  "STRING": 3,
-  "INTEGER": 4,
-  "BOOLEAN": 5,
-  "USER": 6,
-  "CHANNEL": 7,
-  "ROLE": 8,
-  "MENTIONABLE": 9,
-  "NUMBER": 10,
-  "ATTACHMENT": 11,
-};
-
-const OptionTypes = {
-  SubCommand: TypeMapping["SUB_COMMAND"],
-  String: TypeMapping["STRING"],
-  Integer: TypeMapping["INTEGER"],
-  Boolean: TypeMapping["BOOLEAN"],
-  User: TypeMapping["USER"],
-  Channel: TypeMapping["CHANNEL"],
-  Role: TypeMapping["ROLE"],
-  Mentionable: TypeMapping["MENTIONABLE"],
-  Number: TypeMapping["NUMBER"],
-  Attachment: TypeMapping["ATTACHMENT"],
-};
-
+"use strict";
+var OptionTypes;
+(function (OptionTypes) {
+    OptionTypes[OptionTypes["SubCommand"] = 1] = "SubCommand";
+    OptionTypes[OptionTypes["SubCommandGroup"] = 2] = "SubCommandGroup";
+    OptionTypes[OptionTypes["String"] = 3] = "String";
+    OptionTypes[OptionTypes["Integer"] = 4] = "Integer";
+    OptionTypes[OptionTypes["Boolean"] = 5] = "Boolean";
+    OptionTypes[OptionTypes["User"] = 6] = "User";
+    OptionTypes[OptionTypes["Channel"] = 7] = "Channel";
+    OptionTypes[OptionTypes["Role"] = 8] = "Role";
+    OptionTypes[OptionTypes["Mentionable"] = 9] = "Mentionable";
+    OptionTypes[OptionTypes["Number"] = 10] = "Number";
+    OptionTypes[OptionTypes["Attachment"] = 11] = "Attachment";
+})(OptionTypes || (OptionTypes = {}));
 module.exports = OptionTypes;
-  
