@@ -1,5 +1,12 @@
 "use strict";
+/**
+ * Class representing a Bash Script
+ */
 class BashScript {
+    /**
+     * Initializes the Bash Script
+     * @param data
+     */
     constructor(data) {
         this.CommandName = data.CommandName;
         this.CommandDescription = data.CommandDescription;
@@ -13,6 +20,10 @@ class BashScript {
         this.FailMessages = data.FailMessages;
         this.Options = data.Options;
     }
+    /**
+     * Gets the Bash Script code to run
+     * @returns The Bash Script that will run for the command
+     */
     GetCode() {
         return this.CustomCode.replace('\t', '');
     }
