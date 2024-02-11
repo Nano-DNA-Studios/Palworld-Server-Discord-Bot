@@ -12,13 +12,13 @@ const { GetBashCommands } = require("../FileSearch.js");
 class BashScriptFactory {
   constructor(scriptTag) {
     this.ScriptTag = scriptTag;
-    const directoryPath = path.join(__dirname, "BashScripts");
+    const directoryPath = path.join(__dirname, "BashCommands");
     this.files = fs.readdirSync(directoryPath);
   }
 
   GetBashCommandObject(command) {
 
-    const directoryPath = path.join(__dirname, "BashScripts"); // path to your directory
+    const directoryPath = path.join(__dirname, "BashCommands"); // path to your directory
 
     try {
 

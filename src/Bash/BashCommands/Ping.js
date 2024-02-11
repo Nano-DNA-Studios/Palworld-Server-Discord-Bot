@@ -1,6 +1,7 @@
 require("dotenv").config();
 const Scripts = require("../BashScriptsEnum");
 const OptionTypes = require("../../CommandOptionTypes");
+const IBashCommand = require("../IBashCommand");
 
 //Start works
 const Ping =

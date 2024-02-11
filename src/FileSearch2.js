@@ -37,7 +37,7 @@ function GetFiles(relativePath) {
 }
 exports.GetFiles = GetFiles;
 function GetBashCommands() {
-    const Path = "Bash/BashScripts";
+    const Path = "Bash/BashCommands";
     let Files = GetFiles(Path);
     let Commands = [];
     Files.forEach(file => {

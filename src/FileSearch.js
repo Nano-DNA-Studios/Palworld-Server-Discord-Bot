@@ -16,7 +16,7 @@ function GetFiles(relativePath)
 
 function GetBashCommands ()
 {
- const Path = "Bash/BashScripts";
+ const Path = "Bash/BashCommands";
 
   let Files = GetFiles(Path);
 

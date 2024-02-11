@@ -1,7 +1,7 @@
 const RunBashScript = require("./Bash/BashScriptRunner");
 const Scripts = require("./Bash/BashScriptsEnum.js");
 const BashScriptFactory = require("./Bash/BashScriptFactory");
-const { GetBashCommands } = require("./FileSearch2.js");
+const { GetBashCommands } = require("./FileSearch.js");
 const { REST, Routes } = require("discord.js");
 
 class CommandRegisterer {

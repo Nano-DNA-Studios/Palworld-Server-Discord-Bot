@@ -19,7 +19,7 @@ function GetFiles(relativePath: string): string[] {
 }
 
 function GetBashCommands(): BashCommandModule[] {
-  const Path = "Bash/BashScripts";
+  const Path = "Bash/BashCommands";
 
   let Files = GetFiles(Path);
 
