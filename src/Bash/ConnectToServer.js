@@ -1,39 +1,46 @@
-const { Client } = require("ssh2");
-require("dotenv").config();
-
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const ssh2_1 = require("ssh2");
+const dotenv = __importStar(require("dotenv"));
+dotenv.config();
 function ConnectToServer() {
-
     return new Promise((resolve, reject) => {
-        const conn = new Client();
+        const conn = new ssh2_1.Client();
         conn.on('ready', () => {
-
-            //console.log('SSH Client :: ready');
-
-            // conn.exec(`steamcmd`, (err, stream) => {
-            //     if (err) throw err;
-            //     stream.on('close', (code, signal) => {
-            //         console.log('Stream :: close :: code: ' + code + ', signal: ' + signal);
-            //         conn.end();
-            //     }).on('data', (data) => {
-            //         console.log('STDOUT: ' + data);
-            //     }).stderr.on('data', (data) => {
-            //         console.log('STDERR: ' + data);
-            //     });
-            // });
-
+            console.log('SSH Connection ready');
             resolve(conn); // Resolve with the connection instance
         }).on('error', (err) => {
             console.error('SSH Connection error:', err);
             reject(err);
         }).connect({
             host: process.env.SERVER_IP,
-            port: process.env.SERVER_PORT,
+            port: parseInt(process.env.SERVER_PORT),
             username: process.env.SERVER_USER,
             password: process.env.SERVER_PASSWORD
         });
     });
-
-  //console.log(ServerConnection);
 }
-
-module.exports = ConnectToServer;
+exports.default = ConnectToServer;

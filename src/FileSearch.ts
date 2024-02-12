@@ -3,11 +3,8 @@ dotenv.config();
 import { dir } from "console";
 import * as fs from "fs";
 import * as path from "path";
+import IBashCommand from "./Bash/IBashCommand";
 
-interface BashCommandModule {
-  CommandName: string;
-  [key: string]: any; // Additional properties as needed
-}
 
 function GetFiles(relativePath: string): string[] {
   const directoryPath = path.join(__dirname, relativePath); // path to your directory
@@ -18,17 +15,17 @@ function GetFiles(relativePath: string): string[] {
     return [];
 }
 
-function GetBashCommands(): BashCommandModule[] {
+function GetBashCommands(): IBashCommand[] {
   const Path = "Bash/BashCommands";
 
   let Files = GetFiles(Path);
 
-  let Commands: BashCommandModule[] = [];
+  let Commands: IBashCommand[] = [];
 
   Files.forEach(file => {
     if (path.extname(file) === ".js") {
       // Dynamic imports in TypeScript might require a workaround or explicit any cast
-      const module: BashCommandModule = require(`./${Path}/${file}`) as BashCommandModule;
+      const module: IBashCommand = require(`./${Path}/${file}`) as IBashCommand;
 
       if ('CommandName' in module)
         Commands.push(module);
