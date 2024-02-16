@@ -1,4 +1,7 @@
 "use strict";
+/**
+ * Enum for all the Bash Scripts
+ */
 var BashScriptsEnum;
 (function (BashScriptsEnum) {
     BashScriptsEnum["Start"] = "start";

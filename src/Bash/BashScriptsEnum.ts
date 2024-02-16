@@ -1,5 +1,7 @@
 
-
+/**
+ * Enum for all the Bash Scripts
+ */
 enum BashScriptsEnum {
     Start = 'start',
     Restart = 'restart',
