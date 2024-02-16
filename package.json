@@ -4,14 +4,19 @@
   "description": "A Discord bot that handles and controls Palworld Server settings and operations",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "start": "node src/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/ssh2": "^1.11.19",
     "discord.js": "^14.14.1",
     "dotenv": "^16.4.1",
     "ssh2": "^1.15.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
   }
 }
