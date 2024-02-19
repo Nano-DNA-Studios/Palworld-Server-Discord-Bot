@@ -1,7 +1,10 @@
 import { REST, Routes } from "discord.js";
-import { GetBashCommands } from "./FileSearch";
+import { GetBashCommands, GetConfigureCommands } from "./FileSearch";
 import IBashCommand from "./Bash/IBashCommand";
 import ICommandOption from "./ICommandOption";
+import IConfigureCommands from "./ConfigureCommands/IConfigureCommand";
+import ICommand from "./ICommand";
+import { CommandName } from "./Bash/BashCommands/Backup";
 
 /**
  * Registers the commands to the Discord Server
@@ -10,7 +13,7 @@ class CommandRegisterer {
     private rest: REST;
 
     /**
-     * Initializes the Command Registerer
+     * Initializes the Command Registerer, by registering the REST API
      */
     constructor() {
         this.rest = new REST({ version: "10" }).setToken(`${process.env.DISCORD_BOT_TOKEN}`);
@@ -20,16 +23,47 @@ class CommandRegisterer {
      * Registers all the commands to the Discord Server
      */
     public RegisterAllCommands(): void {
-        this.RegisterBashCommands();
+
+        let CommandArray: object[] = [];
+
+        CommandArray.push(...this.RegisterBashCommands());
+        CommandArray.push(...this.RegisterConfigureCommands());
+
+        this.RegisterCommands(CommandArray);
     }
 
     /**
      * Registers the Bash Commands to the Discord Server
      */
-    private async RegisterBashCommands(): Promise<void> {
+    private RegisterBashCommands(): object[] {
         const Commands: IBashCommand[] = GetBashCommands();
+        const CommandArray: object[] = this.MapToCommand(Commands);
 
-        const CommandArray: object[] = Commands.map(element => ({
+        console.log('Bash Commands Registered');
+
+        return CommandArray;
+    }
+
+     /**
+     * Registers the Configure Commands to the Discord Server
+     */
+     private RegisterConfigureCommands(): object[] {
+        const Commands: IConfigureCommands[] = GetConfigureCommands();
+        const CommandArray: object[] = this.MapToCommand(Commands);
+
+        console.log('Configure Commands Registered');
+
+        return CommandArray;
+    }
+
+    /**
+     * Maps ICommands to Discord Commands
+     * @param Commands Custom Commands to be registered
+     * @returns List of Discord Commands to be Registered
+     */
+    private MapToCommand (Commands: ICommand[]) : object[]
+    {
+        return Commands.map(element => ({
             name: element.CommandName,
             description: element.CommandDescription,
             options: element.Options.map((option: ICommandOption) => ({
@@ -39,8 +73,6 @@ class CommandRegisterer {
                 required: option.required || false,
             }))
         }));
-
-        this.RegisterCommands(CommandArray);
     }
 
     /**

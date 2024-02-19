@@ -23,11 +23,16 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GetFiles = exports.GetBashCommands = void 0;
+exports.GetConfigureCommands = exports.GetFiles = exports.GetBashCommands = void 0;
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
+/**
+ * Gets all the files in a directory
+ * @param relativePath The relative path to the directory
+ * @returns The files in the directory
+ */
 function GetFiles(relativePath) {
     const directoryPath = path.join(__dirname, relativePath); // path to your directory
     if (fs.existsSync(directoryPath))
@@ -36,6 +41,10 @@ function GetFiles(relativePath) {
         return [];
 }
 exports.GetFiles = GetFiles;
+/**
+ * Gets all the Bash Commands
+ * @returns Array of Bash Commands
+ */
 function GetBashCommands() {
     const Path = "Bash/BashCommands";
     let Files = GetFiles(Path);
@@ -51,3 +60,22 @@ function GetBashCommands() {
     return Commands;
 }
 exports.GetBashCommands = GetBashCommands;
+/**
+ * Gets all the Configure Commands
+ * @returns Array of Configure Commands
+ */
+function GetConfigureCommands() {
+    const Path = "ConfigureCommands/Commands";
+    let Files = GetFiles(Path);
+    let Commands = [];
+    Files.forEach(file => {
+        if (path.extname(file) === ".js") {
+            // Dynamic imports in TypeScript might require a workaround or explicit any cast
+            const module = require(`./${Path}/${file}`);
+            if ('CommandName' in module)
+                Commands.push(module);
+        }
+    });
+    return Commands;
+}
+exports.GetConfigureCommands = GetConfigureCommands;

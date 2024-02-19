@@ -1,6 +1,6 @@
 "use strict";
 /**
- * Enum for all the Bash Scripts
+ * Enum for all the Bash Commands
  */
 var BashScriptsEnum;
 (function (BashScriptsEnum) {

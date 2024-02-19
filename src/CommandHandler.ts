@@ -1,9 +1,8 @@
 import BashScriptRunner from './Bash/BashScriptRunner';
 import BashScriptsEnum from './Bash/BashScriptsEnum';
 import BashScriptFactory from './Bash/BashScriptFactory';
-import { GetBashCommands } from './FileSearch';
-import { CacheType, ChatInputCommandInteraction, InteractionResponse, MessagePayload, REST, Routes, TextChannel } from 'discord.js';
-import { Client, Interaction } from 'discord.js'; // Import specific types for client and interaction
+import { CacheType, ChatInputCommandInteraction, InteractionResponse, TextChannel } from 'discord.js';
+import { Client } from 'discord.js'; // Import specific types for client and interaction
 
 //Handles the Command inputted by the user
 async function HandleCommand(interaction: ChatInputCommandInteraction<CacheType>, client: Client): Promise<void> {

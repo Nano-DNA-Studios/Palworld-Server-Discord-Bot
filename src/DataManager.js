@@ -186,5 +186,19 @@ class DataManager {
             this.SaveData();
         }
     }
+    /**
+     * Sets the SSH Server Information to login to the Server
+     * @param serverIP IP of the Server
+     * @param serverUser User on the Server
+     * @param serverPort Port of the Server
+     * @param serverPassword Password of the Server
+     */
+    SetServerSettings(serverIP, serverUser, serverPort, serverPassword) {
+        this.SERVER_IP = serverIP;
+        this.SERVER_USER = serverUser;
+        this.SERVER_PORT = serverPort;
+        this.SERVER_PASSWORD = serverPassword;
+        this.SaveData();
+    }
 }
 module.exports = DataManager;

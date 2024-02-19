@@ -45,7 +45,6 @@ client.on("ready", (c) => {
 client.on("interactionCreate", (interaction) => __awaiter(void 0, void 0, void 0, function* () {
     if (!interaction.isChatInputCommand())
         return;
-    // let dataMan = new DataManager(interaction.guild.id); // Commented out as it seems not used
     console.log(interaction.commandName);
     yield (0, CommandHandler_1.HandleCommand)(interaction, client);
 }));
