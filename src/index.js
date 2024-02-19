@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
+const FileSearch_1 = require("./FileSearch");
 const CommandHandler_1 = require("./CommandHandler");
 const CommandRegisterer_1 = __importDefault(require("./CommandRegisterer"));
 const DataManager_1 = __importDefault(require("./DataManager"));
@@ -40,7 +41,9 @@ client.on("ready", (c) => {
     console.log(`Bot is ready ${c.user.tag}`);
     // console.log(c.guilds.fetch().then((guilds) => console.log(guilds)));  //Gets Guild ID
     let registerer = new CommandRegisterer_1.default();
-    registerer.RegisterAllCommands();
+    registerer.AddCommands((0, FileSearch_1.GetBashCommands)());
+    registerer.AddCommands((0, FileSearch_1.GetConfigureCommands)());
+    registerer.RegisterCommands();
 });
 client.on("interactionCreate", (interaction) => __awaiter(void 0, void 0, void 0, function* () {
     if (!interaction.isChatInputCommand())

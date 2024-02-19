@@ -1,19 +1,9 @@
-import ICommandOption = require("./ICommandOption");
+import IDiscordCommand = require("./IDiscordCommand");
 
 /**
  * Describes the structure of a command for a Discord Bot
  */
-interface ICommand {
-    /**
-     * The name of the command.
-     */
-    CommandName: string;
-
-    /**
-     * The description of the command.
-     */
-    CommandDescription: string;
-
+interface ICommand extends IDiscordCommand{
     /**
      * The tag associated with the command.
      */
@@ -43,11 +33,6 @@ interface ICommand {
      * The array of fail messages to display when the command fails.
      */
     FailMessages: string[];
-
-    /**
-     * The options associated with the command.
-     */
-    Options: ICommandOption[];
 }
 
 export = ICommand;

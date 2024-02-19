@@ -1,16 +1,14 @@
 import { REST, Routes } from "discord.js";
-import { GetBashCommands, GetConfigureCommands } from "./FileSearch";
-import IBashCommand from "./Bash/IBashCommand";
 import ICommandOption from "./ICommandOption";
-import IConfigureCommands from "./ConfigureCommands/IConfigureCommand";
 import ICommand from "./ICommand";
-import { CommandName } from "./Bash/BashCommands/Backup";
+import IDiscordCommand from "./IDiscordCommand";
 
 /**
  * Registers the commands to the Discord Server
  */
 class CommandRegisterer {
     private rest: REST;
+    public Commands: IDiscordCommand[] = [];
 
     /**
      * Initializes the Command Registerer, by registering the REST API
@@ -20,66 +18,18 @@ class CommandRegisterer {
     }
 
     /**
-     * Registers all the commands to the Discord Server
+     * Maps the Commands to be Added to Discord Commands and Adds to the List of Commands to be Registered and 
+     * @param commands Array of Commands to be Registered
      */
-    public RegisterAllCommands(): void {
-
-        let CommandArray: object[] = [];
-
-        CommandArray.push(...this.RegisterBashCommands());
-        CommandArray.push(...this.RegisterConfigureCommands());
-
-        this.RegisterCommands(CommandArray);
-    }
-
-    /**
-     * Registers the Bash Commands to the Discord Server
-     */
-    private RegisterBashCommands(): object[] {
-        const Commands: IBashCommand[] = GetBashCommands();
-        const CommandArray: object[] = this.MapToCommand(Commands);
-
-        console.log('Bash Commands Registered');
-
-        return CommandArray;
-    }
-
-     /**
-     * Registers the Configure Commands to the Discord Server
-     */
-     private RegisterConfigureCommands(): object[] {
-        const Commands: IConfigureCommands[] = GetConfigureCommands();
-        const CommandArray: object[] = this.MapToCommand(Commands);
-
-        console.log('Configure Commands Registered');
-
-        return CommandArray;
-    }
-
-    /**
-     * Maps ICommands to Discord Commands
-     * @param Commands Custom Commands to be registered
-     * @returns List of Discord Commands to be Registered
-     */
-    private MapToCommand (Commands: ICommand[]) : object[]
+    public AddCommands (commands : ICommand[]) : void
     {
-        return Commands.map(element => ({
-            name: element.CommandName,
-            description: element.CommandDescription,
-            options: element.Options.map((option: ICommandOption) => ({
-                type: option.type,
-                name: option.name,
-                description: option.description,
-                required: option.required || false,
-            }))
-        }));
+        this.Commands.push(...commands);
     }
 
     /**
      * Registers the commands to the Discord Server 
-     * @param Commands The commands to register
      */
-    private async RegisterCommands(Commands: object[]): Promise<void> {
+    public async RegisterCommands()  {
         try {
             console.log('Registering Slash Commands');
 
@@ -88,7 +38,16 @@ class CommandRegisterer {
                     process.env.CLIENT_ID!,
                     process.env.GUILD_ID!
                 ),
-                { body: Commands }
+                { body: this.Commands.map(element => ({
+                    name: element.CommandName,
+                    description: element.CommandDescription,
+                    options: element.Options.map((option: ICommandOption) => ({
+                        type: option.type,
+                        name: option.name,
+                        description: option.description,
+                        required: option.required || false,
+                    }))
+                })) }
             );
 
             console.log('Slash Commands Registered');
