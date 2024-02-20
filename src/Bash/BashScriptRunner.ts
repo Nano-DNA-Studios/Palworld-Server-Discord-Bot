@@ -1,18 +1,18 @@
 import * as dotenv from "dotenv";
 import { Client } from "ssh2";
 dotenv.config();
-import BashScriptFactory from "./BashScriptFactory";
+import BashScript from "./BashScript";
 
 class BashScriptRunner {
     private ScriptRanSuccessfully: boolean = true;
-    public Factory: BashScriptFactory;
+    public BashCommand: BashScript;
 
-    constructor(factory: BashScriptFactory) {
-        this.Factory = factory;
+    constructor(bashCommand: BashScript) {
+        this.BashCommand = bashCommand;
     }
 
-    private DetermineError(data: any, Factory: BashScriptFactory): void {
-        let Fails = Factory.GetBashScript().FailMessages;
+    private DetermineError(data: any): void {
+        let Fails = this.BashCommand.FailMessages;
         let dataStr = data.toString().replace(/\r?\n|\r/g, "");
         if (Fails.includes(dataStr)) {
             this.ScriptRanSuccessfully = false;
@@ -24,7 +24,7 @@ class BashScriptRunner {
 
         const ServerConnection = await this.ConnectToServer();
 
-        const Script = await this.Factory.GetBashScript().GetCode();
+        const Script = await this.BashCommand.GetCode();
 
         return new Promise<boolean>((resolve, reject) => {
             ServerConnection.exec(`${Script}`, (err, stream) => {
@@ -32,12 +32,12 @@ class BashScriptRunner {
 
                 let dataBuffer = "";
 
-                if (this.Factory.HasMaxOutTimer()) {
+                if (this.BashCommand.HasMaxOutTimer()) {
                     setTimeout(() => {
                         console.log("Max Timeout Reached");
                         resolve(this.ScriptRanSuccessfully);
                         stream.end();
-                    }, 5000);
+                    }, this.BashCommand.MaxOutTimer);
                 }
 
                 stream
@@ -47,11 +47,11 @@ class BashScriptRunner {
                     .on("data", (data: string) => {
                         dataBuffer += data;
                         console.log("STDOUT: " + data);
-                        this.DetermineError(data, this.Factory);
+                        this.DetermineError(data);
                     })
                     .stderr.on("data", (data) => {
                         console.error("STDERR: " + data);
-                        this.DetermineError(data, this.Factory);
+                        this.DetermineError(data);
                     });
             });
         });

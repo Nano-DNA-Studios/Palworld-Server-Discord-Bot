@@ -4,10 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 const ConfigureScriptsEnum_1 = __importDefault(require("../ConfigureScriptsEnum"));
 const CommandOptionTypes_1 = __importDefault(require("../../CommandOptionTypes"));
+const EmptyCustomCommandHandler_1 = __importDefault(require("../../EmptyCustomCommandHandler"));
 const Backup = {
     CommandName: ConfigureScriptsEnum_1.default.SetServerSettings,
     CommandDescription: "Makes a Backup file of the Server",
-    RunCommand: (dataManager, interaction) => {
+    CommandFunction: (dataManager, interaction) => {
         const serverIp = interaction.options.getString('serverip');
         const serverUser = interaction.options.getString('serveruser');
         const serverPort = interaction.options.getString('serverport');
@@ -51,6 +52,8 @@ const Backup = {
             description: "The Password for the Server",
             required: true
         }
-    ]
+    ],
+    UsesCustomCommandHandler: false,
+    CustomCommandHandler: EmptyCustomCommandHandler_1.default
 };
 module.exports = Backup;

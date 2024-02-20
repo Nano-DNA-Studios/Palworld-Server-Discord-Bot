@@ -22,60 +22,90 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.GetConfigureCommands = exports.GetFiles = exports.GetBashCommands = void 0;
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
-/**
- * Gets all the files in a directory
- * @param relativePath The relative path to the directory
- * @returns The files in the directory
- */
-function GetFiles(relativePath) {
-    const directoryPath = path.join(__dirname, relativePath); // path to your directory
-    if (fs.existsSync(directoryPath))
-        return fs.readdirSync(directoryPath);
-    else
-        return [];
-}
-exports.GetFiles = GetFiles;
-/**
- * Gets all the Bash Commands
- * @returns Array of Bash Commands
- */
-function GetBashCommands() {
-    const Path = "Bash/BashCommands";
-    let Files = GetFiles(Path);
-    let Commands = [];
-    Files.forEach(file => {
-        if (path.extname(file) === ".js") {
-            // Dynamic imports in TypeScript might require a workaround or explicit any cast
-            const module = require(`./${Path}/${file}`);
+class FileSearch {
+    constructor(dataManager) {
+        this._dataManager = dataManager;
+    }
+    /**
+         * Gets all the files with JavaScript endings in the Bot Directory
+         * @returns An Array of Java Script File Paths within the Bot Directory
+         */
+    GetAllJSFiles() {
+        const directoryPath = this._dataManager.BOT_DIRECTORY;
+        return this.GetFiles(directoryPath);
+    }
+    /**
+    * Gets all the Java Script Files within the provided directory and subdirectories through recursion
+    * @param Path The start Path to search for files
+    * @returns Array of all Java Script Files within the provided directory and subdirectories
+    */
+    GetFiles(Path) {
+        let AllFiles = [];
+        if (fs.existsSync(Path)) {
+            let files = fs.readdirSync(Path);
+            files.forEach(file => {
+                let absPath = Path + "/" + file;
+                if (fs.lstatSync(absPath).isDirectory())
+                    AllFiles.push(...this.GetFiles(absPath));
+                else if (path.extname(absPath) === ".js")
+                    AllFiles.push(absPath);
+            });
+        }
+        return AllFiles;
+    }
+    /**
+        * Gets all the Commands from the Provided Directory
+        * @returns Array of IT Command Objects
+        */
+    GetAllCommands() {
+        let Commands = [];
+        const Files = this.GetAllJSFiles();
+        Files.forEach(file => {
+            const module = require(file);
             if ('CommandName' in module)
                 Commands.push(module);
-        }
-    });
-    return Commands;
+        });
+        return Commands;
+    }
+    /**
+     * Gets all the Bash Commands
+     * @returns Array of Bash Commands
+     */
+    GetBashCommands() {
+        const Path = "Bash/BashCommands";
+        let Files = this.GetFiles(Path);
+        let Commands = [];
+        Files.forEach(file => {
+            if (path.extname(file) === ".js") {
+                // Dynamic imports in TypeScript might require a workaround or explicit any cast
+                const module = require(`./${Path}/${file}`);
+                if ('CommandName' in module)
+                    Commands.push(module);
+            }
+        });
+        return Commands;
+    }
+    /**
+     * Gets all the Configure Commands
+     * @returns Array of Configure Commands
+     */
+    GetConfigureCommands() {
+        const Path = "ConfigureCommands/Commands";
+        let Files = this.GetFiles(Path);
+        let Commands = [];
+        Files.forEach(file => {
+            if (path.extname(file) === ".js") {
+                // Dynamic imports in TypeScript might require a workaround or explicit any cast
+                const module = require(`./${Path}/${file}`);
+                if ('CommandName' in module)
+                    Commands.push(module);
+            }
+        });
+        return Commands;
+    }
 }
-exports.GetBashCommands = GetBashCommands;
-/**
- * Gets all the Configure Commands
- * @returns Array of Configure Commands
- */
-function GetConfigureCommands() {
-    const Path = "ConfigureCommands/Commands";
-    let Files = GetFiles(Path);
-    let Commands = [];
-    Files.forEach(file => {
-        if (path.extname(file) === ".js") {
-            // Dynamic imports in TypeScript might require a workaround or explicit any cast
-            const module = require(`./${Path}/${file}`);
-            if ('CommandName' in module)
-                Commands.push(module);
-        }
-    });
-    return Commands;
-}
-exports.GetConfigureCommands = GetConfigureCommands;
+module.exports = FileSearch;

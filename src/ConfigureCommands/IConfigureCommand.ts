@@ -13,7 +13,7 @@ interface IConfigureCommands extends ICommand
      * @param interaction Interaction instance that triggered running the command
      * @returns void
      */
-    RunCommand: (dataManager : DataManager, interaction: ChatInputCommandInteraction<CacheType>) => void;
+    //RunCommand: (dataManager : DataManager, interaction: ChatInputCommandInteraction<CacheType>) => void;
 }
 
 export = IConfigureCommands;

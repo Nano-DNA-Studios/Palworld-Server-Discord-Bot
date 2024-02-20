@@ -19,11 +19,11 @@ dotenv_1.default.config();
  * Class Handling Data Management
  */
 class DataManager {
-    constructor() {
-        /**
-         * Save Path for the Bots Data
-         */
-        this.DATA_SAVE_PATH = 'src/Resources/data.json';
+    /**
+     * Initializes the Data Manager
+     * @param botDirectory The Directory that the Bot is located in
+     */
+    constructor(botDirectory) {
         /**
          * Discord Bot Token
          */
@@ -32,6 +32,10 @@ class DataManager {
          * Discord Server ID
          */
         this.GUILD_ID = "";
+        /**
+         * Name of the Discord Server
+         */
+        this.GUILD_NAME = "";
         /**
          * Name of the Process that Handles the Palworld Server
          */
@@ -72,6 +76,9 @@ class DataManager {
          * Channel ID of the Log Channel that the Bot will send logs to
          */
         this.LOG_CHANNEL_ID = "";
+        this.BOT_DIRECTORY = botDirectory;
+        this.DATA_SAVE_PATH = this.BOT_DIRECTORY + '\\Resources';
+        this.FILE_SAVE_PATH = this.DATA_SAVE_PATH + '\\data.json';
     }
     /**
      * Loads the Data from the File or Registers it by creating the Default Data and file
@@ -92,34 +99,41 @@ class DataManager {
      * @returns True if the file exists, False if it does not
      */
     FileExists() {
-        return fs_1.default.existsSync(this.DATA_SAVE_PATH);
+        console.log(this.FILE_SAVE_PATH);
+        return fs_1.default.existsSync(this.FILE_SAVE_PATH);
     }
     /**
      * Saves the Data to the File
      */
     SaveData() {
         let jsonData = this.GetJSONFormat();
-        fs_1.default.writeFileSync(this.DATA_SAVE_PATH, jsonData);
+        if (fs_1.default.existsSync(this.DATA_SAVE_PATH))
+            fs_1.default.writeFileSync(this.FILE_SAVE_PATH, jsonData);
+        else {
+            console.log("Data File does not exist");
+        }
     }
     /**
      * Loads the Data from the File
      */
     LoadDataFromFile() {
-        let dataJSON = fs_1.default.readFileSync(this.DATA_SAVE_PATH, 'utf8');
+        let dataJSON = fs_1.default.readFileSync(this.FILE_SAVE_PATH, 'utf8');
         let data = JSON.parse(dataJSON);
         //Load all data from JSON and put it in class variables 
         this.DISCORD_BOT_TOKEN = data.DiscordBotToken;
         this.GUILD_ID = data.GuildID;
+        this.GUILD_NAME = data.GuildName;
         this.CLIENT_ID = data.ClientID;
         this.SERVER_PROCESS_NAME = data.ServerProcessName;
         this.SERVER_START_SCRIPT = data.ServerStartScript;
         this.LOG_CHANNEL_ID = data.LogChannelID;
-        this.RUN_LOCALLY = data.RunLocally; // Assuming conversion to boolean
+        this.RUN_LOCALLY = data.RunLocally;
         this.SERVER_IP = data.ServerIP;
         this.SERVER_USER = data.ServerUser;
         this.SERVER_PORT = data.ServerPort;
         this.SERVER_PASSWORD = data.ServerPassword;
         this.STEAM_INSTALL_DIR = data.SteamInstallDir;
+        this.BOT_DIRECTORY = data.BotDirectory;
     }
     /**
      * Registers the Server Controller by asking for the Bot Token
@@ -134,11 +148,14 @@ class DataManager {
             const prompt = (query) => new Promise((resolve) => setupReader.question(query, resolve));
             // Prompt for bot token and guild ID asynchronously
             let botToken = yield prompt('Enter the Discord Bot Token: ');
+            let guildName = yield prompt('Enter the Guild Name: ');
             // Close the readline interface after collecting all necessary inputs
             setupReader.close();
             let data = {
                 'DiscordBotToken': botToken,
+                'BotDirectory': this.BOT_DIRECTORY,
                 'GuildID': '',
+                'GuildName': guildName,
                 'ClientID': '',
                 'ServerProcessName': "PalServer-Linux-Test",
                 'ServerStartScript': "PalServer.sh",
@@ -152,7 +169,7 @@ class DataManager {
             };
             //Save the data to the file
             let JSONData = JSON.stringify(data, null, 4);
-            fs_1.default.writeFileSync(this.DATA_SAVE_PATH, JSONData);
+            fs_1.default.writeFileSync(this.FILE_SAVE_PATH, JSONData);
         });
     }
     /**
@@ -162,7 +179,9 @@ class DataManager {
     GetJSONFormat() {
         let data = {
             'DiscordBotToken': this.DISCORD_BOT_TOKEN,
+            'BotDirectory': this.BOT_DIRECTORY,
             'GuildID': this.GUILD_ID,
+            'GuildName': this.GUILD_NAME,
             'ClientID': this.CLIENT_ID,
             'ServerProcessName': this.SERVER_PROCESS_NAME,
             'ServerStartScript': this.SERVER_START_SCRIPT,
@@ -187,6 +206,14 @@ class DataManager {
         }
     }
     /**
+     * Sets the Guild ID for the Bot
+     * @param guildID ID of the Guild
+     */
+    SetGuildID(guildID) {
+        this.GUILD_ID = guildID;
+        this.SaveData();
+    }
+    /**
      * Sets the SSH Server Information to login to the Server
      * @param serverIP IP of the Server
      * @param serverUser User on the Server
@@ -198,6 +225,14 @@ class DataManager {
         this.SERVER_USER = serverUser;
         this.SERVER_PORT = serverPort;
         this.SERVER_PASSWORD = serverPassword;
+        this.SaveData();
+    }
+    /**
+     * Sets the Discord Bot Absolute Path
+     * @param botDirectory the Absolute Path to the Bot
+     */
+    SetBotDirectory(botDirectory) {
+        this.BOT_DIRECTORY = botDirectory;
         this.SaveData();
     }
 }
