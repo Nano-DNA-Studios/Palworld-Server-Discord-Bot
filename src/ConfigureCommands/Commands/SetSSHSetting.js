@@ -5,9 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 const ConfigureScriptsEnum_1 = __importDefault(require("../ConfigureScriptsEnum"));
 const CommandOptionTypes_1 = __importDefault(require("../../CommandOptionTypes"));
 const EmptyCustomCommandHandler_1 = __importDefault(require("../../EmptyCustomCommandHandler"));
-const Backup = {
-    CommandName: ConfigureScriptsEnum_1.default.SetServerSettings,
-    CommandDescription: "Makes a Backup file of the Server",
+const SetSSH = {
+    CommandName: ConfigureScriptsEnum_1.default.SetSSHSettings,
+    CommandDescription: "Sets the SSH Settings for the Server to Login and run Bash Commands",
     CommandFunction: (dataManager, interaction) => {
         const serverIp = interaction.options.getString('serverip');
         const serverUser = interaction.options.getString('serveruser');
@@ -15,17 +15,17 @@ const Backup = {
         const serverPassword = interaction.options.getString('serverpassword');
         if (serverIp && serverUser && serverPort && serverPassword) {
             console.log("Setting Server Settings");
-            dataManager.SetServerSettings(serverIp, serverUser, serverPort, serverPassword);
+            dataManager.SetSSHSettings(serverIp, serverUser, serverPort, serverPassword);
         }
         else {
             console.log("Not all options were provided.");
         }
     },
-    Tag: ConfigureScriptsEnum_1.default.SetServerSettings,
-    ReplyMessage: "A Backup is being made :arrows_clockwise:",
-    LogMessage: "A Backup is being made :arrows_clockwise:",
-    ErrorMessage: ":warning: Server could not Back Up :warning:",
-    SuccessMessage: ":white_check_mark: Server has been Backed Up :white_check_mark:",
+    Tag: ConfigureScriptsEnum_1.default.SetSSHSettings,
+    ReplyMessage: "SSH Settings are being set :arrows_clockwise:",
+    LogMessage: "SSH Settings are being set :arrows_clockwise:",
+    ErrorMessage: ":warning: Could not set SSH Settings :warning:",
+    SuccessMessage: ":white_check_mark: SSH Settings have been set :white_check_mark:",
     FailMessages: [],
     Options: [
         {
@@ -56,4 +56,4 @@ const Backup = {
     UsesCustomCommandHandler: false,
     CustomCommandHandler: EmptyCustomCommandHandler_1.default
 };
-module.exports = Backup;
+module.exports = SetSSH;

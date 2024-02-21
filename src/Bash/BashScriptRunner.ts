@@ -33,6 +33,7 @@ class BashScriptRunner {
                 let dataBuffer = "";
 
                 if (this.BashCommand.HasMaxOutTimer()) {
+                    console.log("Max Timeout Set");
                     setTimeout(() => {
                         console.log("Max Timeout Reached");
                         resolve(this.ScriptRanSuccessfully);
@@ -56,7 +57,6 @@ class BashScriptRunner {
             });
         });
     }
-
 
     ConnectToServer(): Promise<Client> {
         return new Promise((resolve, reject) => {

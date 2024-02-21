@@ -31,9 +31,9 @@ class FileSearch {
         this._dataManager = dataManager;
     }
     /**
-         * Gets all the files with JavaScript endings in the Bot Directory
-         * @returns An Array of Java Script File Paths within the Bot Directory
-         */
+    * Gets all the files with JavaScript endings in the Bot Directory
+    * @returns An Array of Java Script File Paths within the Bot Directory
+    */
     GetAllJSFiles() {
         const directoryPath = this._dataManager.BOT_DIRECTORY;
         return this.GetFiles(directoryPath);
@@ -58,9 +58,9 @@ class FileSearch {
         return AllFiles;
     }
     /**
-        * Gets all the Commands from the Provided Directory
-        * @returns Array of IT Command Objects
-        */
+    * Gets all the Commands from the Provided Directory
+    * @returns Array of IT Command Objects
+    */
     GetAllCommands() {
         let Commands = [];
         const Files = this.GetAllJSFiles();
@@ -72,9 +72,9 @@ class FileSearch {
         return Commands;
     }
     /**
-     * Gets all the Bash Commands
-     * @returns Array of Bash Commands
-     */
+   * Gets all the Bash Commands
+   * @returns Array of Bash Commands
+   */
     GetBashCommands() {
         const Path = "Bash/BashCommands";
         let Files = this.GetFiles(Path);
@@ -90,9 +90,9 @@ class FileSearch {
         return Commands;
     }
     /**
-     * Gets all the Configure Commands
-     * @returns Array of Configure Commands
-     */
+   * Gets all the Configure Commands
+   * @returns Array of Configure Commands
+   */
     GetConfigureCommands() {
         const Path = "ConfigureCommands/Commands";
         let Files = this.GetFiles(Path);

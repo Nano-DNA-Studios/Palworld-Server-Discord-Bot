@@ -16,11 +16,10 @@ async function HandleBashCommand(dataManager: DataManager, interaction: ChatInpu
         Bash.SubCommands.forEach((subCommand) => {
 
             let commandName = '';
-            if (subCommand === "custom") {
+            if (subCommand === "custom")
                 commandName = Bash.CommandName;
-            } else {
+            else
                 commandName = subCommand;
-            }
 
             const factory = new CommandFactory<IBashCommand>(commandName, dataManager);
             const bashInstance = factory.CreateCommand(BashScript);

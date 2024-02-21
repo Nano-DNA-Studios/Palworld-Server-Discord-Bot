@@ -14,18 +14,18 @@ import FileSearch = require("./FileSearch");
 async function GetGuildID(guildName: string): Promise<string> {
   let guildID = "";
 
-  client.guilds.fetch().then((guilds) => {
-    for (const guild of guilds.values()) {
-      if (guild.name === guildName)
-        guildID = guild.id;
+  const guilds = await client.guilds.fetch();
+  for (const guild of guilds.values()) {
+    if (guild.name === guildName) {
+      guildID = guild.id;
+      break;
     }
-  });
+  }
 
   return guildID;
 }
 
-function RegisterCommands()
-{
+function RegisterCommands() {
   let registerer = new CommandRegisterer();
   let fileSearch = new FileSearch(Data);
   let commands = fileSearch.GetAllCommands();
@@ -39,9 +39,8 @@ function RegisterCommands()
 async function StartBot(): Promise<void> {
   await Data.LoadData();
   await client.login(Data.DISCORD_BOT_TOKEN);
-  GetGuildID(Data.GUILD_NAME).then((GuildID) => {
-    Data.SetGuildID(GuildID);
-  });
+  let guildID = await GetGuildID(Data.GUILD_NAME);
+  await Data.SetGuildID(guildID);
   await Data.SetClientID(client.user!.id);
 }
 

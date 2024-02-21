@@ -3,7 +3,7 @@
  */
 enum ConfigureScriptsEnum {
     SetGuildID = 'guildid',
-    SetServerSettings = 'serversettings',
+    SetSSHSettings = 'sshsettings',
     SetRunLocally = 'runlocally',
     SetLogChannelID = 'logchannelid',
 }

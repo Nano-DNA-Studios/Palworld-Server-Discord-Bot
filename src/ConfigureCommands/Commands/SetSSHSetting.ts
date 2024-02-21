@@ -3,10 +3,10 @@ import ConfigureScriptsEnum from "../ConfigureScriptsEnum";
 import OptionTypes from "../../CommandOptionTypes";
 import EmptyCustomCommandHandler from "../../EmptyCustomCommandHandler";
 
-const Backup: IConfigureCommands =
+const SetSSH: IConfigureCommands =
 {
-    CommandName: ConfigureScriptsEnum.SetServerSettings,
-    CommandDescription: "Makes a Backup file of the Server",
+    CommandName: ConfigureScriptsEnum.SetSSHSettings,
+    CommandDescription: "Sets the SSH Settings for the Server to Login and run Bash Commands",
     CommandFunction: (dataManager, interaction) => {
 
         const serverIp = interaction.options.getString('serverip');
@@ -16,16 +16,16 @@ const Backup: IConfigureCommands =
 
         if (serverIp && serverUser && serverPort && serverPassword) {
             console.log("Setting Server Settings");
-            dataManager.SetServerSettings(serverIp, serverUser, serverPort, serverPassword);
+            dataManager.SetSSHSettings(serverIp, serverUser, serverPort, serverPassword);
         } else {
             console.log("Not all options were provided.");
         }
     },
-    Tag: ConfigureScriptsEnum.SetServerSettings,
-    ReplyMessage: "A Backup is being made :arrows_clockwise:",
-    LogMessage: "A Backup is being made :arrows_clockwise:",
-    ErrorMessage: ":warning: Server could not Back Up :warning:",
-    SuccessMessage: ":white_check_mark: Server has been Backed Up :white_check_mark:",
+    Tag: ConfigureScriptsEnum.SetSSHSettings,
+    ReplyMessage: "SSH Settings are being set :arrows_clockwise:",
+    LogMessage: "SSH Settings are being set :arrows_clockwise:",
+    ErrorMessage: ":warning: Could not set SSH Settings :warning:",
+    SuccessMessage: ":white_check_mark: SSH Settings have been set :white_check_mark:",
     FailMessages: [],
     Options: [
         {
@@ -57,4 +57,4 @@ const Backup: IConfigureCommands =
     CustomCommandHandler: EmptyCustomCommandHandler
 }
 
-export = Backup;
+export = SetSSH;

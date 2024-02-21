@@ -255,11 +255,22 @@ class DataManager {
      * @param serverPort Port of the Server
      * @param serverPassword Password of the Server
      */
-    public SetServerSettings(serverIP: string, serverUser: string, serverPort: string, serverPassword: string) {
+    public SetSSHSettings(serverIP: string, serverUser: string, serverPort: string, serverPassword: string) {
         this.SERVER_IP = serverIP;
         this.SERVER_USER = serverUser;
         this.SERVER_PORT = serverPort;
         this.SERVER_PASSWORD = serverPassword;
+
+        this.SaveData();
+    }
+
+    /**
+     * Sets the Run Locally Boolean
+     * @param runLocally Boolean determining if the server is running locally or not. If true, the server is running locally. If false, the server is running remotely and needs to be SSH'd into.
+     */
+    public SetRunLocally(runLocally: boolean) 
+    {
+        this.RUN_LOCALLY = runLocally;
 
         this.SaveData();
     }

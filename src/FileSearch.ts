@@ -16,9 +16,9 @@ class FileSearch {
   }
 
   /**
-       * Gets all the files with JavaScript endings in the Bot Directory
-       * @returns An Array of Java Script File Paths within the Bot Directory
-       */
+  * Gets all the files with JavaScript endings in the Bot Directory
+  * @returns An Array of Java Script File Paths within the Bot Directory
+  */
   public GetAllJSFiles(): string[] {
     const directoryPath = this._dataManager.BOT_DIRECTORY;
 
@@ -50,9 +50,9 @@ class FileSearch {
   }
 
   /**
-      * Gets all the Commands from the Provided Directory
-      * @returns Array of IT Command Objects
-      */
+  * Gets all the Commands from the Provided Directory
+  * @returns Array of IT Command Objects
+  */
   public GetAllCommands(): ICommand[] {
     let Commands: ICommand[] = [];
 
@@ -69,9 +69,9 @@ class FileSearch {
   }
 
   /**
-   * Gets all the Bash Commands
-   * @returns Array of Bash Commands
-   */
+ * Gets all the Bash Commands
+ * @returns Array of Bash Commands
+ */
   public GetBashCommands(): IBashCommand[] {
     const Path = "Bash/BashCommands";
 
@@ -93,9 +93,9 @@ class FileSearch {
   }
 
   /**
-   * Gets all the Configure Commands
-   * @returns Array of Configure Commands
-   */
+ * Gets all the Configure Commands
+ * @returns Array of Configure Commands
+ */
   public GetConfigureCommands(): IConfigureCommands[] {
     const Path = "ConfigureCommands/Commands";
 
@@ -115,10 +115,6 @@ class FileSearch {
 
     return Commands;
   }
-
 }
-
-
-
 
 export = FileSearch;

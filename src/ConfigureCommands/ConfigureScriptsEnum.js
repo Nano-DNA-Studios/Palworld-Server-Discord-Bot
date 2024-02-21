@@ -5,7 +5,7 @@
 var ConfigureScriptsEnum;
 (function (ConfigureScriptsEnum) {
     ConfigureScriptsEnum["SetGuildID"] = "guildid";
-    ConfigureScriptsEnum["SetServerSettings"] = "serversettings";
+    ConfigureScriptsEnum["SetSSHSettings"] = "sshsettings";
     ConfigureScriptsEnum["SetRunLocally"] = "runlocally";
     ConfigureScriptsEnum["SetLogChannelID"] = "logchannelid";
 })(ConfigureScriptsEnum || (ConfigureScriptsEnum = {}));

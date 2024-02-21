@@ -17,8 +17,27 @@ const Command = require("./Command");
 function HandleCommand(interaction, client, dataManager) {
     return __awaiter(this, void 0, void 0, function* () {
         let Factory = new CommandFactory_1.default(interaction.commandName, dataManager);
-        let script = Factory.CreateCommand(Command);
-        script.RunCommand(dataManager, interaction, client);
+        let command = Factory.CreateCommand(Command);
+        let ResponseMessage = `Running ${interaction.commandName} :arrows_clockwise: \n`;
+        if (command.UsesCustomCommandHandler)
+            command.CustomCommandHandler(dataManager, interaction, client);
+        else {
+            const Response = yield interaction.reply({ content: ResponseMessage, ephemeral: true });
+            const logChannel = client.channels.cache.get(`${process.env.LOG_CHANNEL_ID}`);
+            try {
+                logChannel.send(command.LogMessage);
+                ResponseMessage += `${command.LogMessage} \n`;
+                command.RunCommand(dataManager, interaction, client);
+                logChannel.send(command.SuccessMessage);
+                ResponseMessage += `${command.SuccessMessage} \n`;
+                Response.edit({ content: ResponseMessage });
+            }
+            catch (error) {
+                logChannel.send(command.ErrorMessage);
+                ResponseMessage += `${command.ErrorMessage} \n`;
+                Response.edit({ content: ResponseMessage });
+            }
+        }
     });
 }
 module.exports = HandleCommand;

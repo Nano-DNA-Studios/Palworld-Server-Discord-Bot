@@ -27,12 +27,13 @@ const FileSearch = require("./FileSearch");
 function GetGuildID(guildName) {
     return __awaiter(this, void 0, void 0, function* () {
         let guildID = "";
-        client.guilds.fetch().then((guilds) => {
-            for (const guild of guilds.values()) {
-                if (guild.name === guildName)
-                    guildID = guild.id;
+        const guilds = yield client.guilds.fetch();
+        for (const guild of guilds.values()) {
+            if (guild.name === guildName) {
+                guildID = guild.id;
+                break;
             }
-        });
+        }
         return guildID;
     });
 }
@@ -50,9 +51,8 @@ function StartBot() {
     return __awaiter(this, void 0, void 0, function* () {
         yield Data.LoadData();
         yield client.login(Data.DISCORD_BOT_TOKEN);
-        GetGuildID(Data.GUILD_NAME).then((GuildID) => {
-            Data.SetGuildID(GuildID);
-        });
+        let guildID = yield GetGuildID(Data.GUILD_NAME);
+        yield Data.SetGuildID(guildID);
         yield Data.SetClientID(client.user.id);
     });
 }
