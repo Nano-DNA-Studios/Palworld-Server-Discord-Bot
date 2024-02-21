@@ -43,7 +43,6 @@ class CommandFactory {
             CommandName: "undefined",
             CommandDescription: "",
             CommandFunction: () => { },
-            Tag: "undefined",
             ReplyMessage: " ",
             LogMessage: " ",
             ErrorMessage: " ",

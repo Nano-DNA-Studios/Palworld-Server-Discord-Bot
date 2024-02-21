@@ -15,7 +15,6 @@ sleep 3
 
 exit
 `,
-  Tag: BashScriptsEnum.Start,
   CommandFunction: () => { console.log("Ping Command Executed") },
   SubCommands: [BashScriptsEnum.Custom, BashScriptsEnum.Ping],
   ReplyMessage: "Server is Starting :arrows_clockwise:",

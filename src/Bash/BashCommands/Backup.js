@@ -13,7 +13,6 @@ const Backup = {
     
     cp -r ${process.env.SERVER_INSTALL_DIR}/Pal/Saved ~/Backups/Saved-${new Date().toUTCString().replace(/ /g, '-').replace(/:/g, '-')}
     `,
-    Tag: BashScriptsEnum_1.default.Backup,
     CommandFunction: () => { console.log("Ping Command Executed"); },
     SubCommands: [BashScriptsEnum_1.default.Custom],
     ReplyMessage: "A Backup is being made :arrows_clockwise:",

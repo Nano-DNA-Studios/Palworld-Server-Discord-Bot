@@ -38,7 +38,7 @@ function GetGuildID(guildName) {
     });
 }
 function RegisterCommands() {
-    let registerer = new CommandRegisterer_1.default();
+    let registerer = new CommandRegisterer_1.default(Data);
     let fileSearch = new FileSearch(Data);
     let commands = fileSearch.GetAllCommands();
     registerer.AddCommands(commands);
@@ -54,6 +54,7 @@ function StartBot() {
         let guildID = yield GetGuildID(Data.GUILD_NAME);
         yield Data.SetGuildID(guildID);
         yield Data.SetClientID(client.user.id);
+        yield RegisterCommands();
     });
 }
 const client = new discord_js_1.Client({
@@ -68,7 +69,6 @@ const Data = new DataManager_1.default(__dirname);
 StartBot();
 client.on("ready", (c) => {
     console.log(`Bot is ready ${c.user.tag}`);
-    RegisterCommands();
 });
 client.on("interactionCreate", (interaction) => __awaiter(void 0, void 0, void 0, function* () {
     if (!interaction.isChatInputCommand())

@@ -10,7 +10,6 @@ class Command {
     constructor(data) {
         this.CommandName = data.CommandName;
         this.CommandDescription = data.CommandDescription;
-        this.Tag = data.Tag;
         this.CommandFunction = data.CommandFunction;
         this.ReplyMessage = data.ReplyMessage;
         this.LogMessage = data.LogMessage;

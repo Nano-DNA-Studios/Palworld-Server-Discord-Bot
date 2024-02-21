@@ -8,11 +8,6 @@ import { CacheType, ChatInputCommandInteraction, Client} from 'discord.js';
 interface ICommand extends IDiscordCommand{
 
     /**
-     * The tag associated with the command.
-     */
-    Tag: string;
-
-    /**
      * The message to reply with when the command is executed successfully.
      */
     ReplyMessage: string;

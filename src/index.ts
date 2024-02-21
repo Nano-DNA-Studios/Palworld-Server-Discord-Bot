@@ -26,7 +26,7 @@ async function GetGuildID(guildName: string): Promise<string> {
 }
 
 function RegisterCommands() {
-  let registerer = new CommandRegisterer();
+  let registerer = new CommandRegisterer(Data);
   let fileSearch = new FileSearch(Data);
   let commands = fileSearch.GetAllCommands();
   registerer.AddCommands(commands);
@@ -42,6 +42,7 @@ async function StartBot(): Promise<void> {
   let guildID = await GetGuildID(Data.GUILD_NAME);
   await Data.SetGuildID(guildID);
   await Data.SetClientID(client.user!.id);
+  await RegisterCommands();
 }
 
 const client = new Client({
@@ -59,7 +60,7 @@ StartBot();
 
 client.on("ready", (c) => {
   console.log(`Bot is ready ${c.user.tag}`);
-  RegisterCommands();
+  
 });
 
 client.on("interactionCreate", async (interaction) => {

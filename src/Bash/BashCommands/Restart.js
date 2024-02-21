@@ -8,7 +8,6 @@ const Restart = {
     CommandName: BashScriptsEnum_1.default.Restart,
     CommandDescription: 'Restarts the server',
     CustomCode: `sleep 10`,
-    Tag: BashScriptsEnum_1.default.Restart,
     CommandFunction: () => { console.log("Ping Command Executed"); },
     SubCommands: [BashScriptsEnum_1.default.Shutdown, BashScriptsEnum_1.default.Backup, BashScriptsEnum_1.default.Custom, BashScriptsEnum_1.default.Start, BashScriptsEnum_1.default.Ping],
     ReplyMessage: 'Server is Restarting :arrows_clockwise:',

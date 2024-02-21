@@ -2,10 +2,9 @@
  * Enum for all the Configure Commands
  */
 enum ConfigureScriptsEnum {
-    SetGuildID = 'guildid',
-    SetSSHSettings = 'sshsettings',
-    SetRunLocally = 'runlocally',
-    SetLogChannelID = 'logchannelid',
+    SetSSHSettings = 'setsshsettings',
+    SetRunLocally = 'setrunlocally',
+    SetLogChannel = 'setlogchannel',
 }
 
 export = ConfigureScriptsEnum;

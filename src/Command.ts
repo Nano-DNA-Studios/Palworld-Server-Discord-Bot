@@ -9,7 +9,6 @@ import { CacheType, ChatInputCommandInteraction, Client} from 'discord.js';
 class Command implements ICommand {
     public CommandName: string;
     public CommandDescription: string;
-    public Tag: string;
     public CommandFunction: (dataManager: DataManager, interaction: ChatInputCommandInteraction<CacheType>) => void;
     public ReplyMessage: string;
     public LogMessage: string;
@@ -27,7 +26,6 @@ class Command implements ICommand {
     constructor(data: ICommand) {
         this.CommandName = data.CommandName;
         this.CommandDescription = data.CommandDescription;
-        this.Tag = data.Tag;
         this.CommandFunction = data.CommandFunction;
         this.ReplyMessage = data.ReplyMessage;
         this.LogMessage = data.LogMessage;

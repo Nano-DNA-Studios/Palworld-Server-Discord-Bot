@@ -55,7 +55,6 @@ class CommandFactory<IT extends ICommand>
             CommandName: "undefined",
             CommandDescription: "",
             CommandFunction: () => { },
-            Tag: "undefined",
             ReplyMessage: " ",
             LogMessage: " ",
             ErrorMessage: " ",

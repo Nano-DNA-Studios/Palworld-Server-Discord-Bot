@@ -17,8 +17,9 @@ class CommandRegisterer {
     /**
      * Initializes the Command Registerer, by registering the REST API
      */
-    constructor() {
+    constructor(dataManager) {
         this.Commands = [];
+        this._dataManager = dataManager;
         this.rest = new discord_js_1.REST({ version: "10" }).setToken(`${process.env.DISCORD_BOT_TOKEN}`);
     }
     /**
@@ -35,7 +36,7 @@ class CommandRegisterer {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 console.log('Registering Slash Commands');
-                yield this.rest.put(discord_js_1.Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID), { body: this.Commands.map(element => ({
+                yield this.rest.put(discord_js_1.Routes.applicationGuildCommands(this._dataManager.CLIENT_ID, this._dataManager.GUILD_ID), { body: this.Commands.map(element => ({
                         name: element.CommandName,
                         description: element.CommandDescription,
                         options: element.Options.map((option) => ({

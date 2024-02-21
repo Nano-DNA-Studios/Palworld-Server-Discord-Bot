@@ -10,14 +10,11 @@ const SetRunLocally = {
     CommandDescription: "Determines if the Server doesn't need to be SSH'd into",
     CommandFunction: (dataManager, interaction) => {
         const runLocally = interaction.options.getBoolean('runlocally');
-        if (runLocally !== null && runLocally !== undefined) {
+        if (runLocally !== null && runLocally !== undefined)
             dataManager.SetRunLocally(runLocally);
-        }
-        else {
-            console.log("Not all options were provided.");
-        }
+        else
+            throw new Error("Run Locally Value was not provided.");
     },
-    Tag: ConfigureScriptsEnum_1.default.SetRunLocally,
     ReplyMessage: "Run Locally Value is being set :arrows_clockwise:",
     LogMessage: "Run Locally Value is being set :arrows_clockwise:",
     ErrorMessage: ":warning: Could not set Run Locally Value :warning:",

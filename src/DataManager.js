@@ -99,7 +99,6 @@ class DataManager {
      * @returns True if the file exists, False if it does not
      */
     FileExists() {
-        console.log(this.FILE_SAVE_PATH);
         return fs_1.default.existsSync(this.FILE_SAVE_PATH);
     }
     /**
@@ -233,6 +232,14 @@ class DataManager {
      */
     SetRunLocally(runLocally) {
         this.RUN_LOCALLY = runLocally;
+        this.SaveData();
+    }
+    /**
+     * Sets the Log Channel that the Bot will send logs to
+     * @param logChannelID The ID of the Log Channel
+     */
+    SetLogChannelID(logChannelID) {
+        this.LOG_CHANNEL_ID = logChannelID;
         this.SaveData();
     }
     /**

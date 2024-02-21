@@ -4,9 +4,8 @@
  */
 var ConfigureScriptsEnum;
 (function (ConfigureScriptsEnum) {
-    ConfigureScriptsEnum["SetGuildID"] = "guildid";
-    ConfigureScriptsEnum["SetSSHSettings"] = "sshsettings";
-    ConfigureScriptsEnum["SetRunLocally"] = "runlocally";
-    ConfigureScriptsEnum["SetLogChannelID"] = "logchannelid";
+    ConfigureScriptsEnum["SetSSHSettings"] = "setsshsettings";
+    ConfigureScriptsEnum["SetRunLocally"] = "setrunlocally";
+    ConfigureScriptsEnum["SetLogChannel"] = "setlogchannel";
 })(ConfigureScriptsEnum || (ConfigureScriptsEnum = {}));
 module.exports = ConfigureScriptsEnum;

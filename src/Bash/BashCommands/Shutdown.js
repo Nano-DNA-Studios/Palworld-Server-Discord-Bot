@@ -16,7 +16,6 @@ killall "steamcmd"
 
 sleep 10
   `,
-    Tag: BashScriptsEnum_1.default.Shutdown,
     CommandFunction: () => { console.log("Ping Command Executed"); },
     SubCommands: [BashScriptsEnum_1.default.Custom, BashScriptsEnum_1.default.Ping],
     ReplyMessage: "Server is Shutting Down :arrows_clockwise:",

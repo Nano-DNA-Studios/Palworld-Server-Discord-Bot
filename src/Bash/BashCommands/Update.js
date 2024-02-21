@@ -11,7 +11,6 @@ const Update = {
     CustomCode: `
 steamcmd +force_install_dir ${process.env.STEAM_INSTALL_DIR} +login anonymous +app_update 2394010 validate +quit
 `,
-    Tag: BashScriptsEnum_1.default.Update,
     CommandFunction: () => { console.log("Ping Command Executed"); },
     SubCommands: [BashScriptsEnum_1.default.Shutdown, BashScriptsEnum_1.default.Backup, BashScriptsEnum_1.default.Custom, BashScriptsEnum_1.default.Start, BashScriptsEnum_1.default.Ping],
     ReplyMessage: "Server is Updating :arrows_clockwise:",

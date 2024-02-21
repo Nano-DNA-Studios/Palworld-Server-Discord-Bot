@@ -1,6 +1,7 @@
 import fs from 'fs';
 import dotenv from 'dotenv';
 import readline, { Interface as ReadLineInterface } from 'readline';
+import { TextChannel } from 'discord.js';
 dotenv.config();
 
 /**
@@ -116,7 +117,6 @@ class DataManager {
      * @returns True if the file exists, False if it does not
      */
     private FileExists(): boolean {
-        console.log(this.FILE_SAVE_PATH);
         return fs.existsSync(this.FILE_SAVE_PATH);
     }
 
@@ -271,6 +271,17 @@ class DataManager {
     public SetRunLocally(runLocally: boolean) 
     {
         this.RUN_LOCALLY = runLocally;
+
+        this.SaveData();
+    }
+
+    /**
+     * Sets the Log Channel that the Bot will send logs to
+     * @param logChannelID The ID of the Log Channel
+     */
+    public SetLogChannelID(logChannelID: string) 
+    {
+        this.LOG_CHANNEL_ID = logChannelID;
 
         this.SaveData();
     }

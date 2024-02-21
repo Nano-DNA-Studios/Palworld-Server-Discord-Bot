@@ -11,13 +11,12 @@ const SetRunLocally: IConfigureCommands =
 
         const runLocally = interaction.options.getBoolean('runlocally');
 
-        if (runLocally !== null && runLocally !== undefined) {
+        if (runLocally !== null && runLocally !== undefined) 
             dataManager.SetRunLocally(runLocally);
-        } else {
-            console.log("Not all options were provided.");
-        }
+         else 
+            throw new Error("Run Locally Value was not provided.");
+        
     },
-    Tag: ConfigureScriptsEnum.SetRunLocally,
     ReplyMessage: "Run Locally Value is being set :arrows_clockwise:",
     LogMessage: "Run Locally Value is being set :arrows_clockwise:",
     ErrorMessage: ":warning: Could not set Run Locally Value :warning:",

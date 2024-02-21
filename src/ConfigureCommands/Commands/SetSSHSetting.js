@@ -13,15 +13,11 @@ const SetSSH = {
         const serverUser = interaction.options.getString('serveruser');
         const serverPort = interaction.options.getString('serverport');
         const serverPassword = interaction.options.getString('serverpassword');
-        if (serverIp && serverUser && serverPort && serverPassword) {
-            console.log("Setting Server Settings");
+        if (serverIp && serverUser && serverPort && serverPassword)
             dataManager.SetSSHSettings(serverIp, serverUser, serverPort, serverPassword);
-        }
-        else {
-            console.log("Not all options were provided.");
-        }
+        else
+            throw new Error("Not all the SSH Settings were provided.");
     },
-    Tag: ConfigureScriptsEnum_1.default.SetSSHSettings,
     ReplyMessage: "SSH Settings are being set :arrows_clockwise:",
     LogMessage: "SSH Settings are being set :arrows_clockwise:",
     ErrorMessage: ":warning: Could not set SSH Settings :warning:",

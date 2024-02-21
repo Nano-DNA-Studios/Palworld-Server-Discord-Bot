@@ -11,7 +11,6 @@ const Ping: IBashCommand =
     `
 pidof ${process.env.SERVER_PROCESS_NAME} && echo "Server Is Live" || echo "Server Not Live"
 `,
-  Tag: BashScriptsEnum.Ping,
   SubCommands: [BashScriptsEnum.Custom],
   CommandFunction: () => { console.log("Ping Command Executed") },
   ReplyMessage: "Server is being Pinged :arrows_clockwise:",

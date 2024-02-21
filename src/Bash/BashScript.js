@@ -11,7 +11,6 @@ class BashScript {
         this.CommandName = data.CommandName;
         this.CommandDescription = data.CommandDescription;
         this.CustomCode = data.CustomCode;
-        this.Tag = data.Tag;
         this.CommandFunction = data.CommandFunction;
         this.SubCommands = data.SubCommands;
         this.ReplyMessage = data.ReplyMessage;

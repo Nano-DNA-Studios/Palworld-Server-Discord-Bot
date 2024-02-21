@@ -2,6 +2,7 @@ import { REST, Routes } from "discord.js";
 import ICommandOption from "./ICommandOption";
 import ICommand from "./ICommand";
 import IDiscordCommand from "./IDiscordCommand";
+import DataManager from "./DataManager";
 
 /**
  * Registers the commands to the Discord Server
@@ -9,11 +10,13 @@ import IDiscordCommand from "./IDiscordCommand";
 class CommandRegisterer {
     private rest: REST;
     public Commands: IDiscordCommand[] = [];
+    private _dataManager: DataManager;
 
     /**
      * Initializes the Command Registerer, by registering the REST API
      */
-    constructor() {
+    constructor(dataManager: DataManager) {
+        this._dataManager = dataManager;
         this.rest = new REST({ version: "10" }).setToken(`${process.env.DISCORD_BOT_TOKEN}`);
     }
 
@@ -35,8 +38,8 @@ class CommandRegisterer {
 
             await this.rest.put(
                 Routes.applicationGuildCommands(
-                    process.env.CLIENT_ID!,
-                    process.env.GUILD_ID!
+                    this._dataManager.CLIENT_ID!,
+                    this._dataManager.GUILD_ID!
                 ),
                 { body: this.Commands.map(element => ({
                     name: element.CommandName,

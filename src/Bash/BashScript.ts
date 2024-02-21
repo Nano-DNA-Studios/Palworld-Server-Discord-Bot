@@ -10,7 +10,6 @@ class BashScript implements IBashCommand {
     public CommandName: string;
     public CommandDescription: string;
     public CustomCode: string;
-    public Tag: string;
     public CommandFunction: (dataManager: DataManager, interaction: ChatInputCommandInteraction<CacheType>) => void;
     public SubCommands: string[];
     public ReplyMessage: string;
@@ -31,7 +30,6 @@ class BashScript implements IBashCommand {
         this.CommandName = data.CommandName;
         this.CommandDescription = data.CommandDescription;
         this.CustomCode = data.CustomCode;
-        this.Tag = data.Tag;
         this.CommandFunction = data.CommandFunction;
         this.SubCommands = data.SubCommands;
         this.ReplyMessage = data.ReplyMessage;
