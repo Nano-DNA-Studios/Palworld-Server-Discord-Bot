@@ -12,56 +12,67 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HandleBashCommand = void 0;
 const BashScriptRunner_1 = __importDefault(require("./BashScriptRunner"));
 const CommandFactory_1 = __importDefault(require("../CommandFactory"));
+const BashScriptsEnum = require("./BashScriptsEnum");
 const BashScript = require("./BashScript");
-function HandleBashCommand(dataManager, interaction, client) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const Factory = new CommandFactory_1.default(interaction.commandName, dataManager);
-            const Bash = Factory.CreateCommand(BashScript);
-            let bashInstances = [];
-            Bash.SubCommands.forEach((subCommand) => {
-                let commandName = '';
-                if (subCommand === "custom")
-                    commandName = Bash.CommandName;
-                else
-                    commandName = subCommand;
-                const factory = new CommandFactory_1.default(commandName, dataManager);
-                const bashInstance = factory.CreateCommand(BashScript);
-                bashInstances.push(bashInstance);
-            });
-            let ResponseMessage = `Running ${interaction.commandName} :arrows_clockwise: \n`;
-            const Response = yield interaction.reply({ content: ResponseMessage, ephemeral: true });
-            const logChannel = client.channels.cache.get(`${process.env.LOG_CHANNEL_ID}`);
-            for (const bashInstance of bashInstances) {
-                logChannel.send(bashInstance.LogMessage);
-                ResponseMessage += `${bashInstance.LogMessage} \n`;
-                try {
-                    let BashResult = yield new BashScriptRunner_1.default(bashInstance).RunBashScript();
-                    if (BashResult) {
-                        //Successfully Ran
-                        logChannel.send(bashInstance.SuccessMessage);
-                        ResponseMessage += `${bashInstance.SuccessMessage} \n`;
-                        Response.edit({ content: ResponseMessage });
+const CommandLogger = require("../CommandLogger");
+/**
+ * Command Handler for Bash Commands
+ */
+class BashCommandHandler {
+    HandleCommand(interaction, client, dataManager) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const Factory = new CommandFactory_1.default(interaction.commandName, dataManager);
+                const Bash = Factory.CreateCommand(BashScript);
+                let bashInstances = this.GetBashInstances(Bash, dataManager);
+                yield CommandLogger.InitializeResponse(interaction, client, dataManager);
+                for (const bashInstance of bashInstances) {
+                    CommandLogger.LogAndRespond(bashInstance.LogMessage);
+                    try {
+                        let BashResult = yield new BashScriptRunner_1.default(bashInstance).RunBashScript();
+                        if (BashResult)
+                            CommandLogger.LogAndRespond(bashInstance.SuccessMessage);
+                        else
+                            CommandLogger.LogAndRespond(bashInstance.ErrorMessage);
                     }
-                    else {
-                        //Failure Occurred
-                        logChannel.send(bashInstance.ErrorMessage);
-                        ResponseMessage += `${bashInstance.ErrorMessage} \n`;
-                        Response.edit({ content: ResponseMessage });
+                    catch (error) {
+                        CommandLogger.LogAndRespond(bashInstance.ErrorMessage + `  (${error})`);
                     }
-                }
-                catch (error) {
-                    logChannel.send(`${Bash.ErrorMessage} \n ${error}`);
-                    console.log(error);
                 }
             }
-        }
-        catch (error) {
-            console.log(`Error Occurred : ${error}`);
-        }
-    });
+            catch (error) {
+                console.log(`Error Occurred : ${error}`);
+            }
+        });
+    }
+    /**
+     * Extracts all Sub Commands and returns each Bash Script Instance in the the Correct Instance
+     * @param Bash The Bash Command being called
+     * @param dataManager The Discord Bot Data Manager
+     * @returns An Array of Bash Script Instances based off the Sub Command List
+     */
+    GetBashInstances(Bash, dataManager) {
+        let bashInstances = [];
+        Bash.SubCommands.forEach((subCommand) => {
+            let commandName = '';
+            if (subCommand === BashScriptsEnum.Custom)
+                commandName = Bash.CommandName;
+            else
+                commandName = subCommand;
+            const factory = new CommandFactory_1.default(commandName, dataManager);
+            const bashInstance = factory.CreateCommand(BashScript);
+            bashInstances.push(bashInstance);
+        });
+        return bashInstances;
+    }
+    /**
+     * Gets an Instance of the Bash Command Handler
+     * @returns Returns an Instance of the Bash Command Handler
+     */
+    static Instance() {
+        return new BashCommandHandler();
+    }
 }
-exports.HandleBashCommand = HandleBashCommand;
+exports.default = BashCommandHandler;

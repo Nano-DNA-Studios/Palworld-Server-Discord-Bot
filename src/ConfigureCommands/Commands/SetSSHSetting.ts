@@ -1,13 +1,13 @@
-import IConfigureCommands from "../IConfigureCommand";
+import ICommand from "../../ICommand";
 import ConfigureScriptsEnum from "../ConfigureScriptsEnum";
 import OptionTypes from "../../CommandOptionTypes";
-import EmptyCustomCommandHandler from "../../EmptyCustomCommandHandler";
+import DefaultCommandHandler from "../../DefaultCommandHandler";
 
-const SetSSH: IConfigureCommands =
+const SetSSH: ICommand =
 {
     CommandName: ConfigureScriptsEnum.SetSSHSettings,
     CommandDescription: "Sets the SSH Settings for the Server to Login and run Bash Commands",
-    CommandFunction: (dataManager, interaction) => {
+    CommandFunction: ( interaction, dataManager,) => {
 
         const serverIp = interaction.options.getString('serverip');
         const serverUser = interaction.options.getString('serveruser');
@@ -50,8 +50,7 @@ const SetSSH: IConfigureCommands =
             required: true
         }
     ],
-    UsesCustomCommandHandler: false,
-    CustomCommandHandler: EmptyCustomCommandHandler
+    CommandHandler: DefaultCommandHandler.Instance()
 }
 
 export = SetSSH;

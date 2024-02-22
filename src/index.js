@@ -14,11 +14,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-const HandleCommand = require("./CommandHandler");
+const CommandHandler = require("./CommandHandler");
 const CommandRegisterer_1 = __importDefault(require("./CommandRegisterer"));
 const DataManager_1 = __importDefault(require("./DataManager"));
 const discord_js_1 = require("discord.js");
-const FileSearch = require("./FileSearch");
+const FileSearch_1 = __importDefault(require("./FileSearch"));
 /**
  * Gets the Guild ID Based off the Name Provided
  * @param guildName Name of the Guild/Discord Server
@@ -39,7 +39,7 @@ function GetGuildID(guildName) {
 }
 function RegisterCommands() {
     let registerer = new CommandRegisterer_1.default(Data);
-    let fileSearch = new FileSearch(Data);
+    let fileSearch = new FileSearch_1.default(Data);
     let commands = fileSearch.GetAllCommands();
     registerer.AddCommands(commands);
     registerer.RegisterCommands();
@@ -74,5 +74,5 @@ client.on("interactionCreate", (interaction) => __awaiter(void 0, void 0, void 0
     if (!interaction.isChatInputCommand())
         return;
     console.log(interaction.commandName);
-    yield HandleCommand(interaction, client, Data);
+    new CommandHandler().HandleCommand(interaction, client, Data);
 }));

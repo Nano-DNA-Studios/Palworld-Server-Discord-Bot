@@ -1,7 +1,7 @@
 import IBashCommand from "../IBashCommand"
 import OptionTypes from "../../CommandOptionTypes"
 import BashScriptsEnum from "../BashScriptsEnum"
-import { HandleBashCommand } from "../BashCommandHandler"
+import BashCommandHandler from "../BashCommandHandler"
 
 const Backup: IBashCommand =
 {
@@ -29,8 +29,7 @@ const Backup: IBashCommand =
         }
     ],
     MaxOutTimer: 0,
-    UsesCustomCommandHandler: true,
-    CustomCommandHandler: HandleBashCommand
+    CommandHandler: BashCommandHandler.Instance()
 }
 
 export = Backup;

@@ -3,8 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const EmptyCustomCommandHandler_1 = __importDefault(require("./EmptyCustomCommandHandler"));
 const FileSearch_1 = __importDefault(require("./FileSearch"));
+const Command_1 = __importDefault(require("./Command"));
 /**
  * Command Factory for creating new Instances of a Command based off the Command Name provided
  */
@@ -32,27 +32,7 @@ class CommandFactory {
         catch (err) {
             console.log("Unable to scan directory: " + err);
         }
-        return this.GetUndefinedCommand();
-    }
-    /**
-     * Gets an undefined ICommand Object
-     * @returns Returns an ICommand Object that is undefined
-     */
-    GetUndefinedCommand() {
-        let UndefinedBashScript = {
-            CommandName: "undefined",
-            CommandDescription: "",
-            CommandFunction: () => { },
-            ReplyMessage: " ",
-            LogMessage: " ",
-            ErrorMessage: " ",
-            SuccessMessage: " ",
-            FailMessages: [''],
-            Options: [],
-            UsesCustomCommandHandler: false,
-            CustomCommandHandler: EmptyCustomCommandHandler_1.default,
-        };
-        return UndefinedBashScript;
+        return Command_1.default.GetEmptyCommand();
     }
     /**
      * Creates an Instance of the Command

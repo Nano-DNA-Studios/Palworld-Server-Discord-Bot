@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 const BashScriptsEnum_1 = __importDefault(require("../BashScriptsEnum"));
-const BashCommandHandler_1 = require("../BashCommandHandler");
+const BashCommandHandler_1 = __importDefault(require("../BashCommandHandler"));
 const Restart = {
     CommandName: BashScriptsEnum_1.default.Restart,
     CommandDescription: 'Restarts the server',
@@ -17,7 +17,6 @@ const Restart = {
     FailMessages: [],
     Options: [],
     MaxOutTimer: 5000,
-    UsesCustomCommandHandler: true,
-    CustomCommandHandler: BashCommandHandler_1.HandleBashCommand
+    CommandHandler: BashCommandHandler_1.default.Instance()
 };
 module.exports = Restart;

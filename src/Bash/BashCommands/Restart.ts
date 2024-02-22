@@ -1,6 +1,6 @@
 import IBashCommand from "../IBashCommand";
 import BashScriptsEnum from "../BashScriptsEnum";
-import { HandleBashCommand } from "../BashCommandHandler"
+import BashCommandHandler from "../BashCommandHandler";
 
 const Restart: IBashCommand =
 {
@@ -16,8 +16,7 @@ const Restart: IBashCommand =
   FailMessages: [],
   Options: [],
   MaxOutTimer: 5000,
-  UsesCustomCommandHandler: true,
-  CustomCommandHandler: HandleBashCommand
+  CommandHandler: BashCommandHandler.Instance()
 };
 
 export = Restart;

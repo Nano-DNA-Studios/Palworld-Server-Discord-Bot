@@ -11,18 +11,35 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const CommandFactory_1 = __importDefault(require("./CommandFactory"));
 const Command_1 = __importDefault(require("./Command"));
+const CommandLogger_1 = __importDefault(require("./CommandLogger"));
 /**
- * Class Handling Command Execution, and Delegates to Custom Command Handlers
+ * Default Command Handler used for empty and regular Discord Bot Commands
  */
-class CommandHandler {
+class DefaultCommandHandler {
     HandleCommand(interaction, client, dataManager) {
         return __awaiter(this, void 0, void 0, function* () {
             let Factory = yield new CommandFactory_1.default(interaction.commandName, dataManager);
             let command = yield Factory.CreateCommand(Command_1.default);
-            yield command.CommandHandler.HandleCommand(interaction, client, dataManager);
+            yield CommandLogger_1.default.InitializeResponse(interaction, client, dataManager);
+            try {
+                CommandLogger_1.default.LogAndRespond(command.LogMessage);
+                command.RunCommand(dataManager, interaction, client);
+                CommandLogger_1.default.LogAndRespond(command.SuccessMessage);
+            }
+            catch (error) {
+                CommandLogger_1.default.LogAndRespond(command.ErrorMessage + `  (${error})`);
+            }
         });
     }
+    /**
+     * Gets an Instance of the Default Command Handler
+     * @returns Returns an Instance of the Default Command Handler
+     */
+    static Instance() {
+        return new DefaultCommandHandler();
+    }
 }
-module.exports = CommandHandler;
+exports.default = DefaultCommandHandler;

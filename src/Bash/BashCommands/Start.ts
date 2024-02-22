@@ -1,6 +1,6 @@
 import IBashCommand from "../IBashCommand";
 import BashScriptsEnum from "../BashScriptsEnum";
-import { HandleBashCommand } from "../BashCommandHandler"
+import BashCommandHandler from "../BashCommandHandler";
 
 //Start works
 const Start: IBashCommand =
@@ -24,8 +24,7 @@ exit
   FailMessages: [],
   Options: [],
   MaxOutTimer: 5000,
-  UsesCustomCommandHandler: true,
-  CustomCommandHandler: HandleBashCommand
+  CommandHandler: BashCommandHandler.Instance()
 };
 
 export = Start;

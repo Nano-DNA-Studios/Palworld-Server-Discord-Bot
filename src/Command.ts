@@ -1,7 +1,9 @@
 import ICommand from "./ICommand";
 import ICommandOption from "./ICommandOption";
 import DataManager from "./DataManager";
-import { CacheType, ChatInputCommandInteraction, Client} from 'discord.js';
+import { CacheType, ChatInputCommandInteraction, Client } from 'discord.js';
+import ICommandHandler from "./ICommandHandler";
+import DefaultCommandHandler from "./DefaultCommandHandler";
 
 /**
  * Represents a Command for a Discord Bot
@@ -9,15 +11,14 @@ import { CacheType, ChatInputCommandInteraction, Client} from 'discord.js';
 class Command implements ICommand {
     public CommandName: string;
     public CommandDescription: string;
-    public CommandFunction: (dataManager: DataManager, interaction: ChatInputCommandInteraction<CacheType>) => void;
+    public CommandFunction: ( interaction: ChatInputCommandInteraction<CacheType>, dataManager: DataManager) => void;
     public ReplyMessage: string;
     public LogMessage: string;
     public ErrorMessage: string;
     public SuccessMessage: string;
     public FailMessages: string[];
     public Options: ICommandOption[];
-    public UsesCustomCommandHandler: boolean;
-    public CustomCommandHandler: (dataManager: DataManager, interaction: ChatInputCommandInteraction<CacheType>, client: Client) => Promise<void>;
+    public CommandHandler: ICommandHandler;
 
     /**
      * Initializes the Command
@@ -33,8 +34,7 @@ class Command implements ICommand {
         this.SuccessMessage = data.SuccessMessage;
         this.FailMessages = data.FailMessages;
         this.Options = data.Options;
-        this.UsesCustomCommandHandler = data.UsesCustomCommandHandler;
-        this.CustomCommandHandler = data.CustomCommandHandler;
+        this.CommandHandler = data.CommandHandler;
     }
 
     /**
@@ -43,13 +43,30 @@ class Command implements ICommand {
      * @param interaction Instance of the ChatInputCommandInteraction
      */
     RunCommand(dataManager: DataManager, interaction: ChatInputCommandInteraction<CacheType>, client: Client): void {
-        if (this.UsesCustomCommandHandler)
-            this.CustomCommandHandler(dataManager, interaction, client);
-        else
-            this.CommandFunction(dataManager, interaction);
+        this.CommandFunction(interaction, dataManager);
+    }
 
+    /**
+     * Gets an Empty Command that can be used as a default
+     * @returns Returns an Empty Command
+     */
+    public static GetEmptyCommand(): ICommand {
+        let UndefinedBashScript: ICommand = {
+            CommandName: "undefined",
+            CommandDescription: "",
+            CommandFunction: () => { },
+            ReplyMessage: " ",
+            LogMessage: " ",
+            ErrorMessage: " ",
+            SuccessMessage: " ",
+            FailMessages: [''],
+            Options: [],
+            CommandHandler: new DefaultCommandHandler(),
+        };
+
+        return UndefinedBashScript;
     }
 
 }
 
-export = Command;
+export default Command;

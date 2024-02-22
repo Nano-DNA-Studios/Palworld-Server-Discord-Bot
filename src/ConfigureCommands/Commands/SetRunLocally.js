@@ -4,11 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 const ConfigureScriptsEnum_1 = __importDefault(require("../ConfigureScriptsEnum"));
 const CommandOptionTypes_1 = __importDefault(require("../../CommandOptionTypes"));
-const EmptyCustomCommandHandler_1 = __importDefault(require("../../EmptyCustomCommandHandler"));
+const DefaultCommandHandler_1 = __importDefault(require("../../DefaultCommandHandler"));
 const SetRunLocally = {
     CommandName: ConfigureScriptsEnum_1.default.SetRunLocally,
     CommandDescription: "Determines if the Server doesn't need to be SSH'd into",
-    CommandFunction: (dataManager, interaction) => {
+    CommandFunction: (interaction, dataManager) => {
         const runLocally = interaction.options.getBoolean('runlocally');
         if (runLocally !== null && runLocally !== undefined)
             dataManager.SetRunLocally(runLocally);
@@ -28,7 +28,6 @@ const SetRunLocally = {
             required: true
         }
     ],
-    UsesCustomCommandHandler: false,
-    CustomCommandHandler: EmptyCustomCommandHandler_1.default
+    CommandHandler: DefaultCommandHandler_1.default.Instance()
 };
 module.exports = SetRunLocally;

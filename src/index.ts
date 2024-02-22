@@ -1,10 +1,10 @@
 import dotenv from "dotenv";
 dotenv.config();
-import HandleCommand = require("./CommandHandler");
+import CommandHandler = require("./CommandHandler");
 import CommandRegisterer from "./CommandRegisterer";
 import DataManager from "./DataManager";
 import { Client, IntentsBitField } from "discord.js";
-import FileSearch = require("./FileSearch");
+import FileSearch from "./FileSearch";
 
 /**
  * Gets the Guild ID Based off the Name Provided
@@ -66,5 +66,5 @@ client.on("ready", (c) => {
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.isChatInputCommand()) return;
   console.log(interaction.commandName);
-  await HandleCommand(interaction, client, Data);
+  new CommandHandler().HandleCommand(interaction, client, Data);
 });

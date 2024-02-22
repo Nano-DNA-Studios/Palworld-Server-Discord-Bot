@@ -4,12 +4,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 const ConfigureScriptsEnum_1 = __importDefault(require("../ConfigureScriptsEnum"));
 const CommandOptionTypes_1 = __importDefault(require("../../CommandOptionTypes"));
-const EmptyCustomCommandHandler_1 = __importDefault(require("../../EmptyCustomCommandHandler"));
 const discord_js_1 = require("discord.js");
+const DefaultCommandHandler_1 = __importDefault(require("../../DefaultCommandHandler"));
 const SetLogChannel = {
     CommandName: ConfigureScriptsEnum_1.default.SetLogChannel,
     CommandDescription: "Sets the Discord Text Channel to send Bot and Server Logs to",
-    CommandFunction: (dataManager, interaction) => {
+    CommandFunction: (interaction, dataManager) => {
         const logChannel = interaction.options.getChannel('logchannel');
         if (logChannel && logChannel instanceof discord_js_1.TextChannel) {
             if (logChannel)
@@ -33,7 +33,6 @@ const SetLogChannel = {
             required: true
         }
     ],
-    UsesCustomCommandHandler: false,
-    CustomCommandHandler: EmptyCustomCommandHandler_1.default
+    CommandHandler: DefaultCommandHandler_1.default.Instance()
 };
 module.exports = SetLogChannel;

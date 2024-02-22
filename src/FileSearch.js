@@ -22,6 +22,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
 const fs = __importStar(require("fs"));
@@ -71,41 +72,5 @@ class FileSearch {
         });
         return Commands;
     }
-    /**
-   * Gets all the Bash Commands
-   * @returns Array of Bash Commands
-   */
-    GetBashCommands() {
-        const Path = "Bash/BashCommands";
-        let Files = this.GetFiles(Path);
-        let Commands = [];
-        Files.forEach(file => {
-            if (path.extname(file) === ".js") {
-                // Dynamic imports in TypeScript might require a workaround or explicit any cast
-                const module = require(`./${Path}/${file}`);
-                if ('CommandName' in module)
-                    Commands.push(module);
-            }
-        });
-        return Commands;
-    }
-    /**
-   * Gets all the Configure Commands
-   * @returns Array of Configure Commands
-   */
-    GetConfigureCommands() {
-        const Path = "ConfigureCommands/Commands";
-        let Files = this.GetFiles(Path);
-        let Commands = [];
-        Files.forEach(file => {
-            if (path.extname(file) === ".js") {
-                // Dynamic imports in TypeScript might require a workaround or explicit any cast
-                const module = require(`./${Path}/${file}`);
-                if ('CommandName' in module)
-                    Commands.push(module);
-            }
-        });
-        return Commands;
-    }
 }
-module.exports = FileSearch;
+exports.default = FileSearch;

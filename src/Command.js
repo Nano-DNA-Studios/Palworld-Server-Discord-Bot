@@ -1,4 +1,9 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const DefaultCommandHandler_1 = __importDefault(require("./DefaultCommandHandler"));
 /**
  * Represents a Command for a Discord Bot
  */
@@ -17,8 +22,7 @@ class Command {
         this.SuccessMessage = data.SuccessMessage;
         this.FailMessages = data.FailMessages;
         this.Options = data.Options;
-        this.UsesCustomCommandHandler = data.UsesCustomCommandHandler;
-        this.CustomCommandHandler = data.CustomCommandHandler;
+        this.CommandHandler = data.CommandHandler;
     }
     /**
      * Runs the Discord Command
@@ -26,10 +30,26 @@ class Command {
      * @param interaction Instance of the ChatInputCommandInteraction
      */
     RunCommand(dataManager, interaction, client) {
-        if (this.UsesCustomCommandHandler)
-            this.CustomCommandHandler(dataManager, interaction, client);
-        else
-            this.CommandFunction(dataManager, interaction);
+        this.CommandFunction(interaction, dataManager);
+    }
+    /**
+     * Gets an Empty Command that can be used as a default
+     * @returns Returns an Empty Command
+     */
+    static GetEmptyCommand() {
+        let UndefinedBashScript = {
+            CommandName: "undefined",
+            CommandDescription: "",
+            CommandFunction: () => { },
+            ReplyMessage: " ",
+            LogMessage: " ",
+            ErrorMessage: " ",
+            SuccessMessage: " ",
+            FailMessages: [''],
+            Options: [],
+            CommandHandler: new DefaultCommandHandler_1.default(),
+        };
+        return UndefinedBashScript;
     }
 }
-module.exports = Command;
+exports.default = Command;

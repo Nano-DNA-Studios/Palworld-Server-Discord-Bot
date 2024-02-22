@@ -1,7 +1,8 @@
 import IBashCommand from "./IBashCommand";
 import ICommandOption from "../ICommandOption";
 import DataManager from "../DataManager";
-import { CacheType, ChatInputCommandInteraction, Client} from 'discord.js';
+import { CacheType, ChatInputCommandInteraction, Client } from 'discord.js';
+import ICommandHandler from "../ICommandHandler";
 
 /**
  * Class representing a Bash Script 
@@ -10,7 +11,7 @@ class BashScript implements IBashCommand {
     public CommandName: string;
     public CommandDescription: string;
     public CustomCode: string;
-    public CommandFunction: (dataManager: DataManager, interaction: ChatInputCommandInteraction<CacheType>) => void;
+    public CommandFunction: (interaction: ChatInputCommandInteraction<CacheType>, dataManager: DataManager) => void;
     public SubCommands: string[];
     public ReplyMessage: string;
     public LogMessage: string;
@@ -19,8 +20,7 @@ class BashScript implements IBashCommand {
     public FailMessages: string[];
     public Options: ICommandOption[];
     public MaxOutTimer: number;
-    public UsesCustomCommandHandler: boolean;
-    public CustomCommandHandler: (dataManager : DataManager, interaction: ChatInputCommandInteraction<CacheType>, client: Client) => Promise<void>;
+    public CommandHandler: ICommandHandler;
 
     /**
      * Initializes the Bash Script
@@ -39,8 +39,7 @@ class BashScript implements IBashCommand {
         this.FailMessages = data.FailMessages;
         this.Options = data.Options;
         this.MaxOutTimer = data.MaxOutTimer;
-        this.UsesCustomCommandHandler = data.UsesCustomCommandHandler;
-        this.CustomCommandHandler = data.CustomCommandHandler;
+        this.CommandHandler = data.CommandHandler;
     }
 
     /**
@@ -51,16 +50,20 @@ class BashScript implements IBashCommand {
         return this.CustomCode.replace('\t', '');
     }
 
+    /**
+     * Runs the Discord Bash Command
+     * @param dataManager Instance of the DataManager
+     * @param interaction Instance of the ChatInputCommandInteraction
+     */
     RunCommand(dataManager: DataManager, interaction: ChatInputCommandInteraction<CacheType>): void {
-        this.CommandFunction(dataManager, interaction);
+        this.CommandFunction(interaction, dataManager);
     }
 
     /**
      * Determines if the Bash Script has a Max Out Timer
      * @returns True if the Bash Script has a Max Out Timer more than 0, False if it is less
      */
-    public HasMaxOutTimer() : boolean
-    {
+    public HasMaxOutTimer(): boolean {
         if (this.MaxOutTimer > 0)
             return true;
         else

@@ -1,13 +1,13 @@
-import IConfigureCommands from "../IConfigureCommand";
+import ICommand from "../../ICommand";
 import ConfigureScriptsEnum from "../ConfigureScriptsEnum";
 import OptionTypes from "../../CommandOptionTypes";
-import EmptyCustomCommandHandler from "../../EmptyCustomCommandHandler";
+import DefaultCommandHandler from "../../DefaultCommandHandler";
 
-const SetRunLocally: IConfigureCommands =
+const SetRunLocally: ICommand =
 {
     CommandName: ConfigureScriptsEnum.SetRunLocally,
     CommandDescription: "Determines if the Server doesn't need to be SSH'd into",
-    CommandFunction: (dataManager, interaction) => {
+    CommandFunction: (interaction, dataManager) => {
 
         const runLocally = interaction.options.getBoolean('runlocally');
 
@@ -30,8 +30,7 @@ const SetRunLocally: IConfigureCommands =
             required: true
         }
     ],
-    UsesCustomCommandHandler: false,
-    CustomCommandHandler: EmptyCustomCommandHandler
+    CommandHandler: DefaultCommandHandler.Instance()
 }
 
 export = SetRunLocally;

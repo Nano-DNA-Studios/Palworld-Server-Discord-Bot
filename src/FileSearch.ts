@@ -2,8 +2,6 @@ import * as dotenv from "dotenv";
 dotenv.config();
 import * as fs from "fs";
 import * as path from "path";
-import IBashCommand from "./Bash/IBashCommand";
-import IConfigureCommands from "./ConfigureCommands/IConfigureCommand";
 import DataManager from "./DataManager";
 import ICommand from "./ICommand";
 
@@ -67,54 +65,6 @@ class FileSearch {
 
     return Commands;
   }
-
-  /**
- * Gets all the Bash Commands
- * @returns Array of Bash Commands
- */
-  public GetBashCommands(): IBashCommand[] {
-    const Path = "Bash/BashCommands";
-
-    let Files = this.GetFiles(Path);
-
-    let Commands: IBashCommand[] = [];
-
-    Files.forEach(file => {
-      if (path.extname(file) === ".js") {
-        // Dynamic imports in TypeScript might require a workaround or explicit any cast
-        const module: IBashCommand = require(`./${Path}/${file}`) as IBashCommand;
-
-        if ('CommandName' in module)
-          Commands.push(module);
-      }
-    });
-
-    return Commands;
-  }
-
-  /**
- * Gets all the Configure Commands
- * @returns Array of Configure Commands
- */
-  public GetConfigureCommands(): IConfigureCommands[] {
-    const Path = "ConfigureCommands/Commands";
-
-    let Files = this.GetFiles(Path);
-
-    let Commands: IConfigureCommands[] = [];
-
-    Files.forEach(file => {
-      if (path.extname(file) === ".js") {
-        // Dynamic imports in TypeScript might require a workaround or explicit any cast
-        const module: IConfigureCommands = require(`./${Path}/${file}`) as IConfigureCommands;
-
-        if ('CommandName' in module)
-          Commands.push(module);
-      }
-    });
-
-    return Commands;
-  }
 }
 
-export = FileSearch;
+export default FileSearch;

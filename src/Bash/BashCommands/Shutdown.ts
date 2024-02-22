@@ -1,6 +1,6 @@
 import IBashCommand from "../IBashCommand";
 import BashScriptsEnum from "../BashScriptsEnum";
-import { HandleBashCommand } from "../BashCommandHandler"
+import BashCommandHandler from "../BashCommandHandler";
 
 const Shutdown: IBashCommand = {
   CommandName: BashScriptsEnum.Shutdown,
@@ -24,8 +24,7 @@ sleep 10
   FailMessages: [],
   Options: [],
   MaxOutTimer: 0,
-  UsesCustomCommandHandler: true,
-  CustomCommandHandler: HandleBashCommand
+  CommandHandler: BashCommandHandler.Instance()
 };
 
 export = Shutdown;

@@ -20,8 +20,7 @@ class BashScript {
         this.FailMessages = data.FailMessages;
         this.Options = data.Options;
         this.MaxOutTimer = data.MaxOutTimer;
-        this.UsesCustomCommandHandler = data.UsesCustomCommandHandler;
-        this.CustomCommandHandler = data.CustomCommandHandler;
+        this.CommandHandler = data.CommandHandler;
     }
     /**
      * Gets the Bash Script code to run
@@ -30,8 +29,13 @@ class BashScript {
     GetCode() {
         return this.CustomCode.replace('\t', '');
     }
+    /**
+     * Runs the Discord Bash Command
+     * @param dataManager Instance of the DataManager
+     * @param interaction Instance of the ChatInputCommandInteraction
+     */
     RunCommand(dataManager, interaction) {
-        this.CommandFunction(dataManager, interaction);
+        this.CommandFunction(interaction, dataManager);
     }
     /**
      * Determines if the Bash Script has a Max Out Timer

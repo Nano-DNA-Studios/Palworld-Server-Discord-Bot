@@ -4,11 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 const ConfigureScriptsEnum_1 = __importDefault(require("../ConfigureScriptsEnum"));
 const CommandOptionTypes_1 = __importDefault(require("../../CommandOptionTypes"));
-const EmptyCustomCommandHandler_1 = __importDefault(require("../../EmptyCustomCommandHandler"));
+const DefaultCommandHandler_1 = __importDefault(require("../../DefaultCommandHandler"));
 const SetSSH = {
     CommandName: ConfigureScriptsEnum_1.default.SetSSHSettings,
     CommandDescription: "Sets the SSH Settings for the Server to Login and run Bash Commands",
-    CommandFunction: (dataManager, interaction) => {
+    CommandFunction: (interaction, dataManager) => {
         const serverIp = interaction.options.getString('serverip');
         const serverUser = interaction.options.getString('serveruser');
         const serverPort = interaction.options.getString('serverport');
@@ -49,7 +49,6 @@ const SetSSH = {
             required: true
         }
     ],
-    UsesCustomCommandHandler: false,
-    CustomCommandHandler: EmptyCustomCommandHandler_1.default
+    CommandHandler: DefaultCommandHandler_1.default.Instance()
 };
 module.exports = SetSSH;

@@ -1,6 +1,7 @@
 import IDiscordCommand = require("./IDiscordCommand");
-import DataManager = require("./DataManager");
+import DataManager from "./DataManager";
 import { CacheType, ChatInputCommandInteraction, Client} from 'discord.js';
+import ICommandHandler = require("./ICommandHandler");
 
 /**
  * Describes the structure of a command for a Discord Bot
@@ -18,7 +19,7 @@ interface ICommand extends IDiscordCommand{
      * @param interaction Interaction instance that triggered running the command
      * @returns void
      */
-    CommandFunction: (dataManager : DataManager, interaction: ChatInputCommandInteraction<CacheType>) => void;
+    CommandFunction: (interaction: ChatInputCommandInteraction<CacheType>, dataManager : DataManager) => void;
 
     /**
      * The message to log when the command is executed.
@@ -41,17 +42,12 @@ interface ICommand extends IDiscordCommand{
     FailMessages: string[];
 
     /**
-     * Boolean Determining if the command uses a custom command handler
-     */
-    UsesCustomCommandHandler: boolean;
-
-    /**
      * The Custom Command Handler for the command
      * @param dataManager Data Manager that contains all Bot Settings
      * @param interaction Interaction instance that triggered running the command
      * @returns Nothing
      */
-    CustomCommandHandler: (dataManager: DataManager, interaction: ChatInputCommandInteraction<CacheType>, client: Client) => Promise<void>;
+    CommandHandler: ICommandHandler;
 }
 
-export = ICommand;
+export default ICommand;

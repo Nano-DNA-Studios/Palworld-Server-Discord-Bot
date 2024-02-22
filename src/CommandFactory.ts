@@ -1,7 +1,7 @@
 import ICommand from "./ICommand";
 import DataManager from "./DataManager";
-import EmptyCustomCommandHandler from "./EmptyCustomCommandHandler";
 import FileSearch from "./FileSearch";
+import Command from "./Command";
 
 /**
  * Command Factory for creating new Instances of a Command based off the Command Name provided
@@ -32,7 +32,6 @@ class CommandFactory<IT extends ICommand>
      * @returns Returns a IT instance of the Command being run
      */
     private GetCommandInterface(): IT {
-
         try {
             const Commands: ICommand[] = this._fileSearch.GetAllCommands();
             for (const command of Commands) {
@@ -43,29 +42,7 @@ class CommandFactory<IT extends ICommand>
             console.log("Unable to scan directory: " + err);
         }
 
-        return this.GetUndefinedCommand() as IT;
-    }
-
-    /**
-     * Gets an undefined ICommand Object
-     * @returns Returns an ICommand Object that is undefined
-     */
-    private GetUndefinedCommand(): IT {
-        let UndefinedBashScript: ICommand = {
-            CommandName: "undefined",
-            CommandDescription: "",
-            CommandFunction: () => { },
-            ReplyMessage: " ",
-            LogMessage: " ",
-            ErrorMessage: " ",
-            SuccessMessage: " ",
-            FailMessages: [''],
-            Options: [],
-            UsesCustomCommandHandler: false,
-            CustomCommandHandler: EmptyCustomCommandHandler,
-        };
-
-        return UndefinedBashScript as IT;
+        return Command.GetEmptyCommand() as IT;
     }
 
     /**
@@ -78,6 +55,7 @@ class CommandFactory<IT extends ICommand>
         if (!commandInterface) {
             throw new Error("CommandInterface is undefined");
         }
+
         return new CommandType(commandInterface);
     }
 }

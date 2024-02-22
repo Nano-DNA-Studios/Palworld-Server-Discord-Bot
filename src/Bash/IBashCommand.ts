@@ -1,4 +1,4 @@
-import ICommand = require("../ICommand");
+import ICommand from "../ICommand";
 
 /**
  * Describes the structure of a bash command

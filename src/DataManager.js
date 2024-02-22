@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = __importDefault(require("fs"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const readline_1 = __importDefault(require("readline"));
@@ -164,7 +165,7 @@ class DataManager {
                 'ServerUser': '',
                 'ServerPort': '',
                 'ServerPassword': '',
-                'ServerInstallDir': '/home/user/PalworldServer',
+                'SteamInstallDir': '/home/user/PalworldServer',
             };
             //Save the data to the file
             let JSONData = JSON.stringify(data, null, 4);
@@ -190,7 +191,7 @@ class DataManager {
             'ServerUser': this.SERVER_USER,
             'ServerPort': this.SERVER_PORT,
             'ServerPassword': this.SERVER_PASSWORD,
-            'ServerInstallDir': this.STEAM_INSTALL_DIR,
+            'SteamInstallDir': this.STEAM_INSTALL_DIR,
         };
         return JSON.stringify(data, null, 4);
     }
@@ -251,4 +252,4 @@ class DataManager {
         this.SaveData();
     }
 }
-module.exports = DataManager;
+exports.default = DataManager;

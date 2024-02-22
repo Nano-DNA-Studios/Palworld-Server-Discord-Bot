@@ -1,6 +1,6 @@
 import BashScriptsEnum from "../BashScriptsEnum";
 import IBashCommand from "../IBashCommand";
-import { HandleBashCommand } from "../BashCommandHandler"
+import BashCommandHandler from "../BashCommandHandler";
 
 //Start works
 const Ping: IBashCommand =
@@ -20,8 +20,7 @@ pidof ${process.env.SERVER_PROCESS_NAME} && echo "Server Is Live" || echo "Serve
   FailMessages: ["Server Not Live"],
   Options: [],
   MaxOutTimer: 0,
-  UsesCustomCommandHandler: true,
-  CustomCommandHandler: HandleBashCommand
+  CommandHandler: BashCommandHandler.Instance()
 };
 
 export = Ping;

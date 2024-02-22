@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 const CommandOptionTypes_1 = __importDefault(require("../../CommandOptionTypes"));
 const BashScriptsEnum_1 = __importDefault(require("../BashScriptsEnum"));
-const BashCommandHandler_1 = require("../BashCommandHandler");
+const BashCommandHandler_1 = __importDefault(require("../BashCommandHandler"));
 const Backup = {
     CommandName: BashScriptsEnum_1.default.Backup,
     CommandDescription: "Makes a Backup file of the Server",
@@ -29,7 +29,6 @@ const Backup = {
         }
     ],
     MaxOutTimer: 0,
-    UsesCustomCommandHandler: true,
-    CustomCommandHandler: BashCommandHandler_1.HandleBashCommand
+    CommandHandler: BashCommandHandler_1.default.Instance()
 };
 module.exports = Backup;

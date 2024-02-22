@@ -1,6 +1,6 @@
 import IBashCommand from "../IBashCommand";
 import BashScriptsEnum from "../BashScriptsEnum";
-import { HandleBashCommand } from "../BashCommandHandler"
+import BashCommandHandler from "../BashCommandHandler";
 
 //Start works
 const Update: IBashCommand =
@@ -20,8 +20,7 @@ steamcmd +force_install_dir ${process.env.STEAM_INSTALL_DIR} +login anonymous +a
   FailMessages: [],
   Options: [],
   MaxOutTimer: 0,
-  UsesCustomCommandHandler: true,
-  CustomCommandHandler: HandleBashCommand
+  CommandHandler: BashCommandHandler.Instance()
 };
 
 export = Update;

@@ -1,14 +1,15 @@
-import IConfigureCommands from "../IConfigureCommand";
 import ConfigureScriptsEnum from "../ConfigureScriptsEnum";
 import OptionTypes from "../../CommandOptionTypes";
-import EmptyCustomCommandHandler from "../../EmptyCustomCommandHandler";
 import { TextChannel } from "discord.js";
+import DefaultCommandHandler from "../../DefaultCommandHandler";
+import ICommand from "../../ICommand";
 
-const SetLogChannel: IConfigureCommands =
+
+const SetLogChannel: ICommand =
 {
     CommandName: ConfigureScriptsEnum.SetLogChannel,
     CommandDescription: "Sets the Discord Text Channel to send Bot and Server Logs to",
-    CommandFunction: (dataManager, interaction) => {
+    CommandFunction: (interaction, dataManager) => {
 
         const logChannel = interaction.options.getChannel('logchannel');
 
@@ -34,8 +35,7 @@ const SetLogChannel: IConfigureCommands =
             required: true
         }
     ],
-    UsesCustomCommandHandler: false,
-    CustomCommandHandler: EmptyCustomCommandHandler
+    CommandHandler: DefaultCommandHandler.Instance()
 }
 
 export = SetLogChannel;

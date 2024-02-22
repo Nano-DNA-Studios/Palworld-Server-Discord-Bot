@@ -192,7 +192,7 @@ class DataManager {
             'ServerPort': '',
             'ServerPassword': '',
 
-            'ServerInstallDir': '/home/user/PalworldServer',
+            'SteamInstallDir': '/home/user/PalworldServer',
         };
 
         //Save the data to the file
@@ -221,7 +221,7 @@ class DataManager {
             'ServerPort': this.SERVER_PORT,
             'ServerPassword': this.SERVER_PASSWORD,
 
-            'ServerInstallDir': this.STEAM_INSTALL_DIR,
+            'SteamInstallDir': this.STEAM_INSTALL_DIR,
         };
 
         return JSON.stringify(data, null, 4);
@@ -296,4 +296,4 @@ class DataManager {
     }
 }
 
-export = DataManager;
+export default DataManager;
