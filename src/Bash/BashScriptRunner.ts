@@ -1,17 +1,17 @@
 import * as dotenv from "dotenv";
 import { Client } from "ssh2";
 import BashScript from "./BashScript";
-import DataManager from "../DataManager";
+import BotDataManager from "../BotDataManager";
 
 
 class BashScriptRunner {
 
-    private _dataManager: DataManager;
+    private _dataManager: BotDataManager;
     private _scriptRanSuccessfully: boolean = true;
     public BashCommand: BashScript;
 
-    constructor(bashCommand: BashScript, dataManager: DataManager) {
-        this._dataManager = dataManager;
+    constructor(bashCommand: BashScript, BotDataManager: BotDataManager) {
+        this._dataManager = BotDataManager;
         this.BashCommand = bashCommand;
     }
 

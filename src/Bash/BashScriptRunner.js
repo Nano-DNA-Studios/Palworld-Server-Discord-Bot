@@ -11,9 +11,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const ssh2_1 = require("ssh2");
 class BashScriptRunner {
-    constructor(bashCommand, dataManager) {
+    constructor(bashCommand, BotDataManager) {
         this._scriptRanSuccessfully = true;
-        this._dataManager = dataManager;
+        this._dataManager = BotDataManager;
         this.BashCommand = bashCommand;
     }
     DetermineError(data) {

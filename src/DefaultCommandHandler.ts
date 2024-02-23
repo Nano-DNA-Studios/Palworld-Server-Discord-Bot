@@ -1,7 +1,7 @@
 import ICommandHandler from "./ICommandHandler";
 import { CacheType, ChatInputCommandInteraction, Client } from 'discord.js';
 import CommandFactory from './CommandFactory';
-import DataManager from "./DataManager";
+import BotDataManager from "./BotDataManager";
 import ICommand from "./ICommand";
 import Command from "./Command";
 import CommandLogger from './CommandLogger';
@@ -11,8 +11,8 @@ import CommandLogger from './CommandLogger';
  */
 class DefaultCommandHandler implements ICommandHandler {
 
-    public async HandleCommand(interaction: ChatInputCommandInteraction<CacheType>, client: Client, dataManager: DataManager): Promise<void> {
-        let Factory = await new CommandFactory<ICommand>(interaction.commandName, dataManager);
+    public async HandleCommand(interaction: ChatInputCommandInteraction<CacheType>, client: Client, dataManager: BotDataManager): Promise<void> {
+        let Factory = await new CommandFactory<ICommand>(interaction.commandName);
         let command = await Factory.CreateCommand<Command>(Command);
 
         await CommandLogger.InitializeResponse(interaction, client, dataManager);

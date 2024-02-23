@@ -13,9 +13,9 @@ class CommandFactory {
      * Initializes the Command Factory
      * @param commandName The name of the command
      */
-    constructor(commandName, dataManager) {
+    constructor(commandName) {
         this._commandName = commandName;
-        this._fileSearch = new FileSearch_1.default(dataManager);
+        this._fileSearch = new FileSearch_1.default();
     }
     /**
      * Gets the Command Interface based off the Command Name

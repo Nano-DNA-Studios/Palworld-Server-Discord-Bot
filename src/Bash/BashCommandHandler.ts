@@ -1,5 +1,5 @@
 import BashScriptRunner from './BashScriptRunner';
-import DataManager from '../DataManager';
+import BotDataManager from '../BotDataManager';
 import { CacheType, ChatInputCommandInteraction, Client } from 'discord.js';
 import CommandFactory from '../CommandFactory';
 import BashScriptsEnum = require('./BashScriptsEnum');
@@ -13,21 +13,21 @@ import CommandLogger = require('../CommandLogger');
  */
 class BashCommandHandler implements ICommandHandler {
 
-    public async HandleCommand(interaction: ChatInputCommandInteraction<CacheType>, client: Client, dataManager: DataManager): Promise<void> {
+    public async HandleCommand(interaction: ChatInputCommandInteraction<CacheType>, client: Client, BotDataManager: BotDataManager): Promise<void> {
         try {
-            const Factory = new CommandFactory<IBashCommand>(interaction.commandName, dataManager);
+            const Factory = new CommandFactory<IBashCommand>(interaction.commandName);
             const Bash = Factory.CreateCommand(BashScript);
 
-            let bashInstances = this.GetBashInstances(Bash, dataManager);
+            let bashInstances = this.GetBashInstances(Bash, BotDataManager);
 
-            await CommandLogger.InitializeResponse(interaction, client, dataManager);
+            await CommandLogger.InitializeResponse(interaction, client, BotDataManager);
 
             for (const bashInstance of bashInstances) {
 
                 CommandLogger.LogAndRespond(bashInstance.LogMessage);
 
                 try {
-                    let BashResult = await new BashScriptRunner(bashInstance, dataManager).RunBashScript();
+                    let BashResult = await new BashScriptRunner(bashInstance, BotDataManager).RunBashScript();
 
                     if (BashResult)
                         CommandLogger.LogAndRespond(bashInstance.SuccessMessage);
@@ -46,10 +46,10 @@ class BashCommandHandler implements ICommandHandler {
     /**
      * Extracts all Sub Commands and returns each Bash Script Instance in the the Correct Instance
      * @param Bash The Bash Command being called
-     * @param dataManager The Discord Bot Data Manager
+     * @param BotDataManager The Discord Bot Data Manager
      * @returns An Array of Bash Script Instances based off the Sub Command List
      */
-    private GetBashInstances(Bash: IBashCommand, dataManager: DataManager): BashScript[] {
+    private GetBashInstances(Bash: IBashCommand, BotDataManager: BotDataManager): BashScript[] {
         let bashInstances: BashScript[] = [];
 
         Bash.SubCommands.forEach((subCommand) => {
@@ -60,7 +60,7 @@ class BashCommandHandler implements ICommandHandler {
             else
                 commandName = subCommand;
 
-            const factory = new CommandFactory<IBashCommand>(commandName, dataManager);
+            const factory = new CommandFactory<IBashCommand>(commandName);
             const bashInstance = factory.CreateCommand<BashScript>(BashScript);
 
             bashInstances.push(bashInstance);

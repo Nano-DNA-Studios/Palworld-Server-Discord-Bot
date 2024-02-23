@@ -7,12 +7,12 @@ const SetRunLocally: ICommand =
 {
     CommandName: ConfigureScriptsEnum.SetRunLocally,
     CommandDescription: "Determines if the Server doesn't need to be SSH'd into",
-    CommandFunction: (interaction, dataManager) => {
+    CommandFunction: (interaction, BotDataManager) => {
 
         const runLocally = interaction.options.getBoolean('runlocally');
 
         if (runLocally !== null && runLocally !== undefined) 
-            dataManager.SetRunLocally(runLocally);
+            BotDataManager.SetRunLocally(runLocally);
          else 
             throw new Error("Run Locally Value was not provided.");
         

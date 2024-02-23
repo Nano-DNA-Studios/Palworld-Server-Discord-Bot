@@ -1,18 +1,11 @@
 import fs from 'fs';
-import dotenv from 'dotenv';
 import readline, { Interface as ReadLineInterface } from 'readline';
-import { TextChannel } from 'discord.js';
-dotenv.config();
+import IBotDataManager from './IBotDataManager';
 
 /**
  * Class Handling Data Management
  */
-class DataManager {
-
-    /**
-     * Directory that the Bot is located on the Computer
-     */
-    public BOT_DIRECTORY: string;
+class BotDataManager implements IBotDataManager{
 
     /**
      * Save Path for the Bots Data
@@ -93,10 +86,9 @@ class DataManager {
      * Initializes the Data Manager
      * @param botDirectory The Directory that the Bot is located in
      */
-    constructor (botDirectory: string)
+    constructor ()
     {
-        this.BOT_DIRECTORY = botDirectory;
-        this.DATA_SAVE_PATH = this.BOT_DIRECTORY + '\\Resources';
+        this.DATA_SAVE_PATH = process.cwd() + '\\Resources';
         this.FILE_SAVE_PATH = this.DATA_SAVE_PATH + '\\data.json';
     }
 
@@ -129,7 +121,7 @@ class DataManager {
             fs.writeFileSync(this.FILE_SAVE_PATH, jsonData);
         else 
         {
-            console.log("Data File does not exist");
+          throw new Error(`Data Save Path does not exist ${this.DATA_SAVE_PATH}`);
         }
     }
 
@@ -154,7 +146,6 @@ class DataManager {
         this.SERVER_PORT = data.ServerPort;
         this.SERVER_PASSWORD = data.ServerPassword;
         this.STEAM_INSTALL_DIR = data.SteamInstallDir;
-        this.BOT_DIRECTORY = data.BotDirectory;
     }
 
     /**
@@ -178,7 +169,6 @@ class DataManager {
 
         let data = {
             'DiscordBotToken': botToken,
-            'BotDirectory': this.BOT_DIRECTORY,
             'GuildID': '',
             'GuildName': guildName,
             'ClientID': '',
@@ -207,7 +197,6 @@ class DataManager {
     private GetJSONFormat(): string {
         let data = {
             'DiscordBotToken': this.DISCORD_BOT_TOKEN,
-            'BotDirectory': this.BOT_DIRECTORY,
             'GuildID': this.GUILD_ID,
             'GuildName': this.GUILD_NAME,
             'ClientID': this.CLIENT_ID,
@@ -285,15 +274,6 @@ class DataManager {
 
         this.SaveData();
     }
-
-    /**
-     * Sets the Discord Bot Absolute Path
-     * @param botDirectory the Absolute Path to the Bot
-     */
-    public SetBotDirectory(botDirectory: string) {
-        this.BOT_DIRECTORY = botDirectory;
-        this.SaveData();
-    }
 }
 
-export default DataManager;
+export default BotDataManager;

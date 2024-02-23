@@ -26,7 +26,7 @@ class Command {
     }
     /**
      * Runs the Discord Command
-     * @param dataManager Instance of the DataManager
+     * @param BotDataManager Instance of the BotDataManager
      * @param interaction Instance of the ChatInputCommandInteraction
      */
     RunCommand(dataManager, interaction, client) {

@@ -16,7 +16,8 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const CommandHandler = require("./CommandHandler");
 const CommandRegisterer_1 = __importDefault(require("./CommandRegisterer"));
-const DataManager_1 = __importDefault(require("./DataManager"));
+const BotDataManager_1 = __importDefault(require("./BotDataManager"));
+const BotData_1 = __importDefault(require("./BotData"));
 const discord_js_1 = require("discord.js");
 const FileSearch_1 = __importDefault(require("./FileSearch"));
 /**
@@ -39,7 +40,7 @@ function GetGuildID(guildName) {
 }
 function RegisterCommands() {
     let registerer = new CommandRegisterer_1.default(Data);
-    let fileSearch = new FileSearch_1.default(Data);
+    let fileSearch = new FileSearch_1.default();
     let commands = fileSearch.GetAllCommands();
     registerer.AddCommands(commands);
     registerer.RegisterCommands();
@@ -65,7 +66,7 @@ const client = new discord_js_1.Client({
         discord_js_1.IntentsBitField.Flags.MessageContent,
     ],
 });
-const Data = new DataManager_1.default(__dirname);
+const Data = BotData_1.default.Instance(BotDataManager_1.default);
 StartBot();
 client.on("ready", (c) => {
     console.log(`Bot is ready ${c.user.tag}`);

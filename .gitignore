@@ -90,3 +90,4 @@ build/
 *.lock
 # End of https://www.gitignore.io/api/node,visualstudiocode
 src/Resources/data.json
+Resources/data.json

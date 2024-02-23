@@ -1,6 +1,6 @@
 import IBashCommand from "./IBashCommand";
 import ICommandOption from "../ICommandOption";
-import DataManager from "../DataManager";
+import BotDataManager from "../BotDataManager";
 import { CacheType, ChatInputCommandInteraction, Client } from 'discord.js';
 import ICommandHandler from "../ICommandHandler";
 
@@ -11,7 +11,7 @@ class BashScript implements IBashCommand {
     public CommandName: string;
     public CommandDescription: string;
     public CustomCode: string;
-    public CommandFunction: (interaction: ChatInputCommandInteraction<CacheType>, dataManager: DataManager) => void;
+    public CommandFunction: (interaction: ChatInputCommandInteraction<CacheType>, BotDataManager: BotDataManager) => void;
     public SubCommands: string[];
     public ReplyMessage: string;
     public LogMessage: string;
@@ -52,10 +52,10 @@ class BashScript implements IBashCommand {
 
     /**
      * Runs the Discord Bash Command
-     * @param dataManager Instance of the DataManager
+     * @param BotDataManager Instance of the BotDataManager
      * @param interaction Instance of the ChatInputCommandInteraction
      */
-    RunCommand(dataManager: DataManager, interaction: ChatInputCommandInteraction<CacheType>): void {
+    RunCommand(dataManager: BotDataManager, interaction: ChatInputCommandInteraction<CacheType>): void {
         this.CommandFunction(interaction, dataManager);
     }
 

@@ -27,32 +27,37 @@ const dotenv = __importStar(require("dotenv"));
 dotenv.config();
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
+/**
+ * Utility Class for Searching Files
+ */
 class FileSearch {
-    constructor(dataManager) {
-        this._dataManager = dataManager;
+    constructor() {
+        /**
+         * Path the the Directory of the Bot
+         */
+        this._directoryPath = process.cwd() + "\\src";
     }
     /**
     * Gets all the files with JavaScript endings in the Bot Directory
     * @returns An Array of Java Script File Paths within the Bot Directory
     */
     GetAllJSFiles() {
-        const directoryPath = this._dataManager.BOT_DIRECTORY;
-        return this.GetFiles(directoryPath);
+        return this.GetFiles(this._directoryPath, ".js");
     }
     /**
     * Gets all the Java Script Files within the provided directory and subdirectories through recursion
     * @param Path The start Path to search for files
     * @returns Array of all Java Script Files within the provided directory and subdirectories
     */
-    GetFiles(Path) {
+    GetFiles(Path, fileExtension) {
         let AllFiles = [];
         if (fs.existsSync(Path)) {
             let files = fs.readdirSync(Path);
             files.forEach(file => {
                 let absPath = Path + "/" + file;
                 if (fs.lstatSync(absPath).isDirectory())
-                    AllFiles.push(...this.GetFiles(absPath));
-                else if (path.extname(absPath) === ".js")
+                    AllFiles.push(...this.GetFiles(absPath, fileExtension));
+                else if (path.extname(absPath) === fileExtension)
                     AllFiles.push(absPath);
             });
         }

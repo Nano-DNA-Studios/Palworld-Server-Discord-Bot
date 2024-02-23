@@ -13,7 +13,7 @@ class CommandLogger {
     * Initializes all info needed for the Response to the Command
     * @param interaction Command Interaction
     * @param client Discord Bot Client
-    * @param dataManager Data Manager
+    * @param BotDataManager Data Manager
     */
     static InitializeResponse(interaction, client, dataManager) {
         return __awaiter(this, void 0, void 0, function* () {

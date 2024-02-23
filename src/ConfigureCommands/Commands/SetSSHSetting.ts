@@ -7,7 +7,7 @@ const SetSSH: ICommand =
 {
     CommandName: ConfigureScriptsEnum.SetSSHSettings,
     CommandDescription: "Sets the SSH Settings for the Server to Login and run Bash Commands",
-    CommandFunction: ( interaction, dataManager,) => {
+    CommandFunction: ( interaction, BotDataManager,) => {
 
         const serverIp = interaction.options.getString('serverip');
         const serverUser = interaction.options.getString('serveruser');
@@ -15,7 +15,7 @@ const SetSSH: ICommand =
         const serverPassword = interaction.options.getString('serverpassword');
 
         if (serverIp && serverUser && serverPort && serverPassword)
-            dataManager.SetSSHSettings(serverIp, serverUser, serverPort, serverPassword);
+            BotDataManager.SetSSHSettings(serverIp, serverUser, serverPort, serverPassword);
         else
             throw new Error("Not all the SSH Settings were provided.");
     },

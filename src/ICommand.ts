@@ -1,5 +1,5 @@
 import IDiscordCommand = require("./IDiscordCommand");
-import DataManager from "./DataManager";
+import BotDataManager from "./BotDataManager";
 import { CacheType, ChatInputCommandInteraction, Client} from 'discord.js';
 import ICommandHandler = require("./ICommandHandler");
 
@@ -15,11 +15,11 @@ interface ICommand extends IDiscordCommand{
 
     /**
      * Function that is executed when the command is run
-     * @param dataManager DataManager that contains all Bot Settings
+     * @param BotDataManager BotDataManager that contains all Bot Settings
      * @param interaction Interaction instance that triggered running the command
      * @returns void
      */
-    CommandFunction: (interaction: ChatInputCommandInteraction<CacheType>, dataManager : DataManager) => void;
+    CommandFunction: (interaction: ChatInputCommandInteraction<CacheType>, BotDataManager : BotDataManager) => void;
 
     /**
      * The message to log when the command is executed.
@@ -43,7 +43,7 @@ interface ICommand extends IDiscordCommand{
 
     /**
      * The Custom Command Handler for the command
-     * @param dataManager Data Manager that contains all Bot Settings
+     * @param BotDataManager Data Manager that contains all Bot Settings
      * @param interaction Interaction instance that triggered running the command
      * @returns Nothing
      */

@@ -2,7 +2,7 @@ import { REST, Routes } from "discord.js";
 import ICommandOption from "./ICommandOption";
 import ICommand from "./ICommand";
 import IDiscordCommand from "./IDiscordCommand";
-import DataManager from "./DataManager";
+import BotDataManager from "./BotDataManager";
 
 /**
  * Registers the commands to the Discord Server
@@ -10,12 +10,12 @@ import DataManager from "./DataManager";
 class CommandRegisterer {
     private rest: REST;
     public Commands: IDiscordCommand[] = [];
-    private _dataManager: DataManager;
+    private _dataManager: BotDataManager;
 
     /**
      * Initializes the Command Registerer, by registering the REST API
      */
-    constructor(dataManager: DataManager) {
+    constructor(dataManager: BotDataManager) {
         this._dataManager = dataManager;
         this.rest = new REST({ version: "10" }).setToken(`${this._dataManager.DISCORD_BOT_TOKEN}`);
     }

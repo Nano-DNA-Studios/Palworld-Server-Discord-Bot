@@ -21,7 +21,7 @@ const CommandLogger_1 = __importDefault(require("./CommandLogger"));
 class DefaultCommandHandler {
     HandleCommand(interaction, client, dataManager) {
         return __awaiter(this, void 0, void 0, function* () {
-            let Factory = yield new CommandFactory_1.default(interaction.commandName, dataManager);
+            let Factory = yield new CommandFactory_1.default(interaction.commandName);
             let command = yield Factory.CreateCommand(Command_1.default);
             yield CommandLogger_1.default.InitializeResponse(interaction, client, dataManager);
             try {

@@ -1,6 +1,6 @@
 import ICommand from "./ICommand";
 import ICommandOption from "./ICommandOption";
-import DataManager from "./DataManager";
+import BotDataManager from "./BotDataManager";
 import { CacheType, ChatInputCommandInteraction, Client } from 'discord.js';
 import ICommandHandler from "./ICommandHandler";
 import DefaultCommandHandler from "./DefaultCommandHandler";
@@ -11,7 +11,7 @@ import DefaultCommandHandler from "./DefaultCommandHandler";
 class Command implements ICommand {
     public CommandName: string;
     public CommandDescription: string;
-    public CommandFunction: ( interaction: ChatInputCommandInteraction<CacheType>, dataManager: DataManager) => void;
+    public CommandFunction: ( interaction: ChatInputCommandInteraction<CacheType>, BotDataManager: BotDataManager) => void;
     public ReplyMessage: string;
     public LogMessage: string;
     public ErrorMessage: string;
@@ -39,10 +39,10 @@ class Command implements ICommand {
 
     /**
      * Runs the Discord Command
-     * @param dataManager Instance of the DataManager
+     * @param BotDataManager Instance of the BotDataManager
      * @param interaction Instance of the ChatInputCommandInteraction
      */
-    RunCommand(dataManager: DataManager, interaction: ChatInputCommandInteraction<CacheType>, client: Client): void {
+    RunCommand(dataManager: BotDataManager, interaction: ChatInputCommandInteraction<CacheType>, client: Client): void {
         this.CommandFunction(interaction, dataManager);
     }
 

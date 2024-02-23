@@ -21,17 +21,17 @@ const CommandLogger = require("../CommandLogger");
  * Command Handler for Bash Commands
  */
 class BashCommandHandler {
-    HandleCommand(interaction, client, dataManager) {
+    HandleCommand(interaction, client, BotDataManager) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const Factory = new CommandFactory_1.default(interaction.commandName, dataManager);
+                const Factory = new CommandFactory_1.default(interaction.commandName);
                 const Bash = Factory.CreateCommand(BashScript);
-                let bashInstances = this.GetBashInstances(Bash, dataManager);
-                yield CommandLogger.InitializeResponse(interaction, client, dataManager);
+                let bashInstances = this.GetBashInstances(Bash, BotDataManager);
+                yield CommandLogger.InitializeResponse(interaction, client, BotDataManager);
                 for (const bashInstance of bashInstances) {
                     CommandLogger.LogAndRespond(bashInstance.LogMessage);
                     try {
-                        let BashResult = yield new BashScriptRunner_1.default(bashInstance, dataManager).RunBashScript();
+                        let BashResult = yield new BashScriptRunner_1.default(bashInstance, BotDataManager).RunBashScript();
                         if (BashResult)
                             CommandLogger.LogAndRespond(bashInstance.SuccessMessage);
                         else
@@ -50,10 +50,10 @@ class BashCommandHandler {
     /**
      * Extracts all Sub Commands and returns each Bash Script Instance in the the Correct Instance
      * @param Bash The Bash Command being called
-     * @param dataManager The Discord Bot Data Manager
+     * @param BotDataManager The Discord Bot Data Manager
      * @returns An Array of Bash Script Instances based off the Sub Command List
      */
-    GetBashInstances(Bash, dataManager) {
+    GetBashInstances(Bash, BotDataManager) {
         let bashInstances = [];
         Bash.SubCommands.forEach((subCommand) => {
             let commandName = '';
@@ -61,7 +61,7 @@ class BashCommandHandler {
                 commandName = Bash.CommandName;
             else
                 commandName = subCommand;
-            const factory = new CommandFactory_1.default(commandName, dataManager);
+            const factory = new CommandFactory_1.default(commandName);
             const bashInstance = factory.CreateCommand(BashScript);
             bashInstances.push(bashInstance);
         });

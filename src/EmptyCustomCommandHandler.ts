@@ -1,7 +1,7 @@
-import DataManager from "./DataManager";
+import BotDataManager from "./BotDataManager";
 import { CacheType, ChatInputCommandInteraction, Client} from 'discord.js';
 
-function EmptyCustomCommandHandler(dataManager: DataManager, interaction: ChatInputCommandInteraction<CacheType>, client: Client): Promise<void> {
+function EmptyCustomCommandHandler(dataManager: BotDataManager, interaction: ChatInputCommandInteraction<CacheType>, client: Client): Promise<void> {
     return new Promise((resolve, reject) => {
         resolve();
     });

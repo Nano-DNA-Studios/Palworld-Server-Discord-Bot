@@ -1,5 +1,4 @@
 import ICommand from "./ICommand";
-import DataManager from "./DataManager";
 import FileSearch from "./FileSearch";
 import Command from "./Command";
 
@@ -22,9 +21,9 @@ class CommandFactory<IT extends ICommand>
      * Initializes the Command Factory
      * @param commandName The name of the command
      */
-    constructor(commandName: string, dataManager: DataManager) {
+    constructor(commandName: string) {
         this._commandName = commandName;
-        this._fileSearch = new FileSearch(dataManager);
+        this._fileSearch = new FileSearch();
     }
 
     /**

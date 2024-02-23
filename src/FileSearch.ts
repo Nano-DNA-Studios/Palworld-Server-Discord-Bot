@@ -2,25 +2,24 @@ import * as dotenv from "dotenv";
 dotenv.config();
 import * as fs from "fs";
 import * as path from "path";
-import DataManager from "./DataManager";
 import ICommand from "./ICommand";
 
+/**
+ * Utility Class for Searching Files
+ */
 class FileSearch {
 
-  private _dataManager: DataManager;
-
-  constructor(dataManager: DataManager) {
-    this._dataManager = dataManager;
-  }
+  /**
+   * Path the the Directory of the Bot
+   */
+  private _directoryPath: string = process.cwd() + "\\src";
 
   /**
   * Gets all the files with JavaScript endings in the Bot Directory
   * @returns An Array of Java Script File Paths within the Bot Directory
   */
   public GetAllJSFiles(): string[] {
-    const directoryPath = this._dataManager.BOT_DIRECTORY;
-
-    return this.GetFiles(directoryPath);
+    return this.GetFiles(this._directoryPath, ".js");
   }
 
   /**
@@ -28,7 +27,7 @@ class FileSearch {
   * @param Path The start Path to search for files
   * @returns Array of all Java Script Files within the provided directory and subdirectories
   */
-  public GetFiles(Path: string): string[] {
+  public GetFiles(Path: string, fileExtension: string): string[] {
     let AllFiles: string[] = [];
 
     if (fs.existsSync(Path)) {
@@ -38,12 +37,12 @@ class FileSearch {
         let absPath = Path + "/" + file;
 
         if (fs.lstatSync(absPath).isDirectory())
-          AllFiles.push(...this.GetFiles(absPath));
-        else if (path.extname(absPath) === ".js")
+          AllFiles.push(...this.GetFiles(absPath, fileExtension));
+        else if (path.extname(absPath) === fileExtension)
           AllFiles.push(absPath);
       });
     }
-
+    
     return AllFiles;
   }
 

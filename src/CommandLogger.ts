@@ -1,5 +1,5 @@
 import { CacheType, ChatInputCommandInteraction, InteractionResponse, TextChannel, Client } from 'discord.js';
-import DataManager from './DataManager';
+import BotDataManager from './BotDataManager';
 
 class CommandLogger {
  
@@ -22,9 +22,9 @@ class CommandLogger {
      * Initializes all info needed for the Response to the Command
      * @param interaction Command Interaction
      * @param client Discord Bot Client
-     * @param dataManager Data Manager
+     * @param BotDataManager Data Manager
      */
-    public static async InitializeResponse(interaction: ChatInputCommandInteraction<CacheType>, client: Client, dataManager: DataManager) {
+    public static async InitializeResponse(interaction: ChatInputCommandInteraction<CacheType>, client: Client, dataManager: BotDataManager) {
         this.ResponseMessage = `Running ${interaction.commandName} :arrows_clockwise: \n`;
         this.LogChannel = client.channels.cache.get(`${dataManager.LOG_CHANNEL_ID}`) as TextChannel;
         this.Response = await interaction.reply({ content: this.ResponseMessage, ephemeral: true }) as InteractionResponse;

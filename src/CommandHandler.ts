@@ -1,6 +1,6 @@
 import { CacheType, ChatInputCommandInteraction, Client } from 'discord.js';
 import CommandFactory from './CommandFactory';
-import DataManager from './DataManager';
+import BotDataManager from './BotDataManager';
 import ICommand from './ICommand';
 import Command from './Command';
 import ICommandHandler from './ICommandHandler';
@@ -10,11 +10,11 @@ import ICommandHandler from './ICommandHandler';
  */
 class CommandHandler implements ICommandHandler {
 
-    public async HandleCommand(interaction: ChatInputCommandInteraction<CacheType>, client: Client, dataManager: DataManager): Promise<void> {
-        let Factory = await new CommandFactory<ICommand>(interaction.commandName, dataManager);
+    public async HandleCommand(interaction: ChatInputCommandInteraction<CacheType>, client: Client, BotDataManager: BotDataManager): Promise<void> {
+        let Factory = await new CommandFactory<ICommand>(interaction.commandName);
         let command = await Factory.CreateCommand<Command>(Command);
 
-        await command.CommandHandler.HandleCommand(interaction, client, dataManager);
+        await command.CommandHandler.HandleCommand(interaction, client, BotDataManager);
     }
 }
 

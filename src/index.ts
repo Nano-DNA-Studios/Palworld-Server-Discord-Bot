@@ -2,7 +2,8 @@ import dotenv from "dotenv";
 dotenv.config();
 import CommandHandler = require("./CommandHandler");
 import CommandRegisterer from "./CommandRegisterer";
-import DataManager from "./DataManager";
+import BotDataManager from "./BotDataManager";
+import BotData from "./BotData";
 import { Client, IntentsBitField } from "discord.js";
 import FileSearch from "./FileSearch";
 
@@ -27,7 +28,7 @@ async function GetGuildID(guildName: string): Promise<string> {
 
 function RegisterCommands() {
   let registerer = new CommandRegisterer(Data);
-  let fileSearch = new FileSearch(Data);
+  let fileSearch = new FileSearch();
   let commands = fileSearch.GetAllCommands();
   registerer.AddCommands(commands);
   registerer.RegisterCommands();
@@ -54,7 +55,7 @@ const client = new Client({
   ],
 });
 
-const Data = new DataManager(__dirname);
+const Data = BotData.Instance(BotDataManager);
 
 StartBot();
 

@@ -9,11 +9,11 @@ const DefaultCommandHandler_1 = __importDefault(require("../../DefaultCommandHan
 const SetLogChannel = {
     CommandName: ConfigureScriptsEnum_1.default.SetLogChannel,
     CommandDescription: "Sets the Discord Text Channel to send Bot and Server Logs to",
-    CommandFunction: (interaction, dataManager) => {
+    CommandFunction: (interaction, BotDataManager) => {
         const logChannel = interaction.options.getChannel('logchannel');
         if (logChannel && logChannel instanceof discord_js_1.TextChannel) {
             if (logChannel)
-                dataManager.SetLogChannelID(logChannel.id);
+                BotDataManager.SetLogChannelID(logChannel.id);
             else
                 throw new Error("Log Channel ID provided does not match to a Text Channel");
         }
