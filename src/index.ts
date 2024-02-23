@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import CommandHandler = require("./CommandHandler");
 import CommandRegisterer from "./CommandRegisterer";
-import BotDataManager from "./BotDataManager";
+import PalworldBotDataManager from "./PalworldBotDataManager";
 import BotData from "./BotData";
 import { Client, IntentsBitField } from "discord.js";
 import FileSearch from "./FileSearch";
@@ -55,7 +55,7 @@ const client = new Client({
   ],
 });
 
-const Data = BotData.Instance(BotDataManager);
+const Data = BotData.Instance(PalworldBotDataManager);
 
 StartBot();
 

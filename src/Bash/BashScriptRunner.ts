@@ -1,7 +1,7 @@
 import * as dotenv from "dotenv";
 import { Client } from "ssh2";
 import BashScript from "./BashScript";
-import BotDataManager from "../BotDataManager";
+import BotDataManager from "../PalworldBotDataManager";
 
 
 class BashScriptRunner {

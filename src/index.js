@@ -16,7 +16,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const CommandHandler = require("./CommandHandler");
 const CommandRegisterer_1 = __importDefault(require("./CommandRegisterer"));
-const BotDataManager_1 = __importDefault(require("./BotDataManager"));
+const PalworldBotDataManager_1 = __importDefault(require("./PalworldBotDataManager"));
 const BotData_1 = __importDefault(require("./BotData"));
 const discord_js_1 = require("discord.js");
 const FileSearch_1 = __importDefault(require("./FileSearch"));
@@ -66,7 +66,7 @@ const client = new discord_js_1.Client({
         discord_js_1.IntentsBitField.Flags.MessageContent,
     ],
 });
-const Data = BotData_1.default.Instance(BotDataManager_1.default);
+const Data = BotData_1.default.Instance(PalworldBotDataManager_1.default);
 StartBot();
 client.on("ready", (c) => {
     console.log(`Bot is ready ${c.user.tag}`);

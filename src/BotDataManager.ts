@@ -1,15 +1,15 @@
+import IBotDataManager from "./IBotDataManager";
 import fs from 'fs';
 import readline, { Interface as ReadLineInterface } from 'readline';
-import IBotDataManager from './IBotDataManager';
 
 /**
- * Class Handling Data Management
+ * The Default Bot Data Manager, implementing the bareminimum for a Bot Data Manager
  */
-class BotDataManager implements IBotDataManager{
+class BotDataManager implements IBotDataManager {
 
     /**
-     * Save Path for the Bots Data
-     */
+       * Save Path for the Bots Data
+       */
     public DATA_SAVE_PATH: string;
 
     /**
@@ -33,49 +33,9 @@ class BotDataManager implements IBotDataManager{
     public GUILD_NAME: string = "";
 
     /**
-     * Name of the Process that Handles the Palworld Server
-     */
-    public SERVER_PROCESS_NAME: string = "";
-
-    /**
-     * Name of the Script that Starts the Palworld Server
-     */
-    public SERVER_START_SCRIPT: string = "";
-
-    /**
      * Id of the Discord Bot
      */
     public CLIENT_ID: string = "";
-
-    /**
-     * If the Bot is running locally on the same computer as the Palworld Server hosted or will SSH to communicate
-     */
-    public RUN_LOCALLY: boolean = true;
-
-    /**
-     * IP of the Server to SSH into 
-     */
-    public SERVER_IP: string = "";
-
-    /**
-     * User of the Server to SSH into 
-     */
-    public SERVER_USER: string = "";
-
-    /**
-     * Port of the Server to SSH into 
-     */
-    public SERVER_PORT: string = "";
-
-    /**
-     * Password of the Server to SSH into 
-     */
-    public SERVER_PASSWORD: string = "";
-
-    /**
-     * Directory the Palworld Server is installed in
-     */
-    public STEAM_INSTALL_DIR: string = "";
 
     /**
      * Channel ID of the Log Channel that the Bot will send logs to
@@ -86,8 +46,7 @@ class BotDataManager implements IBotDataManager{
      * Initializes the Data Manager
      * @param botDirectory The Directory that the Bot is located in
      */
-    constructor ()
-    {
+    constructor() {
         this.DATA_SAVE_PATH = process.cwd() + '\\Resources';
         this.FILE_SAVE_PATH = this.DATA_SAVE_PATH + '\\data.json';
     }
@@ -96,8 +55,9 @@ class BotDataManager implements IBotDataManager{
      * Loads the Data from the File or Registers it by creating the Default Data and file
      */
     public async LoadData() {
+
         if (this.FileExists()) {
-            this.LoadDataFromFile();
+            await this.LoadDataFromFile();
         } else {
             await this.RegisterServerController();
             this.LoadDataFromFile();
@@ -108,7 +68,7 @@ class BotDataManager implements IBotDataManager{
      * Determines if the Data File Exists
      * @returns True if the file exists, False if it does not
      */
-    private FileExists(): boolean {
+    protected FileExists(): boolean {
         return fs.existsSync(this.FILE_SAVE_PATH);
     }
 
@@ -119,33 +79,24 @@ class BotDataManager implements IBotDataManager{
         let jsonData: string = this.GetJSONFormat();
         if (fs.existsSync(this.DATA_SAVE_PATH))
             fs.writeFileSync(this.FILE_SAVE_PATH, jsonData);
-        else 
-        {
-          throw new Error(`Data Save Path does not exist ${this.DATA_SAVE_PATH}`);
-        }
+        else
+            throw new Error(`Data Save Path does not exist ${this.DATA_SAVE_PATH}`);
     }
 
     /**
-     * Loads the Data from the File
+     * Loads the Data from the File and Populates the Class Properties
      */
-    private LoadDataFromFile(): void {
+    public LoadDataFromFile(): void {
         let dataJSON: string = fs.readFileSync(this.FILE_SAVE_PATH, 'utf8');
         let data = JSON.parse(dataJSON);
 
-        //Load all data from JSON and put it in class variables 
-        this.DISCORD_BOT_TOKEN = data.DiscordBotToken;
-        this.GUILD_ID = data.GuildID;
-        this.GUILD_NAME = data.GuildName;
-        this.CLIENT_ID = data.ClientID;
-        this.SERVER_PROCESS_NAME = data.ServerProcessName;
-        this.SERVER_START_SCRIPT = data.ServerStartScript;
-        this.LOG_CHANNEL_ID = data.LogChannelID;
-        this.RUN_LOCALLY = data.RunLocally;
-        this.SERVER_IP = data.ServerIP;
-        this.SERVER_USER = data.ServerUser;
-        this.SERVER_PORT = data.ServerPort;
-        this.SERVER_PASSWORD = data.ServerPassword;
-        this.STEAM_INSTALL_DIR = data.SteamInstallDir;
+        // Dynamically assign values from JSON to class properties
+        for (const key in data) {
+            if (data.hasOwnProperty(key) && this.hasOwnProperty(key)) {
+
+                (this as any)[key] = data[key];
+            }
+        }
     }
 
     /**
@@ -161,32 +112,14 @@ class BotDataManager implements IBotDataManager{
         const prompt = (query: string) => new Promise<string>((resolve) => setupReader.question(query, resolve));
 
         // Prompt for bot token and guild ID asynchronously
-        let botToken: string = await prompt('Enter the Discord Bot Token: ');
-        let guildName: string = await prompt('Enter the Guild Name: ');
+        this.DISCORD_BOT_TOKEN = await prompt('Enter the Discord Bot Token: ');
+        this.GUILD_NAME = await prompt('Enter the Guild Name: ');
 
         // Close the readline interface after collecting all necessary inputs
         setupReader.close();
 
-        let data = {
-            'DiscordBotToken': botToken,
-            'GuildID': '',
-            'GuildName': guildName,
-            'ClientID': '',
-            'ServerProcessName': "PalServer-Linux-Test",
-            'ServerStartScript': "PalServer.sh",
-            'LogChannelID': '',
-            'RunLocally': true,
-
-            'ServerIP': '',
-            'ServerUser': '',
-            'ServerPort': '',
-            'ServerPassword': '',
-
-            'SteamInstallDir': '/home/user/PalworldServer',
-        };
-
         //Save the data to the file
-        let JSONData: string = JSON.stringify(data, null, 4);
+        let JSONData: string = JSON.stringify(this, null, 4);
         fs.writeFileSync(this.FILE_SAVE_PATH, JSONData);
     }
 
@@ -195,25 +128,7 @@ class BotDataManager implements IBotDataManager{
      * @returns A string of the Data in JSON Format
      */
     private GetJSONFormat(): string {
-        let data = {
-            'DiscordBotToken': this.DISCORD_BOT_TOKEN,
-            'GuildID': this.GUILD_ID,
-            'GuildName': this.GUILD_NAME,
-            'ClientID': this.CLIENT_ID,
-            'ServerProcessName': this.SERVER_PROCESS_NAME,
-            'ServerStartScript': this.SERVER_START_SCRIPT,
-            'LogChannelID': this.LOG_CHANNEL_ID,
-            'RunLocally': this.RUN_LOCALLY,
-
-            'ServerIP': this.SERVER_IP,
-            'ServerUser': this.SERVER_USER,
-            'ServerPort': this.SERVER_PORT,
-            'ServerPassword': this.SERVER_PASSWORD,
-
-            'SteamInstallDir': this.STEAM_INSTALL_DIR,
-        };
-
-        return JSON.stringify(data, null, 4);
+        return JSON.stringify(this, null, 4);
     }
 
     /**
@@ -238,38 +153,10 @@ class BotDataManager implements IBotDataManager{
     }
 
     /**
-     * Sets the SSH Server Information to login to the Server
-     * @param serverIP IP of the Server
-     * @param serverUser User on the Server
-     * @param serverPort Port of the Server
-     * @param serverPassword Password of the Server
-     */
-    public SetSSHSettings(serverIP: string, serverUser: string, serverPort: string, serverPassword: string) {
-        this.SERVER_IP = serverIP;
-        this.SERVER_USER = serverUser;
-        this.SERVER_PORT = serverPort;
-        this.SERVER_PASSWORD = serverPassword;
-
-        this.SaveData();
-    }
-
-    /**
-     * Sets the Run Locally Boolean
-     * @param runLocally Boolean determining if the server is running locally or not. If true, the server is running locally. If false, the server is running remotely and needs to be SSH'd into.
-     */
-    public SetRunLocally(runLocally: boolean) 
-    {
-        this.RUN_LOCALLY = runLocally;
-
-        this.SaveData();
-    }
-
-    /**
      * Sets the Log Channel that the Bot will send logs to
      * @param logChannelID The ID of the Log Channel
      */
-    public SetLogChannelID(logChannelID: string) 
-    {
+    public SetLogChannelID(logChannelID: string) {
         this.LOG_CHANNEL_ID = logChannelID;
 
         this.SaveData();

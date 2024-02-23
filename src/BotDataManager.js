@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = __importDefault(require("fs"));
 const readline_1 = __importDefault(require("readline"));
 /**
- * Class Handling Data Management
+ * The Default Bot Data Manager, implementing the bareminimum for a Bot Data Manager
  */
 class BotDataManager {
     /**
@@ -36,41 +36,9 @@ class BotDataManager {
          */
         this.GUILD_NAME = "";
         /**
-         * Name of the Process that Handles the Palworld Server
-         */
-        this.SERVER_PROCESS_NAME = "";
-        /**
-         * Name of the Script that Starts the Palworld Server
-         */
-        this.SERVER_START_SCRIPT = "";
-        /**
          * Id of the Discord Bot
          */
         this.CLIENT_ID = "";
-        /**
-         * If the Bot is running locally on the same computer as the Palworld Server hosted or will SSH to communicate
-         */
-        this.RUN_LOCALLY = true;
-        /**
-         * IP of the Server to SSH into
-         */
-        this.SERVER_IP = "";
-        /**
-         * User of the Server to SSH into
-         */
-        this.SERVER_USER = "";
-        /**
-         * Port of the Server to SSH into
-         */
-        this.SERVER_PORT = "";
-        /**
-         * Password of the Server to SSH into
-         */
-        this.SERVER_PASSWORD = "";
-        /**
-         * Directory the Palworld Server is installed in
-         */
-        this.STEAM_INSTALL_DIR = "";
         /**
          * Channel ID of the Log Channel that the Bot will send logs to
          */
@@ -84,7 +52,7 @@ class BotDataManager {
     LoadData() {
         return __awaiter(this, void 0, void 0, function* () {
             if (this.FileExists()) {
-                this.LoadDataFromFile();
+                yield this.LoadDataFromFile();
             }
             else {
                 yield this.RegisterServerController();
@@ -106,30 +74,21 @@ class BotDataManager {
         let jsonData = this.GetJSONFormat();
         if (fs_1.default.existsSync(this.DATA_SAVE_PATH))
             fs_1.default.writeFileSync(this.FILE_SAVE_PATH, jsonData);
-        else {
+        else
             throw new Error(`Data Save Path does not exist ${this.DATA_SAVE_PATH}`);
-        }
     }
     /**
-     * Loads the Data from the File
+     * Loads the Data from the File and Populates the Class Properties
      */
     LoadDataFromFile() {
         let dataJSON = fs_1.default.readFileSync(this.FILE_SAVE_PATH, 'utf8');
         let data = JSON.parse(dataJSON);
-        //Load all data from JSON and put it in class variables 
-        this.DISCORD_BOT_TOKEN = data.DiscordBotToken;
-        this.GUILD_ID = data.GuildID;
-        this.GUILD_NAME = data.GuildName;
-        this.CLIENT_ID = data.ClientID;
-        this.SERVER_PROCESS_NAME = data.ServerProcessName;
-        this.SERVER_START_SCRIPT = data.ServerStartScript;
-        this.LOG_CHANNEL_ID = data.LogChannelID;
-        this.RUN_LOCALLY = data.RunLocally;
-        this.SERVER_IP = data.ServerIP;
-        this.SERVER_USER = data.ServerUser;
-        this.SERVER_PORT = data.ServerPort;
-        this.SERVER_PASSWORD = data.ServerPassword;
-        this.STEAM_INSTALL_DIR = data.SteamInstallDir;
+        // Dynamically assign values from JSON to class properties
+        for (const key in data) {
+            if (data.hasOwnProperty(key) && this.hasOwnProperty(key)) {
+                this[key] = data[key];
+            }
+        }
     }
     /**
      * Registers the Server Controller by asking for the Bot Token
@@ -143,27 +102,12 @@ class BotDataManager {
             //Setup Question format
             const prompt = (query) => new Promise((resolve) => setupReader.question(query, resolve));
             // Prompt for bot token and guild ID asynchronously
-            let botToken = yield prompt('Enter the Discord Bot Token: ');
-            let guildName = yield prompt('Enter the Guild Name: ');
+            this.DISCORD_BOT_TOKEN = yield prompt('Enter the Discord Bot Token: ');
+            this.GUILD_NAME = yield prompt('Enter the Guild Name: ');
             // Close the readline interface after collecting all necessary inputs
             setupReader.close();
-            let data = {
-                'DiscordBotToken': botToken,
-                'GuildID': '',
-                'GuildName': guildName,
-                'ClientID': '',
-                'ServerProcessName': "PalServer-Linux-Test",
-                'ServerStartScript': "PalServer.sh",
-                'LogChannelID': '',
-                'RunLocally': true,
-                'ServerIP': '',
-                'ServerUser': '',
-                'ServerPort': '',
-                'ServerPassword': '',
-                'SteamInstallDir': '/home/user/PalworldServer',
-            };
             //Save the data to the file
-            let JSONData = JSON.stringify(data, null, 4);
+            let JSONData = JSON.stringify(this, null, 4);
             fs_1.default.writeFileSync(this.FILE_SAVE_PATH, JSONData);
         });
     }
@@ -172,22 +116,7 @@ class BotDataManager {
      * @returns A string of the Data in JSON Format
      */
     GetJSONFormat() {
-        let data = {
-            'DiscordBotToken': this.DISCORD_BOT_TOKEN,
-            'GuildID': this.GUILD_ID,
-            'GuildName': this.GUILD_NAME,
-            'ClientID': this.CLIENT_ID,
-            'ServerProcessName': this.SERVER_PROCESS_NAME,
-            'ServerStartScript': this.SERVER_START_SCRIPT,
-            'LogChannelID': this.LOG_CHANNEL_ID,
-            'RunLocally': this.RUN_LOCALLY,
-            'ServerIP': this.SERVER_IP,
-            'ServerUser': this.SERVER_USER,
-            'ServerPort': this.SERVER_PORT,
-            'ServerPassword': this.SERVER_PASSWORD,
-            'SteamInstallDir': this.STEAM_INSTALL_DIR,
-        };
-        return JSON.stringify(data, null, 4);
+        return JSON.stringify(this, null, 4);
     }
     /**
      * Sets the Client ID for the Bot
@@ -205,28 +134,6 @@ class BotDataManager {
      */
     SetGuildID(guildID) {
         this.GUILD_ID = guildID;
-        this.SaveData();
-    }
-    /**
-     * Sets the SSH Server Information to login to the Server
-     * @param serverIP IP of the Server
-     * @param serverUser User on the Server
-     * @param serverPort Port of the Server
-     * @param serverPassword Password of the Server
-     */
-    SetSSHSettings(serverIP, serverUser, serverPort, serverPassword) {
-        this.SERVER_IP = serverIP;
-        this.SERVER_USER = serverUser;
-        this.SERVER_PORT = serverPort;
-        this.SERVER_PASSWORD = serverPassword;
-        this.SaveData();
-    }
-    /**
-     * Sets the Run Locally Boolean
-     * @param runLocally Boolean determining if the server is running locally or not. If true, the server is running locally. If false, the server is running remotely and needs to be SSH'd into.
-     */
-    SetRunLocally(runLocally) {
-        this.RUN_LOCALLY = runLocally;
         this.SaveData();
     }
     /**

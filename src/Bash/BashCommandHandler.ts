@@ -1,5 +1,5 @@
 import BashScriptRunner from './BashScriptRunner';
-import BotDataManager from '../BotDataManager';
+import BotDataManager from '../PalworldBotDataManager';
 import { CacheType, ChatInputCommandInteraction, Client } from 'discord.js';
 import CommandFactory from '../CommandFactory';
 import BashScriptsEnum = require('./BashScriptsEnum');

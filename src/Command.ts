@@ -1,6 +1,6 @@
 import ICommand from "./ICommand";
 import ICommandOption from "./ICommandOption";
-import BotDataManager from "./BotDataManager";
+import BotDataManager from "./PalworldBotDataManager";
 import { CacheType, ChatInputCommandInteraction, Client } from 'discord.js';
 import ICommandHandler from "./ICommandHandler";
 import DefaultCommandHandler from "./DefaultCommandHandler";

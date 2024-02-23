@@ -1,5 +1,5 @@
 import { CacheType, ChatInputCommandInteraction, Client } from 'discord.js';
-import BotDataManager from './BotDataManager';
+import BotDataManager from './PalworldBotDataManager';
 import CommandLogger from './CommandLogger';
 
 /**
