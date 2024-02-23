@@ -1,13 +1,17 @@
 import * as dotenv from "dotenv";
 import { Client } from "ssh2";
-dotenv.config();
 import BashScript from "./BashScript";
+import DataManager from "../DataManager";
+
 
 class BashScriptRunner {
-    private ScriptRanSuccessfully: boolean = true;
+
+    private _dataManager: DataManager;
+    private _scriptRanSuccessfully: boolean = true;
     public BashCommand: BashScript;
 
-    constructor(bashCommand: BashScript) {
+    constructor(bashCommand: BashScript, dataManager: DataManager) {
+        this._dataManager = dataManager;
         this.BashCommand = bashCommand;
     }
 
@@ -15,12 +19,12 @@ class BashScriptRunner {
         let Fails = this.BashCommand.FailMessages;
         let dataStr = data.toString().replace(/\r?\n|\r/g, "");
         if (Fails.includes(dataStr)) {
-            this.ScriptRanSuccessfully = false;
+            this._scriptRanSuccessfully = false;
         }
     }
 
     public async RunBashScript(): Promise<boolean> {
-        this.ScriptRanSuccessfully = true;
+        this._scriptRanSuccessfully = true;
 
         const ServerConnection = await this.ConnectToServer();
 
@@ -36,14 +40,14 @@ class BashScriptRunner {
                     console.log("Max Timeout Set");
                     setTimeout(() => {
                         console.log("Max Timeout Reached");
-                        resolve(this.ScriptRanSuccessfully);
+                        resolve(this._scriptRanSuccessfully);
                         stream.end();
                     }, this.BashCommand.MaxOutTimer);
                 }
 
                 stream
                     .on("close", (code: string, signal: string) => {
-                        resolve(this.ScriptRanSuccessfully);
+                        resolve(this._scriptRanSuccessfully);
                     })
                     .on("data", (data: string) => {
                         dataBuffer += data;
@@ -68,10 +72,10 @@ class BashScriptRunner {
                 console.error('SSH Connection error:', err);
                 reject(err);
             }).connect({
-                host: process.env.SERVER_IP!,
-                port: parseInt(process.env.SERVER_PORT!),
-                username: process.env.SERVER_USER!,
-                password: process.env.SERVER_PASSWORD!
+                host: this._dataManager.SERVER_IP!,
+                port: parseInt(this._dataManager.SERVER_PORT!),
+                username: this._dataManager.SERVER_USER!,
+                password: this._dataManager.SERVER_PASSWORD!
             });
         });
     }

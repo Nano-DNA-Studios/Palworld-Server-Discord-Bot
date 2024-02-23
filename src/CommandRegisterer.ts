@@ -17,7 +17,7 @@ class CommandRegisterer {
      */
     constructor(dataManager: DataManager) {
         this._dataManager = dataManager;
-        this.rest = new REST({ version: "10" }).setToken(`${process.env.DISCORD_BOT_TOKEN}`);
+        this.rest = new REST({ version: "10" }).setToken(`${this._dataManager.DISCORD_BOT_TOKEN}`);
     }
 
     /**

@@ -20,7 +20,7 @@ class CommandRegisterer {
     constructor(dataManager) {
         this.Commands = [];
         this._dataManager = dataManager;
-        this.rest = new discord_js_1.REST({ version: "10" }).setToken(`${process.env.DISCORD_BOT_TOKEN}`);
+        this.rest = new discord_js_1.REST({ version: "10" }).setToken(`${this._dataManager.DISCORD_BOT_TOKEN}`);
     }
     /**
      * Maps the Commands to be Added to Discord Commands and Adds to the List of Commands to be Registered and

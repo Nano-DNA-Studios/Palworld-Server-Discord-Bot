@@ -1,27 +1,4 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -32,24 +9,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const dotenv = __importStar(require("dotenv"));
 const ssh2_1 = require("ssh2");
-dotenv.config();
 class BashScriptRunner {
-    constructor(bashCommand) {
-        this.ScriptRanSuccessfully = true;
+    constructor(bashCommand, dataManager) {
+        this._scriptRanSuccessfully = true;
+        this._dataManager = dataManager;
         this.BashCommand = bashCommand;
     }
     DetermineError(data) {
         let Fails = this.BashCommand.FailMessages;
         let dataStr = data.toString().replace(/\r?\n|\r/g, "");
         if (Fails.includes(dataStr)) {
-            this.ScriptRanSuccessfully = false;
+            this._scriptRanSuccessfully = false;
         }
     }
     RunBashScript() {
         return __awaiter(this, void 0, void 0, function* () {
-            this.ScriptRanSuccessfully = true;
+            this._scriptRanSuccessfully = true;
             const ServerConnection = yield this.ConnectToServer();
             const Script = yield this.BashCommand.GetCode();
             return new Promise((resolve, reject) => {
@@ -61,13 +37,13 @@ class BashScriptRunner {
                         console.log("Max Timeout Set");
                         setTimeout(() => {
                             console.log("Max Timeout Reached");
-                            resolve(this.ScriptRanSuccessfully);
+                            resolve(this._scriptRanSuccessfully);
                             stream.end();
                         }, this.BashCommand.MaxOutTimer);
                     }
                     stream
                         .on("close", (code, signal) => {
-                        resolve(this.ScriptRanSuccessfully);
+                        resolve(this._scriptRanSuccessfully);
                     })
                         .on("data", (data) => {
                         dataBuffer += data;
@@ -92,10 +68,10 @@ class BashScriptRunner {
                 console.error('SSH Connection error:', err);
                 reject(err);
             }).connect({
-                host: process.env.SERVER_IP,
-                port: parseInt(process.env.SERVER_PORT),
-                username: process.env.SERVER_USER,
-                password: process.env.SERVER_PASSWORD
+                host: this._dataManager.SERVER_IP,
+                port: parseInt(this._dataManager.SERVER_PORT),
+                username: this._dataManager.SERVER_USER,
+                password: this._dataManager.SERVER_PASSWORD
             });
         });
     }

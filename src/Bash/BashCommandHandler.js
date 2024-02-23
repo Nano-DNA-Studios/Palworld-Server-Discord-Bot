@@ -31,7 +31,7 @@ class BashCommandHandler {
                 for (const bashInstance of bashInstances) {
                     CommandLogger.LogAndRespond(bashInstance.LogMessage);
                     try {
-                        let BashResult = yield new BashScriptRunner_1.default(bashInstance).RunBashScript();
+                        let BashResult = yield new BashScriptRunner_1.default(bashInstance, dataManager).RunBashScript();
                         if (BashResult)
                             CommandLogger.LogAndRespond(bashInstance.SuccessMessage);
                         else

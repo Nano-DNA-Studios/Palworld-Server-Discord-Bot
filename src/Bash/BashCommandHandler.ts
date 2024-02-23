@@ -15,7 +15,6 @@ class BashCommandHandler implements ICommandHandler {
 
     public async HandleCommand(interaction: ChatInputCommandInteraction<CacheType>, client: Client, dataManager: DataManager): Promise<void> {
         try {
-
             const Factory = new CommandFactory<IBashCommand>(interaction.commandName, dataManager);
             const Bash = Factory.CreateCommand(BashScript);
 
@@ -28,7 +27,7 @@ class BashCommandHandler implements ICommandHandler {
                 CommandLogger.LogAndRespond(bashInstance.LogMessage);
 
                 try {
-                    let BashResult = await new BashScriptRunner(bashInstance).RunBashScript();
+                    let BashResult = await new BashScriptRunner(bashInstance, dataManager).RunBashScript();
 
                     if (BashResult)
                         CommandLogger.LogAndRespond(bashInstance.SuccessMessage);
