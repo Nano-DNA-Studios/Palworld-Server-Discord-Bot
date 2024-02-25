@@ -1,15 +1,17 @@
 import IBashCommand from "../IBashCommand";
 import BashScriptsEnum from "../BashScriptsEnum";
 import BashCommandHandler from "../BashCommandHandler";
+import BotData from "../../BotData"
+import PalworldBotDataManager from "../../PalworldBotDataManager"
 
 const Shutdown: IBashCommand = {
   CommandName: BashScriptsEnum.Shutdown,
   CommandDescription: "Stops the server",
   CustomCode:
     `
-pkill "${process.env.SERVER_START_SCRIPT}"
+pkill "${BotData.Instance(PalworldBotDataManager).SERVER_START_SCRIPT}"
 
-killall "PalServer-Linux-Test"
+killall "${BotData.Instance(PalworldBotDataManager).SERVER_PROCESS_NAME}"
 
 killall "steamcmd"
 

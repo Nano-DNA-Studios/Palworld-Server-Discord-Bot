@@ -1,6 +1,8 @@
 import BashScriptsEnum from "../BashScriptsEnum";
 import IBashCommand from "../IBashCommand";
 import BashCommandHandler from "../BashCommandHandler";
+import BotData from "../../BotData"
+import PalworldBotDataManager from "../../PalworldBotDataManager"
 
 //Start works
 const Ping: IBashCommand =
@@ -9,7 +11,7 @@ const Ping: IBashCommand =
   CommandDescription: "Pings the Server to determine if it is Online",
   CustomCode:
     `
-pidof ${process.env.SERVER_PROCESS_NAME} && echo "Server Is Live" || echo "Server Not Live"
+pidof ${BotData.Instance(PalworldBotDataManager).SERVER_PROCESS_NAME} && echo "Server Is Live" || echo "Server Not Live"
 `,
   SubCommands: [BashScriptsEnum.Custom],
   CommandFunction: () => { console.log("Ping Command Executed") },

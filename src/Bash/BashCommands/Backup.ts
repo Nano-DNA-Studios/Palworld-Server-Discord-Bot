@@ -2,6 +2,8 @@ import IBashCommand from "../IBashCommand"
 import OptionTypes from "../../CommandOptionTypes"
 import BashScriptsEnum from "../BashScriptsEnum"
 import BashCommandHandler from "../BashCommandHandler"
+import BotData from "../../BotData"
+import PalworldBotDataManager from "../../PalworldBotDataManager"
 
 const Backup: IBashCommand =
 {
@@ -11,7 +13,7 @@ const Backup: IBashCommand =
         `
     mkdir Backups
     
-    cp -r ${process.env.SERVER_INSTALL_DIR}/Pal/Saved ~/Backups/Saved-${new Date().toUTCString().replace(/ /g, '-').replace(/:/g, '-')}
+    cp -r ${BotData.Instance(PalworldBotDataManager).STEAM_INSTALL_DIR}/Pal/Saved ~/Backups/Saved-${new Date().toUTCString().replace(/ /g, '-').replace(/:/g, '-')}
     `,
     CommandFunction: () => { console.log("Ping Command Executed") },
     SubCommands: [BashScriptsEnum.Custom],
@@ -25,7 +27,7 @@ const Backup: IBashCommand =
             type: OptionTypes.String,
             name: "suffix",
             description: "The suffix to the Backup File",
-            required: false
+            required: false,
         }
     ],
     MaxOutTimer: 0,

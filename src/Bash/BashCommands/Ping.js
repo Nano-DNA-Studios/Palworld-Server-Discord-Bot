@@ -4,12 +4,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 const BashScriptsEnum_1 = __importDefault(require("../BashScriptsEnum"));
 const BashCommandHandler_1 = __importDefault(require("../BashCommandHandler"));
+const BotData_1 = __importDefault(require("../../BotData"));
+const PalworldBotDataManager_1 = __importDefault(require("../../PalworldBotDataManager"));
 //Start works
 const Ping = {
     CommandName: BashScriptsEnum_1.default.Ping,
     CommandDescription: "Pings the Server to determine if it is Online",
     CustomCode: `
-pidof ${process.env.SERVER_PROCESS_NAME} && echo "Server Is Live" || echo "Server Not Live"
+pidof ${BotData_1.default.Instance(PalworldBotDataManager_1.default).SERVER_PROCESS_NAME} && echo "Server Is Live" || echo "Server Not Live"
 `,
     SubCommands: [BashScriptsEnum_1.default.Custom],
     CommandFunction: () => { console.log("Ping Command Executed"); },

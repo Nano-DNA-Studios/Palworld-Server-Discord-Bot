@@ -49,6 +49,7 @@ class CommandRegisterer {
                         name: option.name,
                         description: option.description,
                         required: option.required || false,
+                        choices: option.choices || []
                     }))
                 })) }
             );

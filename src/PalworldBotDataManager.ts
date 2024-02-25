@@ -46,6 +46,11 @@ class PalworldBotDataManager extends BotDataManager {
     public STEAM_INSTALL_DIR: string = "";
 
     /**
+     * Directory the Account Information is stored in
+     */
+    public ACCOUNT_PATH: string = "";
+
+    /**
      * Initializes the Data Manager
      * @param botDirectory The Directory that the Bot is located in
      */
@@ -78,6 +83,17 @@ class PalworldBotDataManager extends BotDataManager {
      */
     public SetRunLocally(runLocally: boolean) {
         this.RUN_LOCALLY = runLocally;
+
+        this.SaveData();
+    }
+
+    /**
+     * Sets the Steam Install Directory
+     * @param steamInstallDir Directory the Palworld Server is installed in
+     */
+    public SetSteamInstallDir(accountPath: string, steamInstallDir: string) {
+        this.STEAM_INSTALL_DIR = steamInstallDir;
+        this.ACCOUNT_PATH = accountPath;
 
         this.SaveData();
     }

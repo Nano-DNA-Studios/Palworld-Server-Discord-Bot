@@ -4,13 +4,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 const BashScriptsEnum_1 = __importDefault(require("../BashScriptsEnum"));
 const BashCommandHandler_1 = __importDefault(require("../BashCommandHandler"));
+const BotData_1 = __importDefault(require("../../BotData"));
+const PalworldBotDataManager_1 = __importDefault(require("../../PalworldBotDataManager"));
 const Shutdown = {
     CommandName: BashScriptsEnum_1.default.Shutdown,
     CommandDescription: "Stops the server",
     CustomCode: `
-pkill "${process.env.SERVER_START_SCRIPT}"
+pkill "${BotData_1.default.Instance(PalworldBotDataManager_1.default).SERVER_START_SCRIPT}"
 
-killall "PalServer-Linux-Test"
+killall "${BotData_1.default.Instance(PalworldBotDataManager_1.default).SERVER_PROCESS_NAME}"
 
 killall "steamcmd"
 

@@ -4,12 +4,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 const BashScriptsEnum_1 = __importDefault(require("../BashScriptsEnum"));
 const BashCommandHandler_1 = __importDefault(require("../BashCommandHandler"));
+const BotData_1 = __importDefault(require("../../BotData"));
+const PalworldBotDataManager_1 = __importDefault(require("../../PalworldBotDataManager"));
 //Start works
 const Start = {
     CommandName: BashScriptsEnum_1.default.Start,
     CommandDescription: "Starts the Server",
     CustomCode: `
-nohup ./${process.env.SERVER_INSTALL_DIR}/${process.env.SERVER_START_SCRIPT} &
+nohup ./${BotData_1.default.Instance(PalworldBotDataManager_1.default).STEAM_INSTALL_DIR}/${BotData_1.default.Instance(PalworldBotDataManager_1.default).SERVER_START_SCRIPT} &
 
 sleep 3
 

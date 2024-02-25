@@ -1,6 +1,8 @@
 import IBashCommand from "../IBashCommand";
 import BashScriptsEnum from "../BashScriptsEnum";
 import BashCommandHandler from "../BashCommandHandler";
+import BotData from "../../BotData"
+import PalworldBotDataManager from "../../PalworldBotDataManager"
 
 //Start works
 const Update: IBashCommand =
@@ -9,7 +11,7 @@ const Update: IBashCommand =
   CommandDescription: "Updates the Server",
   CustomCode:
     `
-steamcmd +force_install_dir ${process.env.STEAM_INSTALL_DIR} +login anonymous +app_update 2394010 validate +quit
+steamcmd +force_install_dir ${BotData.Instance(PalworldBotDataManager).ACCOUNT_PATH}/${BotData.Instance(PalworldBotDataManager).STEAM_INSTALL_DIR} +login anonymous +app_update 2394010 validate +quit
 `,
   CommandFunction: () => { console.log("Ping Command Executed") },
   SubCommands: [BashScriptsEnum.Shutdown, BashScriptsEnum.Backup, BashScriptsEnum.Custom, BashScriptsEnum.Start, BashScriptsEnum.Ping],

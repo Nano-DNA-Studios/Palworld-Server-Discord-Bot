@@ -1,6 +1,8 @@
 import IBashCommand from "../IBashCommand";
 import BashScriptsEnum from "../BashScriptsEnum";
 import BashCommandHandler from "../BashCommandHandler";
+import BotData from "../../BotData"
+import PalworldBotDataManager from "../../PalworldBotDataManager"
 
 //Start works
 const Start: IBashCommand =
@@ -9,7 +11,7 @@ const Start: IBashCommand =
   CommandDescription: "Starts the Server",
   CustomCode:
     `
-nohup ./${process.env.SERVER_INSTALL_DIR}/${process.env.SERVER_START_SCRIPT} &
+nohup ./${BotData.Instance(PalworldBotDataManager).STEAM_INSTALL_DIR}/${BotData.Instance(PalworldBotDataManager).SERVER_START_SCRIPT} &
 
 sleep 3
 

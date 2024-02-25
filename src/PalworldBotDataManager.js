@@ -46,6 +46,10 @@ class PalworldBotDataManager extends BotDataManager_1.default {
          * Directory the Palworld Server is installed in
          */
         this.STEAM_INSTALL_DIR = "";
+        /**
+         * Directory the Account Information is stored in
+         */
+        this.ACCOUNT_PATH = "";
         this.SERVER_PROCESS_NAME = "PalServer-Linux-Test";
         this.SERVER_START_SCRIPT = "PalServer.sh";
     }
@@ -69,6 +73,15 @@ class PalworldBotDataManager extends BotDataManager_1.default {
      */
     SetRunLocally(runLocally) {
         this.RUN_LOCALLY = runLocally;
+        this.SaveData();
+    }
+    /**
+     * Sets the Steam Install Directory
+     * @param steamInstallDir Directory the Palworld Server is installed in
+     */
+    SetSteamInstallDir(accountPath, steamInstallDir) {
+        this.STEAM_INSTALL_DIR = steamInstallDir;
+        this.ACCOUNT_PATH = accountPath;
         this.SaveData();
     }
 }

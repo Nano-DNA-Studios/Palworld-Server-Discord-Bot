@@ -24,6 +24,11 @@ interface ICommandOption
      * Whether the option is required
      */
     required: boolean;
+
+    /**
+     * The choices for the option
+     */
+    choices?: ICommandOptionChoice[];
 }
 
 
