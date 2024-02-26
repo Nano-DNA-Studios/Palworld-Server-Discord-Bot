@@ -2,7 +2,7 @@ import { REST, Routes } from "discord.js";
 import ICommandOption from "./ICommandOption";
 import ICommand from "./ICommand";
 import IDiscordCommand from "./IDiscordCommand";
-import BotDataManager from "./PalworldBotDataManager";
+import BotDataManager from "./BotDataManager";
 
 /**
  * Registers the commands to the Discord Server
