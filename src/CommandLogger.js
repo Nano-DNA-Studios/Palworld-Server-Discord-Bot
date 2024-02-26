@@ -8,6 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+const BotCommandLog_1 = __importDefault(require("./BotCommandLog"));
 class CommandLogger {
     /**
     * Initializes all info needed for the Response to the Command
@@ -31,6 +35,11 @@ class CommandLogger {
         (_a = this.LogChannel) === null || _a === void 0 ? void 0 : _a.send(message);
         this.ResponseMessage += `${message} \n`;
         this.Response.edit({ content: this.ResponseMessage });
+    }
+    static GetCommandLog(interaction) {
+        let log = new BotCommandLog_1.default(interaction);
+        log.AddLogMessage(this.ResponseMessage);
+        return log;
     }
 }
 /**

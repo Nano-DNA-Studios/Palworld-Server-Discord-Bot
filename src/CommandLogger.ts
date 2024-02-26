@@ -1,5 +1,6 @@
 import { CacheType, ChatInputCommandInteraction, InteractionResponse, TextChannel, Client } from 'discord.js';
 import BotDataManager from './PalworldBotDataManager';
+import BotCommandLog from './BotCommandLog';
 
 class CommandLogger {
  
@@ -38,6 +39,15 @@ class CommandLogger {
         this.LogChannel?.send(message);
         this.ResponseMessage += `${message} \n`;
         this.Response.edit({ content: this.ResponseMessage });
+    }
+
+    public static GetCommandLog(interaction: ChatInputCommandInteraction<CacheType>): BotCommandLog {
+        
+        let log = new BotCommandLog(interaction);
+
+        log.AddLogMessage(this.ResponseMessage);
+
+        return log;
     }
 
 }

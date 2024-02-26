@@ -1,45 +1,27 @@
 import IBotDataManager from "./IBotDataManager";
 import fs from 'fs';
 import readline, { Interface as ReadLineInterface } from 'readline';
+import BotCommandLog from "./BotCommandLog";
 
 /**
  * The Default Bot Data Manager, implementing the bareminimum for a Bot Data Manager
  */
 class BotDataManager implements IBotDataManager {
 
-    /**
-       * Save Path for the Bots Data
-       */
+    public LOG_FILE_PATH: string;
+
     public DATA_SAVE_PATH: string;
 
-    /**
-     * Save Path for the File Data
-     */
     public FILE_SAVE_PATH: string;
 
-    /**
-     * Discord Bot Token
-     */
     public DISCORD_BOT_TOKEN: string = "";
 
-    /**
-     * Discord Server ID
-     */
     public GUILD_ID: string = "";
 
-    /**
-     * Name of the Discord Server
-     */
     public GUILD_NAME: string = "";
 
-    /**
-     * Id of the Discord Bot
-     */
     public CLIENT_ID: string = "";
 
-    /**
-     * Channel ID of the Log Channel that the Bot will send logs to
-     */
     public LOG_CHANNEL_ID: string = "";
 
     /**
@@ -49,6 +31,7 @@ class BotDataManager implements IBotDataManager {
     constructor() {
         this.DATA_SAVE_PATH = process.cwd() + '\\Resources';
         this.FILE_SAVE_PATH = this.DATA_SAVE_PATH + '\\data.json';
+        this.LOG_FILE_PATH = this.DATA_SAVE_PATH + '\\log.txt';
     }
 
     /**
@@ -77,8 +60,10 @@ class BotDataManager implements IBotDataManager {
      */
     public SaveData(): void {
         let jsonData: string = this.GetJSONFormat();
-        if (fs.existsSync(this.DATA_SAVE_PATH))
+        if (fs.existsSync(this.DATA_SAVE_PATH)) {
             fs.writeFileSync(this.FILE_SAVE_PATH, jsonData);
+            fs.writeFileSync(this.LOG_FILE_PATH, '');
+        }
         else
             throw new Error(`Data Save Path does not exist ${this.DATA_SAVE_PATH}`);
     }
@@ -160,6 +145,14 @@ class BotDataManager implements IBotDataManager {
         this.LOG_CHANNEL_ID = logChannelID;
 
         this.SaveData();
+    }
+
+    /**
+     * Adds a Command Log to the Log File
+     * @param log Log to add to the Log File
+     */
+    public AddCommandLog(log: BotCommandLog): void {
+        fs.appendFileSync(this.LOG_FILE_PATH, JSON.stringify(log, null, 4));
     }
 }
 

@@ -21,18 +21,18 @@ const CommandLogger = require("../CommandLogger");
  * Command Handler for Bash Commands
  */
 class BashCommandHandler {
-    HandleCommand(interaction, client, BotDataManager) {
+    HandleCommand(interaction, client, dataManager) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const Factory = new CommandFactory_1.default(interaction.commandName);
                 const Bash = Factory.CreateCommand(BashScript_1.default);
                 if (Bash) {
-                    let bashInstances = this.GetBashInstances(Bash, BotDataManager);
-                    yield CommandLogger.InitializeResponse(interaction, client, BotDataManager);
+                    let bashInstances = this.GetBashInstances(Bash, dataManager);
+                    yield CommandLogger.InitializeResponse(interaction, client, dataManager);
                     for (const bashInstance of bashInstances) {
                         CommandLogger.LogAndRespond(bashInstance.LogMessage);
                         try {
-                            let BashResult = yield new BashScriptRunner_1.default(bashInstance, BotDataManager).RunBashScript();
+                            let BashResult = yield new BashScriptRunner_1.default(bashInstance, dataManager).RunBashScript();
                             if (BashResult)
                                 CommandLogger.LogAndRespond(bashInstance.SuccessMessage);
                             else
@@ -41,6 +41,7 @@ class BashCommandHandler {
                         catch (error) {
                             CommandLogger.LogAndRespond(bashInstance.ErrorMessage + `  (${error})`);
                         }
+                        dataManager.AddCommandLog(CommandLogger.GetCommandLog(interaction));
                     }
                 }
             }

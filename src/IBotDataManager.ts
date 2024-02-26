@@ -40,6 +40,11 @@ interface IBotDataManager {
      */
     LOG_CHANNEL_ID: string;
 
+    /**
+     * Directory to the Log File
+     */
+    LOG_FILE_PATH: string;
+
 }
 
 export default IBotDataManager;

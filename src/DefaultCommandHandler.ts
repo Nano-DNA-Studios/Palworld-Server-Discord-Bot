@@ -2,7 +2,6 @@ import ICommandHandler from "./ICommandHandler";
 import { CacheType, ChatInputCommandInteraction, Client } from 'discord.js';
 import CommandFactory from './CommandFactory';
 import BotDataManager from "./PalworldBotDataManager";
-import ICommand from "./ICommand";
 import Command from "./Command";
 import CommandLogger from './CommandLogger';
 
@@ -28,6 +27,8 @@ class DefaultCommandHandler implements ICommandHandler {
             } catch (error) {
                 CommandLogger.LogAndRespond(command.ErrorMessage + `  (${error})`)
             }
+
+            dataManager.AddCommandLog(CommandLogger.GetCommandLog(interaction));
         }
     }
 

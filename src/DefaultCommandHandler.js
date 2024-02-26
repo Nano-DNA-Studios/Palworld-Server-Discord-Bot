@@ -33,6 +33,7 @@ class DefaultCommandHandler {
                 catch (error) {
                     CommandLogger_1.default.LogAndRespond(command.ErrorMessage + `  (${error})`);
                 }
+                dataManager.AddCommandLog(CommandLogger_1.default.GetCommandLog(interaction));
             }
         });
     }

@@ -13,23 +13,23 @@ import CommandLogger = require('../CommandLogger');
  */
 class BashCommandHandler implements ICommandHandler {
 
-    public async HandleCommand(interaction: ChatInputCommandInteraction<CacheType>, client: Client, BotDataManager: BotDataManager): Promise<void> {
+    public async HandleCommand(interaction: ChatInputCommandInteraction<CacheType>, client: Client, dataManager: BotDataManager): Promise<void> {
         try {
             const Factory = new CommandFactory(interaction.commandName);
             const Bash = Factory.CreateCommand(BashScript);
 
             if (Bash)
             {
-                let bashInstances = this.GetBashInstances(Bash, BotDataManager);
+                let bashInstances = this.GetBashInstances(Bash, dataManager);
 
-                await CommandLogger.InitializeResponse(interaction, client, BotDataManager);
+                await CommandLogger.InitializeResponse(interaction, client, dataManager);
     
                 for (const bashInstance of bashInstances) {
     
                     CommandLogger.LogAndRespond(bashInstance.LogMessage);
     
                     try {
-                        let BashResult = await new BashScriptRunner(bashInstance, BotDataManager).RunBashScript();
+                        let BashResult = await new BashScriptRunner(bashInstance, dataManager).RunBashScript();
     
                         if (BashResult)
                             CommandLogger.LogAndRespond(bashInstance.SuccessMessage);
@@ -39,6 +39,8 @@ class BashCommandHandler implements ICommandHandler {
                     } catch (error) {
                         CommandLogger.LogAndRespond(bashInstance.ErrorMessage + `  (${error})`);
                     }
+
+                    dataManager.AddCommandLog(CommandLogger.GetCommandLog(interaction));
                 }
             }
            

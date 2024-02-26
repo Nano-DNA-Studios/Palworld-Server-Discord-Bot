@@ -23,28 +23,14 @@ class BotDataManager {
      * @param botDirectory The Directory that the Bot is located in
      */
     constructor() {
-        /**
-         * Discord Bot Token
-         */
         this.DISCORD_BOT_TOKEN = "";
-        /**
-         * Discord Server ID
-         */
         this.GUILD_ID = "";
-        /**
-         * Name of the Discord Server
-         */
         this.GUILD_NAME = "";
-        /**
-         * Id of the Discord Bot
-         */
         this.CLIENT_ID = "";
-        /**
-         * Channel ID of the Log Channel that the Bot will send logs to
-         */
         this.LOG_CHANNEL_ID = "";
         this.DATA_SAVE_PATH = process.cwd() + '\\Resources';
         this.FILE_SAVE_PATH = this.DATA_SAVE_PATH + '\\data.json';
+        this.LOG_FILE_PATH = this.DATA_SAVE_PATH + '\\log.txt';
     }
     /**
      * Loads the Data from the File or Registers it by creating the Default Data and file
@@ -72,8 +58,10 @@ class BotDataManager {
      */
     SaveData() {
         let jsonData = this.GetJSONFormat();
-        if (fs_1.default.existsSync(this.DATA_SAVE_PATH))
+        if (fs_1.default.existsSync(this.DATA_SAVE_PATH)) {
             fs_1.default.writeFileSync(this.FILE_SAVE_PATH, jsonData);
+            fs_1.default.writeFileSync(this.LOG_FILE_PATH, '');
+        }
         else
             throw new Error(`Data Save Path does not exist ${this.DATA_SAVE_PATH}`);
     }
@@ -143,6 +131,13 @@ class BotDataManager {
     SetLogChannelID(logChannelID) {
         this.LOG_CHANNEL_ID = logChannelID;
         this.SaveData();
+    }
+    /**
+     * Adds a Command Log to the Log File
+     * @param log Log to add to the Log File
+     */
+    AddCommandLog(log) {
+        fs_1.default.appendFileSync(this.LOG_FILE_PATH, JSON.stringify(log, null, 4));
     }
 }
 exports.default = BotDataManager;
