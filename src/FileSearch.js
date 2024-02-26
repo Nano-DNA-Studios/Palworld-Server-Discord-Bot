@@ -64,7 +64,21 @@ class FileSearch {
         return AllFiles;
     }
     /**
-    * Gets all the Commands from the Provided Directory
+     * Gets all the Command Instances from the Provided Directory
+     * @returns Array of IT Command Objects
+     */
+    GetAllCommandInstances() {
+        let Commands = [];
+        const CommandClasses = this.GetAllCommands();
+        CommandClasses.forEach(commandClass => {
+            const commandInstance = new commandClass();
+            if (commandInstance.CommandName !== '')
+                Commands.push(commandInstance);
+        });
+        return Commands;
+    }
+    /**
+    * Gets all the Command Classes from the Provided Directory
     * @returns Array of IT Command Objects
     */
     GetAllCommands() {
@@ -72,8 +86,18 @@ class FileSearch {
         const Files = this.GetAllJSFiles();
         Files.forEach(file => {
             const module = require(file);
-            if ('CommandName' in module)
-                Commands.push(module);
+            try {
+                const classType = module;
+                try {
+                    const moduleInstance = new classType();
+                    if ('CommandName' in moduleInstance)
+                        Commands.push(module);
+                }
+                catch (error) { }
+            }
+            catch (error) {
+                console.log("Error Occurred: " + error);
+            }
         });
         return Commands;
     }

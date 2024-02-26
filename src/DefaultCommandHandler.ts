@@ -12,19 +12,22 @@ import CommandLogger from './CommandLogger';
 class DefaultCommandHandler implements ICommandHandler {
 
     public async HandleCommand(interaction: ChatInputCommandInteraction<CacheType>, client: Client, dataManager: BotDataManager): Promise<void> {
-        let Factory = await new CommandFactory<ICommand>(interaction.commandName);
-        let command = await Factory.CreateCommand<Command>(Command);
+        let Factory = await new CommandFactory(interaction.commandName);
+        let command = await Factory.CreateCommand(Command);
 
-        await CommandLogger.InitializeResponse(interaction, client, dataManager);
+        if (command)
+        {
+            await CommandLogger.InitializeResponse(interaction, client, dataManager);
 
-        try {
-            CommandLogger.LogAndRespond(command.LogMessage);
-
-            command.RunCommand(dataManager, interaction, client);
-
-            CommandLogger.LogAndRespond(command.SuccessMessage);
-        } catch (error) {
-            CommandLogger.LogAndRespond(command.ErrorMessage + `  (${error})`)
+            try {
+                CommandLogger.LogAndRespond(command.LogMessage);
+    
+                command.RunCommand(dataManager, interaction, client);
+    
+                CommandLogger.LogAndRespond(command.SuccessMessage);
+            } catch (error) {
+                CommandLogger.LogAndRespond(command.ErrorMessage + `  (${error})`)
+            }
         }
     }
 

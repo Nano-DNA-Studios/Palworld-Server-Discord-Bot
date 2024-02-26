@@ -48,6 +48,8 @@ interface ICommand extends IDiscordCommand{
      * @returns Nothing
      */
     CommandHandler: ICommandHandler;
+
+    RunCommand: (dataManager: BotDataManager, interaction: ChatInputCommandInteraction<CacheType>, client: Client) => void;
 }
 
 export default ICommand;

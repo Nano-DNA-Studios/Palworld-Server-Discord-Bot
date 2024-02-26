@@ -1,13 +1,34 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const DefaultCommandHandler_1 = __importDefault(require("../DefaultCommandHandler"));
 /**
  * Class representing a Bash Script
  */
 class BashScript {
+    constructor() {
+        this.CommandName = '';
+        this.CommandDescription = '';
+        this.CustomCode = '';
+        this.CommandFunction = () => { };
+        this.SubCommands = [];
+        this.ReplyMessage = '';
+        this.LogMessage = '';
+        this.ErrorMessage = '';
+        this.SuccessMessage = '';
+        this.FailMessages = [];
+        this.Options = [];
+        this.MaxOutTimer = 0;
+        this.CommandHandler = DefaultCommandHandler_1.default.Instance();
+    }
     /**
      * Initializes the Bash Script
      * @param data
      */
-    constructor(data) {
+    /*
+    constructor(data: IBashCommand) {
         this.CommandName = data.CommandName;
         this.CommandDescription = data.CommandDescription;
         this.CustomCode = data.CustomCode;
@@ -22,6 +43,7 @@ class BashScript {
         this.MaxOutTimer = data.MaxOutTimer;
         this.CommandHandler = data.CommandHandler;
     }
+    */
     /**
      * Gets the Bash Script code to run
      * @returns The Bash Script that will run for the command
@@ -48,4 +70,4 @@ class BashScript {
             return false;
     }
 }
-module.exports = BashScript;
+exports.default = BashScript;

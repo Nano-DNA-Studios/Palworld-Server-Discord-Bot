@@ -23,14 +23,16 @@ class DefaultCommandHandler {
         return __awaiter(this, void 0, void 0, function* () {
             let Factory = yield new CommandFactory_1.default(interaction.commandName);
             let command = yield Factory.CreateCommand(Command_1.default);
-            yield CommandLogger_1.default.InitializeResponse(interaction, client, dataManager);
-            try {
-                CommandLogger_1.default.LogAndRespond(command.LogMessage);
-                command.RunCommand(dataManager, interaction, client);
-                CommandLogger_1.default.LogAndRespond(command.SuccessMessage);
-            }
-            catch (error) {
-                CommandLogger_1.default.LogAndRespond(command.ErrorMessage + `  (${error})`);
+            if (command) {
+                yield CommandLogger_1.default.InitializeResponse(interaction, client, dataManager);
+                try {
+                    CommandLogger_1.default.LogAndRespond(command.LogMessage);
+                    command.RunCommand(dataManager, interaction, client);
+                    CommandLogger_1.default.LogAndRespond(command.SuccessMessage);
+                }
+                catch (error) {
+                    CommandLogger_1.default.LogAndRespond(command.ErrorMessage + `  (${error})`);
+                }
             }
         });
     }

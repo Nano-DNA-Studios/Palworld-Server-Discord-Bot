@@ -36,17 +36,20 @@ class CommandRegisterer {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 console.log('Registering Slash Commands');
-                yield this.rest.put(discord_js_1.Routes.applicationGuildCommands(this._dataManager.CLIENT_ID, this._dataManager.GUILD_ID), { body: this.Commands.map(element => ({
-                        name: element.CommandName,
-                        description: element.CommandDescription,
-                        options: element.Options.map((option) => ({
-                            type: option.type,
-                            name: option.name,
-                            description: option.description,
-                            required: option.required || false,
-                            choices: option.choices || []
-                        }))
-                    })) });
+                let body = this.Commands.map(element => ({
+                    name: element.CommandName,
+                    description: element.CommandDescription,
+                    options: element.Options.map((option) => ({
+                        type: option.type,
+                        name: option.name,
+                        description: option.description,
+                        required: option.required || false,
+                        choices: option.choices || []
+                    }))
+                }));
+                yield this.rest.put(discord_js_1.Routes.applicationGuildCommands(this._dataManager.CLIENT_ID, this._dataManager.GUILD_ID), {
+                    body: body
+                });
                 console.log('Slash Commands Registered');
             }
             catch (error) {

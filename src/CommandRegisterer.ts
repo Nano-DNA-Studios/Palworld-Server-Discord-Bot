@@ -24,34 +24,37 @@ class CommandRegisterer {
      * Maps the Commands to be Added to Discord Commands and Adds to the List of Commands to be Registered and 
      * @param commands Array of Commands to be Registered
      */
-    public AddCommands (commands : ICommand[]) : void
-    {
+    public AddCommands(commands: ICommand[]): void {
         this.Commands.push(...commands);
     }
 
     /**
      * Registers the commands to the Discord Server 
      */
-    public async RegisterCommands()  {
+    public async RegisterCommands() {
         try {
             console.log('Registering Slash Commands');
+
+            let body =  this.Commands.map(element => ({
+                name: element.CommandName,
+                description: element.CommandDescription,
+                options: element.Options.map((option: ICommandOption) => ({
+                    type: option.type,
+                    name: option.name,
+                    description: option.description,
+                    required: option.required || false,
+                    choices: option.choices || []
+                }))
+            }));
 
             await this.rest.put(
                 Routes.applicationGuildCommands(
                     this._dataManager.CLIENT_ID!,
                     this._dataManager.GUILD_ID!
                 ),
-                { body: this.Commands.map(element => ({
-                    name: element.CommandName,
-                    description: element.CommandDescription,
-                    options: element.Options.map((option: ICommandOption) => ({
-                        type: option.type,
-                        name: option.name,
-                        description: option.description,
-                        required: option.required || false,
-                        choices: option.choices || []
-                    }))
-                })) }
+                {
+                    body: body
+                }
             );
 
             console.log('Slash Commands Registered');

@@ -12,7 +12,18 @@ class Command {
      * Initializes the Command
      * @param data
      */
-    constructor(data) {
+    constructor() {
+        this.CommandName = '';
+        this.CommandDescription = '';
+        this.CommandFunction = () => { };
+        this.ReplyMessage = '';
+        this.LogMessage = '';
+        this.ErrorMessage = '';
+        this.SuccessMessage = '';
+        this.FailMessages = [];
+        this.Options = [];
+        this.CommandHandler = DefaultCommandHandler_1.default.Instance();
+        /*
         this.CommandName = data.CommandName;
         this.CommandDescription = data.CommandDescription;
         this.CommandFunction = data.CommandFunction;
@@ -23,6 +34,7 @@ class Command {
         this.FailMessages = data.FailMessages;
         this.Options = data.Options;
         this.CommandHandler = data.CommandHandler;
+        */
     }
     /**
      * Runs the Discord Command
@@ -48,8 +60,9 @@ class Command {
             FailMessages: [''],
             Options: [],
             CommandHandler: new DefaultCommandHandler_1.default(),
+            RunCommand: () => { }
         };
-        return UndefinedBashScript;
+        return new this();
     }
 }
 exports.default = Command;

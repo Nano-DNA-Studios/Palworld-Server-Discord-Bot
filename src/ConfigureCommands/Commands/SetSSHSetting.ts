@@ -2,12 +2,14 @@ import ICommand from "../../ICommand";
 import ConfigureScriptsEnum from "../ConfigureScriptsEnum";
 import OptionTypes from "../../CommandOptionTypes";
 import DefaultCommandHandler from "../../DefaultCommandHandler";
+import Command from "../../Command";
+import { ChatInputCommandInteraction, CacheType } from "discord.js";
+import PalworldBotDataManager from "../../PalworldBotDataManager";
 
-const SetSSH: ICommand =
-{
-    CommandName: ConfigureScriptsEnum.SetSSHSettings,
-    CommandDescription: "Sets the SSH Settings for the Server to Login and run Bash Commands",
-    CommandFunction: ( interaction, BotDataManager,) => {
+class SetSSH extends Command implements ICommand {
+    CommandName = ConfigureScriptsEnum.SetSSHSettings;
+    CommandDescription = "Sets the SSH Settings for the Server to Login and run Bash Commands";
+    CommandFunction = (interaction: ChatInputCommandInteraction<CacheType>, BotDataManager: PalworldBotDataManager) => {
 
         const serverIp = interaction.options.getString('serverip');
         const serverUser = interaction.options.getString('serveruser');
@@ -18,13 +20,13 @@ const SetSSH: ICommand =
             BotDataManager.SetSSHSettings(serverIp, serverUser, serverPort, serverPassword);
         else
             throw new Error("Not all the SSH Settings were provided.");
-    },
-    ReplyMessage: "SSH Settings are being set :arrows_clockwise:",
-    LogMessage: "SSH Settings are being set :arrows_clockwise:",
-    ErrorMessage: ":warning: Could not set SSH Settings :warning:",
-    SuccessMessage: ":white_check_mark: SSH Settings have been set :white_check_mark:",
-    FailMessages: [],
-    Options: [
+    };
+    ReplyMessage = "SSH Settings are being set :arrows_clockwise:";
+    LogMessage = "SSH Settings are being set :arrows_clockwise:";
+    ErrorMessage = ":warning: Could not set SSH Settings :warning:";
+    SuccessMessage = ":white_check_mark: SSH Settings have been set :white_check_mark:";
+    FailMessages = [];
+    Options = [
         {
             type: OptionTypes.String,
             name: "serverip",
@@ -49,8 +51,8 @@ const SetSSH: ICommand =
             description: "The Password for the Server",
             required: true
         }
-    ],
-    CommandHandler: DefaultCommandHandler.Instance()
+    ];
+    CommandHandler = DefaultCommandHandler.Instance();
 }
 
 export = SetSSH;

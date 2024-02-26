@@ -41,7 +41,7 @@ function GetGuildID(guildName) {
 function RegisterCommands() {
     let registerer = new CommandRegisterer_1.default(Data);
     let fileSearch = new FileSearch_1.default();
-    let commands = fileSearch.GetAllCommands();
+    let commands = fileSearch.GetAllCommandInstances();
     registerer.AddCommands(commands);
     registerer.RegisterCommands();
 }

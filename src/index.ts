@@ -29,7 +29,7 @@ async function GetGuildID(guildName: string): Promise<string> {
 function RegisterCommands() {
   let registerer = new CommandRegisterer(Data);
   let fileSearch = new FileSearch();
-  let commands = fileSearch.GetAllCommands();
+  let commands = fileSearch.GetAllCommandInstances();
   registerer.AddCommands(commands);
   registerer.RegisterCommands();
 }

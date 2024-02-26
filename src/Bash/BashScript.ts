@@ -3,29 +3,32 @@ import ICommandOption from "../ICommandOption";
 import BotDataManager from "../PalworldBotDataManager";
 import { CacheType, ChatInputCommandInteraction, Client } from 'discord.js';
 import ICommandHandler from "../ICommandHandler";
+import DefaultCommandHandler from "../DefaultCommandHandler";
 
 /**
  * Class representing a Bash Script 
  */
 class BashScript implements IBashCommand {
-    public CommandName: string;
-    public CommandDescription: string;
-    public CustomCode: string;
-    public CommandFunction: (interaction: ChatInputCommandInteraction<CacheType>, BotDataManager: BotDataManager) => void;
-    public SubCommands: string[];
-    public ReplyMessage: string;
-    public LogMessage: string;
-    public ErrorMessage: string;
-    public SuccessMessage: string;
-    public FailMessages: string[];
-    public Options: ICommandOption[];
-    public MaxOutTimer: number;
-    public CommandHandler: ICommandHandler;
+    public CommandName: string = '';
+    public CommandDescription: string= '';
+    public CustomCode: string = '';
+    public CommandFunction: (interaction: ChatInputCommandInteraction<CacheType>, BotDataManager: BotDataManager) => void = () => { };
+    public SubCommands: string[] = [];
+    public ReplyMessage: string =   '';
+    public LogMessage: string = '';
+    public ErrorMessage: string= '';
+    public SuccessMessage: string = '';
+    public FailMessages: string[] = [];
+    public Options: ICommandOption[] = [];
+    public MaxOutTimer: number = 0;
+    public CommandHandler: ICommandHandler = DefaultCommandHandler.Instance();
 
+    
     /**
      * Initializes the Bash Script
      * @param data
      */
+    /*
     constructor(data: IBashCommand) {
         this.CommandName = data.CommandName;
         this.CommandDescription = data.CommandDescription;
@@ -41,6 +44,7 @@ class BashScript implements IBashCommand {
         this.MaxOutTimer = data.MaxOutTimer;
         this.CommandHandler = data.CommandHandler;
     }
+    */
 
     /**
      * Gets the Bash Script code to run
@@ -72,4 +76,4 @@ class BashScript implements IBashCommand {
 
 }
 
-export = BashScript;
+export default BashScript;

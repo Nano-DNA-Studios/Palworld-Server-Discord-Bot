@@ -26,7 +26,7 @@ class CommandFactory {
             const Commands = this._fileSearch.GetAllCommands();
             for (const command of Commands) {
                 if (command.CommandName === this._commandName)
-                    return command;
+                    return new command();
             }
         }
         catch (err) {
@@ -40,11 +40,17 @@ class CommandFactory {
      * @returns A New Instance of the Command Requested
      */
     CreateCommand(CommandType) {
-        const commandInterface = this.GetCommandInterface();
-        if (!commandInterface) {
-            throw new Error("CommandInterface is undefined");
+        try {
+            const Commands = this._fileSearch.GetAllCommands();
+            for (const command of Commands) {
+                const instance = new command();
+                if (instance.CommandName === this._commandName)
+                    return instance;
+            }
         }
-        return new CommandType(commandInterface);
+        catch (err) {
+            console.log("Unable to scan directory: " + err);
+        }
     }
 }
 exports.default = CommandFactory;

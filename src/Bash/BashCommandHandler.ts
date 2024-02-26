@@ -3,7 +3,7 @@ import BotDataManager from '../PalworldBotDataManager';
 import { CacheType, ChatInputCommandInteraction, Client } from 'discord.js';
 import CommandFactory from '../CommandFactory';
 import BashScriptsEnum = require('./BashScriptsEnum');
-import BashScript = require('./BashScript');
+import BashScript from './BashScript';
 import IBashCommand = require('./IBashCommand');
 import ICommandHandler = require('../ICommandHandler');
 import CommandLogger = require('../CommandLogger');
@@ -15,29 +15,33 @@ class BashCommandHandler implements ICommandHandler {
 
     public async HandleCommand(interaction: ChatInputCommandInteraction<CacheType>, client: Client, BotDataManager: BotDataManager): Promise<void> {
         try {
-            const Factory = new CommandFactory<IBashCommand>(interaction.commandName);
+            const Factory = new CommandFactory(interaction.commandName);
             const Bash = Factory.CreateCommand(BashScript);
 
-            let bashInstances = this.GetBashInstances(Bash, BotDataManager);
+            if (Bash)
+            {
+                let bashInstances = this.GetBashInstances(Bash, BotDataManager);
 
-            await CommandLogger.InitializeResponse(interaction, client, BotDataManager);
-
-            for (const bashInstance of bashInstances) {
-
-                CommandLogger.LogAndRespond(bashInstance.LogMessage);
-
-                try {
-                    let BashResult = await new BashScriptRunner(bashInstance, BotDataManager).RunBashScript();
-
-                    if (BashResult)
-                        CommandLogger.LogAndRespond(bashInstance.SuccessMessage);
-                    else
-                        CommandLogger.LogAndRespond(bashInstance.ErrorMessage);
-
-                } catch (error) {
-                    CommandLogger.LogAndRespond(bashInstance.ErrorMessage + `  (${error})`);
+                await CommandLogger.InitializeResponse(interaction, client, BotDataManager);
+    
+                for (const bashInstance of bashInstances) {
+    
+                    CommandLogger.LogAndRespond(bashInstance.LogMessage);
+    
+                    try {
+                        let BashResult = await new BashScriptRunner(bashInstance, BotDataManager).RunBashScript();
+    
+                        if (BashResult)
+                            CommandLogger.LogAndRespond(bashInstance.SuccessMessage);
+                        else
+                            CommandLogger.LogAndRespond(bashInstance.ErrorMessage);
+    
+                    } catch (error) {
+                        CommandLogger.LogAndRespond(bashInstance.ErrorMessage + `  (${error})`);
+                    }
                 }
             }
+           
         } catch (error) {
             console.log(`Error Occurred : ${error}`);
         }
@@ -60,10 +64,11 @@ class BashCommandHandler implements ICommandHandler {
             else
                 commandName = subCommand;
 
-            const factory = new CommandFactory<IBashCommand>(commandName);
-            const bashInstance = factory.CreateCommand<BashScript>(BashScript);
+            const factory = new CommandFactory(commandName);
+            const bashInstance = factory.CreateCommand(BashScript);
 
-            bashInstances.push(bashInstance);
+            if (bashInstance)
+                bashInstances.push(bashInstance);
         });
 
         return bashInstances;

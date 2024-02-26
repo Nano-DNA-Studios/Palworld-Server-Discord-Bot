@@ -6,22 +6,27 @@ const BashScriptsEnum_1 = __importDefault(require("../BashScriptsEnum"));
 const BashCommandHandler_1 = __importDefault(require("../BashCommandHandler"));
 const BotData_1 = __importDefault(require("../../BotData"));
 const PalworldBotDataManager_1 = __importDefault(require("../../PalworldBotDataManager"));
+const BashScript_1 = __importDefault(require("../BashScript"));
 //Start works
-const Update = {
-    CommandName: BashScriptsEnum_1.default.Update,
-    CommandDescription: "Updates the Server",
-    CustomCode: `
+class Update extends BashScript_1.default {
+    constructor() {
+        super(...arguments);
+        this.CommandName = BashScriptsEnum_1.default.Update;
+        this.CommandDescription = "Updates the Server";
+        this.CustomCode = `
 steamcmd +force_install_dir ${BotData_1.default.Instance(PalworldBotDataManager_1.default).ACCOUNT_PATH}/${BotData_1.default.Instance(PalworldBotDataManager_1.default).STEAM_INSTALL_DIR} +login anonymous +app_update 2394010 validate +quit
-`,
-    CommandFunction: () => { console.log("Ping Command Executed"); },
-    SubCommands: [BashScriptsEnum_1.default.Shutdown, BashScriptsEnum_1.default.Backup, BashScriptsEnum_1.default.Custom, BashScriptsEnum_1.default.Start, BashScriptsEnum_1.default.Ping],
-    ReplyMessage: "Server is Updating :arrows_clockwise:",
-    LogMessage: "Server is Updating :arrows_clockwise:",
-    ErrorMessage: ":warning: Server could not Update :warning:",
-    SuccessMessage: ":white_check_mark: Server has been Updated :white_check_mark:",
-    FailMessages: [],
-    Options: [],
-    MaxOutTimer: 0,
-    CommandHandler: BashCommandHandler_1.default.Instance()
-};
+`;
+        this.CommandFunction = () => { console.log("Ping Command Executed"); };
+        this.SubCommands = [BashScriptsEnum_1.default.Shutdown, BashScriptsEnum_1.default.Backup, BashScriptsEnum_1.default.Custom, BashScriptsEnum_1.default.Start, BashScriptsEnum_1.default.Ping];
+        this.ReplyMessage = "Server is Updating :arrows_clockwise:";
+        this.LogMessage = "Server is Updating :arrows_clockwise:";
+        this.ErrorMessage = ":warning: Server could not Update :warning:";
+        this.SuccessMessage = ":white_check_mark: Server has been Updated :white_check_mark:";
+        this.FailMessages = [];
+        this.Options = [];
+        this.MaxOutTimer = 0;
+        this.CommandHandler = BashCommandHandler_1.default.Instance();
+    }
+}
+;
 module.exports = Update;

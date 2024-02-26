@@ -9,22 +9,23 @@ import DefaultCommandHandler from "./DefaultCommandHandler";
  * Represents a Command for a Discord Bot
  */
 class Command implements ICommand {
-    public CommandName: string;
-    public CommandDescription: string;
-    public CommandFunction: ( interaction: ChatInputCommandInteraction<CacheType>, BotDataManager: BotDataManager) => void;
-    public ReplyMessage: string;
-    public LogMessage: string;
-    public ErrorMessage: string;
-    public SuccessMessage: string;
-    public FailMessages: string[];
-    public Options: ICommandOption[];
-    public CommandHandler: ICommandHandler;
+    public CommandName: string = '';
+    public CommandDescription: string = '';
+    public CommandFunction: ( interaction: ChatInputCommandInteraction<CacheType>, BotDataManager: BotDataManager) => void = () => { };
+    public ReplyMessage: string = '';
+    public LogMessage: string = '';
+    public ErrorMessage: string = '';
+    public SuccessMessage: string = '';
+    public FailMessages: string[] = [];
+    public Options: ICommandOption[] = [];
+    public CommandHandler: ICommandHandler = DefaultCommandHandler.Instance();
 
     /**
      * Initializes the Command
      * @param data
      */
-    constructor(data: ICommand) {
+    constructor() {
+        /*
         this.CommandName = data.CommandName;
         this.CommandDescription = data.CommandDescription;
         this.CommandFunction = data.CommandFunction;
@@ -35,7 +36,9 @@ class Command implements ICommand {
         this.FailMessages = data.FailMessages;
         this.Options = data.Options;
         this.CommandHandler = data.CommandHandler;
+        */
     }
+    
 
     /**
      * Runs the Discord Command
@@ -62,9 +65,10 @@ class Command implements ICommand {
             FailMessages: [''],
             Options: [],
             CommandHandler: new DefaultCommandHandler(),
+            RunCommand: () => { }
         };
 
-        return UndefinedBashScript;
+        return new this();
     }
 
 }

@@ -5,8 +5,7 @@ import Command from "./Command";
 /**
  * Command Factory for creating new Instances of a Command based off the Command Name provided
  */
-class CommandFactory<IT extends ICommand>
-{
+class CommandFactory {
     /**
      * The name of the Command to be created
      */
@@ -30,18 +29,19 @@ class CommandFactory<IT extends ICommand>
      * Gets the Command Interface based off the Command Name
      * @returns Returns a IT instance of the Command being run
      */
-    private GetCommandInterface(): IT {
+    private GetCommandInterface<T extends ICommand>(): ICommand {
         try {
-            const Commands: ICommand[] = this._fileSearch.GetAllCommands();
+            const Commands = this._fileSearch.GetAllCommands();
             for (const command of Commands) {
                 if (command.CommandName === this._commandName)
-                    return command as IT;
+                    return new command();
             }
+
         } catch (err) {
             console.log("Unable to scan directory: " + err);
         }
 
-        return Command.GetEmptyCommand() as IT;
+        return Command.GetEmptyCommand();
     }
 
     /**
@@ -49,13 +49,18 @@ class CommandFactory<IT extends ICommand>
      * @param CommandType The Class Type of the Command that will be created. Must have a constructor that takes a single parameter of the Command Interface
      * @returns A New Instance of the Command Requested
      */
-    public CreateCommand<T extends ICommand>(CommandType: { new(commandInterface: IT): T }): T {
-        const commandInterface = this.GetCommandInterface();
-        if (!commandInterface) {
-            throw new Error("CommandInterface is undefined");
-        }
+    public CreateCommand<T extends ICommand>(CommandType: { new(): T }): T | undefined {
+        try {
+            const Commands = this._fileSearch.GetAllCommands();
+            for (const command of Commands) {
+                const instance = new command();
 
-        return new CommandType(commandInterface);
+                if (instance.CommandName === this._commandName)
+                    return instance as T;
+            }
+        } catch (err) {
+            console.log("Unable to scan directory: " + err);
+        }
     }
 }
 
