@@ -12,7 +12,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 const CommandFactory_1 = __importDefault(require("./CommandFactory"));
-const Command_1 = __importDefault(require("./Command"));
 /**
  * Class Handling Command Execution, and Delegates to Custom Command Handlers
  */
@@ -20,7 +19,7 @@ class CommandHandler {
     HandleCommand(interaction, client, BotDataManager) {
         return __awaiter(this, void 0, void 0, function* () {
             let Factory = yield new CommandFactory_1.default(interaction.commandName);
-            let command = yield Factory.CreateCommand(Command_1.default);
+            let command = yield Factory.CreateCommand();
             if (command)
                 yield command.CommandHandler.HandleCommand(interaction, client, BotDataManager);
         });

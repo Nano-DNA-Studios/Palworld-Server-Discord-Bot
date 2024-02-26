@@ -43,6 +43,7 @@ class BotDataManager implements IBotDataManager {
             await this.LoadDataFromFile();
         } else {
             await this.RegisterServerController();
+            fs.writeFileSync(this.LOG_FILE_PATH, '');
             this.LoadDataFromFile();
         }
     }
@@ -62,7 +63,6 @@ class BotDataManager implements IBotDataManager {
         let jsonData: string = this.GetJSONFormat();
         if (fs.existsSync(this.DATA_SAVE_PATH)) {
             fs.writeFileSync(this.FILE_SAVE_PATH, jsonData);
-            fs.writeFileSync(this.LOG_FILE_PATH, '');
         }
         else
             throw new Error(`Data Save Path does not exist ${this.DATA_SAVE_PATH}`);

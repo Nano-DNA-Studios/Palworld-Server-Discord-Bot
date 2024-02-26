@@ -42,6 +42,7 @@ class BotDataManager {
             }
             else {
                 yield this.RegisterServerController();
+                fs_1.default.writeFileSync(this.LOG_FILE_PATH, '');
                 this.LoadDataFromFile();
             }
         });
@@ -60,7 +61,6 @@ class BotDataManager {
         let jsonData = this.GetJSONFormat();
         if (fs_1.default.existsSync(this.DATA_SAVE_PATH)) {
             fs_1.default.writeFileSync(this.FILE_SAVE_PATH, jsonData);
-            fs_1.default.writeFileSync(this.LOG_FILE_PATH, '');
         }
         else
             throw new Error(`Data Save Path does not exist ${this.DATA_SAVE_PATH}`);

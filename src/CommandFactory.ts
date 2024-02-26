@@ -26,30 +26,11 @@ class CommandFactory {
     }
 
     /**
-     * Gets the Command Interface based off the Command Name
-     * @returns Returns a IT instance of the Command being run
-     */
-    private GetCommandInterface<T extends ICommand>(): ICommand {
-        try {
-            const Commands = this._fileSearch.GetAllCommands();
-            for (const command of Commands) {
-                if (command.CommandName === this._commandName)
-                    return new command();
-            }
-
-        } catch (err) {
-            console.log("Unable to scan directory: " + err);
-        }
-
-        return Command.GetEmptyCommand();
-    }
-
-    /**
      * Creates an Instance of the Command
      * @param CommandType The Class Type of the Command that will be created. Must have a constructor that takes a single parameter of the Command Interface
      * @returns A New Instance of the Command Requested
      */
-    public CreateCommand<T extends ICommand>(CommandType: { new(): T }): T | undefined {
+    public CreateCommand<T extends ICommand>(): T | undefined {
         try {
             const Commands = this._fileSearch.GetAllCommands();
             for (const command of Commands) {

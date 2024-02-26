@@ -16,26 +16,25 @@ class BashCommandHandler implements ICommandHandler {
     public async HandleCommand(interaction: ChatInputCommandInteraction<CacheType>, client: Client, dataManager: BotDataManager): Promise<void> {
         try {
             const Factory = new CommandFactory(interaction.commandName);
-            const Bash = Factory.CreateCommand(BashScript);
+            const Bash = Factory.CreateCommand<BashScript>();
 
-            if (Bash)
-            {
+            if (Bash) {
                 let bashInstances = this.GetBashInstances(Bash, dataManager);
 
                 await CommandLogger.InitializeResponse(interaction, client, dataManager);
-    
+
                 for (const bashInstance of bashInstances) {
-    
+
                     CommandLogger.LogAndRespond(bashInstance.LogMessage);
-    
+
                     try {
                         let BashResult = await new BashScriptRunner(bashInstance, dataManager).RunBashScript();
-    
+
                         if (BashResult)
                             CommandLogger.LogAndRespond(bashInstance.SuccessMessage);
                         else
                             CommandLogger.LogAndRespond(bashInstance.ErrorMessage);
-    
+
                     } catch (error) {
                         CommandLogger.LogAndRespond(bashInstance.ErrorMessage + `  (${error})`);
                     }
@@ -43,7 +42,6 @@ class BashCommandHandler implements ICommandHandler {
                     dataManager.AddCommandLog(CommandLogger.GetCommandLog(interaction));
                 }
             }
-           
         } catch (error) {
             console.log(`Error Occurred : ${error}`);
         }
@@ -67,7 +65,7 @@ class BashCommandHandler implements ICommandHandler {
                 commandName = subCommand;
 
             const factory = new CommandFactory(commandName);
-            const bashInstance = factory.CreateCommand(BashScript);
+            const bashInstance = factory.CreateCommand<BashScript>();
 
             if (bashInstance)
                 bashInstances.push(bashInstance);

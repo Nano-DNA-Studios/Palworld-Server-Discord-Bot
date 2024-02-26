@@ -1,20 +1,17 @@
-import ILog from "./ILog";
+import ILogMessage from './ILogMessage';
 import { CacheType, ChatInputCommandInteraction } from 'discord.js';
 
 /**
  * Class representing an instance of a Discord Bot Log
  */
-class BotCommandLog implements ILog {
+class BotCommandLog implements ILogMessage {
 
     public User: string;
 
-  
     public LogMessage: string;
-
 
     public LogCommand: string;
 
-   
     public LogDate: Date;
 
     constructor(interaction: ChatInputCommandInteraction<CacheType>) {

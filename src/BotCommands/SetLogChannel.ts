@@ -1,14 +1,14 @@
-import ConfigureScriptsEnum from "../ConfigureScriptsEnum";
-import OptionTypes from "../../CommandOptionTypes";
+import BotCommandsEnum from "./BotCommandsEnum";
+import OptionTypes from "../CommandOptionTypes";
 import { CacheType, ChatInputCommandInteraction, TextChannel } from "discord.js";
-import DefaultCommandHandler from "../../DefaultCommandHandler";
-import ICommand from "../../ICommand";
-import Command from "../../Command";
-import PalworldBotDataManager from "../../PalworldBotDataManager";
+import DefaultCommandHandler from "../DefaultCommandHandler";
+import ICommand from "../ICommand";
+import Command from "../Command";
+import PalworldBotDataManager from "../PalworldBotDataManager";
 
 
 class SetLogChannel extends Command implements ICommand {
-    CommandName = ConfigureScriptsEnum.SetLogChannel;
+    CommandName = BotCommandsEnum.SetLogChannel;
     CommandDescription = "Sets the Discord Text Channel to send Bot and Server Logs to";
     CommandFunction = (interaction: ChatInputCommandInteraction<CacheType>, BotDataManager: PalworldBotDataManager) => {
 

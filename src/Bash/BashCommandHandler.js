@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const BashScriptRunner_1 = __importDefault(require("./BashScriptRunner"));
 const CommandFactory_1 = __importDefault(require("../CommandFactory"));
 const BashScriptsEnum = require("./BashScriptsEnum");
-const BashScript_1 = __importDefault(require("./BashScript"));
 const CommandLogger = require("../CommandLogger");
 /**
  * Command Handler for Bash Commands
@@ -25,7 +24,7 @@ class BashCommandHandler {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const Factory = new CommandFactory_1.default(interaction.commandName);
-                const Bash = Factory.CreateCommand(BashScript_1.default);
+                const Bash = Factory.CreateCommand();
                 if (Bash) {
                     let bashInstances = this.GetBashInstances(Bash, dataManager);
                     yield CommandLogger.InitializeResponse(interaction, client, dataManager);
@@ -65,7 +64,7 @@ class BashCommandHandler {
             else
                 commandName = subCommand;
             const factory = new CommandFactory_1.default(commandName);
-            const bashInstance = factory.CreateCommand(BashScript_1.default);
+            const bashInstance = factory.CreateCommand();
             if (bashInstance)
                 bashInstances.push(bashInstance);
         });

@@ -2,15 +2,15 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-const ConfigureScriptsEnum_1 = __importDefault(require("../ConfigureScriptsEnum"));
-const CommandOptionTypes_1 = __importDefault(require("../../CommandOptionTypes"));
+const BotCommandsEnum_1 = __importDefault(require("./BotCommandsEnum"));
+const CommandOptionTypes_1 = __importDefault(require("../CommandOptionTypes"));
 const discord_js_1 = require("discord.js");
-const DefaultCommandHandler_1 = __importDefault(require("../../DefaultCommandHandler"));
-const Command_1 = __importDefault(require("../../Command"));
+const DefaultCommandHandler_1 = __importDefault(require("../DefaultCommandHandler"));
+const Command_1 = __importDefault(require("../Command"));
 class SetLogChannel extends Command_1.default {
     constructor() {
         super(...arguments);
-        this.CommandName = ConfigureScriptsEnum_1.default.SetLogChannel;
+        this.CommandName = BotCommandsEnum_1.default.SetLogChannel;
         this.CommandDescription = "Sets the Discord Text Channel to send Bot and Server Logs to";
         this.CommandFunction = (interaction, BotDataManager) => {
             const logChannel = interaction.options.getChannel('logchannel');

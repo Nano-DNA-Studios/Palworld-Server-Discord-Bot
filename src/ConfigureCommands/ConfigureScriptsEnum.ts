@@ -4,7 +4,6 @@
 enum ConfigureScriptsEnum {
     SetSSHSettings = 'setsshsettings',
     SetRunLocally = 'setrunlocally',
-    SetLogChannel = 'setlogchannel',
     SetInstallDirectory = 'setinstalldirectory',
 }
 

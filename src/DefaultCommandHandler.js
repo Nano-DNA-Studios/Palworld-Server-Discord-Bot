@@ -13,7 +13,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const CommandFactory_1 = __importDefault(require("./CommandFactory"));
-const Command_1 = __importDefault(require("./Command"));
 const CommandLogger_1 = __importDefault(require("./CommandLogger"));
 /**
  * Default Command Handler used for empty and regular Discord Bot Commands
@@ -22,7 +21,7 @@ class DefaultCommandHandler {
     HandleCommand(interaction, client, dataManager) {
         return __awaiter(this, void 0, void 0, function* () {
             let Factory = yield new CommandFactory_1.default(interaction.commandName);
-            let command = yield Factory.CreateCommand(Command_1.default);
+            let command = yield Factory.CreateCommand();
             if (command) {
                 yield CommandLogger_1.default.InitializeResponse(interaction, client, dataManager);
                 try {

@@ -3,7 +3,7 @@
 /**
  * Interface for the Log class
  */
-interface ILog {
+interface ILogMessage {
 
     /**
      * User who made the Log
@@ -27,4 +27,4 @@ interface ILog {
     
 }
 
-export default ILog;
+export default ILogMessage;
