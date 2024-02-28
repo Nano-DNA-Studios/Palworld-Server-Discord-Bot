@@ -15,8 +15,7 @@
     "discord.js": "^14.14.1",
     "dna-discord-framework": "^1.0.17",
     "dotenv": "^16.4.1",
-    "ssh2": "^1.15.0",
-    "tsc": "^2.0.4"
+    "ssh2": "^1.15.0"
   },
   "devDependencies": {
     "typescript": "^5.3.3"
