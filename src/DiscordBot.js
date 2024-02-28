@@ -19,6 +19,9 @@ const CommandRegisterer_1 = __importDefault(require("./CommandRegisterer"));
 const BotData_1 = __importDefault(require("./BotData"));
 const discord_js_1 = require("discord.js");
 const FileSearch_1 = __importDefault(require("./FileSearch"));
+/**
+ * Represents an instance of a Discord Bot, has default functionality for a Discord Bot but can be extended and add custom functionality with minimal effort
+ */
 class DiscordBot {
     constructor(dataManager) {
         this.DataManager = BotData_1.default.Instance(dataManager);
