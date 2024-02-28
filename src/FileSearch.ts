@@ -1,41 +1,100 @@
 import * as dotenv from "dotenv";
 dotenv.config();
-import { dir } from "console";
 import * as fs from "fs";
 import * as path from "path";
-import IBashCommand from "./Bash/IBashCommand";
+import ICommand from "./ICommand";
 
+/**
+ * Utility Class for Searching Files
+ */
+class FileSearch {
 
-function GetFiles(relativePath: string): string[] {
-  const directoryPath = path.join(__dirname, relativePath); // path to your directory
+  /**
+   * Path the the Directory of the Bot
+   */
+  private _directoryPath: string = process.cwd() + "\\src";
 
-  if (fs.existsSync(directoryPath))
-    return fs.readdirSync(directoryPath); 
-  else 
-    return [];
-}
+  /**
+  * Gets all the files with JavaScript endings in the Bot Directory
+  * @returns An Array of Java Script File Paths within the Bot Directory
+  */
+  public GetAllJSFiles(): string[] {
+    return this.GetFiles(this._directoryPath, ".js");
+  }
 
-function GetBashCommands(): IBashCommand[] {
-  const Path = "Bash/BashCommands";
+  /**
+  * Gets all the Java Script Files within the provided directory and subdirectories through recursion
+  * @param Path The start Path to search for files
+  * @returns Array of all Java Script Files within the provided directory and subdirectories
+  */
+  public GetFiles(Path: string, fileExtension: string): string[] {
+    let AllFiles: string[] = [];
 
-  let Files = GetFiles(Path);
+    if (fs.existsSync(Path)) {
+      let files = fs.readdirSync(Path);
 
-  let Commands: IBashCommand[] = [];
+      files.forEach(file => {
+        let absPath = Path + "/" + file;
 
-  Files.forEach(file => {
-    if (path.extname(file) === ".js") {
-      // Dynamic imports in TypeScript might require a workaround or explicit any cast
-      const module: IBashCommand = require(`./${Path}/${file}`) as IBashCommand;
-
-      if ('CommandName' in module)
-        Commands.push(module);
+        if (fs.lstatSync(absPath).isDirectory())
+          AllFiles.push(...this.GetFiles(absPath, fileExtension));
+        else if (path.extname(absPath) === fileExtension)
+          AllFiles.push(absPath);
+      });
     }
-  });
 
-  return Commands;
+    return AllFiles;
+  }
+
+
+  /**
+   * Gets all the Command Instances from the Provided Directory
+   * @returns Array of IT Command Objects
+   */
+  public GetAllCommandInstances(): ICommand[] {
+    let Commands: ICommand[] = [];
+
+    const CommandClasses = this.GetAllCommands();
+
+    CommandClasses.forEach(commandClass => {
+      const commandInstance = new commandClass();
+      if (commandInstance.CommandName !== '')
+        Commands.push(commandInstance);
+
+    });
+
+    return Commands;
+  }
+
+  /**
+  * Gets all the Command Classes from the Provided Directory
+  * @returns Array of IT Command Objects
+  */
+  public GetAllCommands<T extends { new(): ICommand } & ICommand>(): T[] {
+    let Commands: T[] = [];
+
+    const Files = this.GetAllJSFiles();
+
+    Files.forEach(file => {
+      const module = require(file)
+
+      try {
+        const classType = module;
+        try {
+          const moduleInstance = new classType() as T;
+
+          if ('CommandName' in moduleInstance)
+            Commands.push(module);
+
+        } catch (error) { }
+      } catch
+      (error) {
+        console.log("Error Occurred: " + error);
+      }
+    });
+
+    return Commands;
+  }
 }
 
-export {
-  GetBashCommands,
-  GetFiles
-};
+export default FileSearch;

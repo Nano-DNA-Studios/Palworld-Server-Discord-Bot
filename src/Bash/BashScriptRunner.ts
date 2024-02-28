@@ -1,30 +1,34 @@
 import * as dotenv from "dotenv";
 import { Client } from "ssh2";
-dotenv.config();
-import BashScriptFactory from "./BashScriptFactory";
+import BashScript from "./BashScript";
+import BotDataManager from "../PalworldBotDataManager";
+
 
 class BashScriptRunner {
-    private ScriptRanSuccessfully: boolean = true;
-    public Factory: BashScriptFactory;
 
-    constructor(factory: BashScriptFactory) {
-        this.Factory = factory;
+    private _dataManager: BotDataManager;
+    private _scriptRanSuccessfully: boolean = true;
+    public BashCommand: BashScript;
+
+    constructor(bashCommand: BashScript, BotDataManager: BotDataManager) {
+        this._dataManager = BotDataManager;
+        this.BashCommand = bashCommand;
     }
 
-    private DetermineError(data: any, Factory: BashScriptFactory): void {
-        let Fails = Factory.GetBashScript().FailMessages;
+    private DetermineError(data: any): void {
+        let Fails = this.BashCommand.FailMessages;
         let dataStr = data.toString().replace(/\r?\n|\r/g, "");
         if (Fails.includes(dataStr)) {
-            this.ScriptRanSuccessfully = false;
+            this._scriptRanSuccessfully = false;
         }
     }
 
     public async RunBashScript(): Promise<boolean> {
-        this.ScriptRanSuccessfully = true;
+        this._scriptRanSuccessfully = true;
 
         const ServerConnection = await this.ConnectToServer();
 
-        const Script = await this.Factory.GetBashScript().GetCode();
+        const Script = await this.BashCommand.GetCode();
 
         return new Promise<boolean>((resolve, reject) => {
             ServerConnection.exec(`${Script}`, (err, stream) => {
@@ -32,31 +36,31 @@ class BashScriptRunner {
 
                 let dataBuffer = "";
 
-                if (this.Factory.HasMaxOutTimer()) {
+                if (this.BashCommand.HasMaxOutTimer()) {
+                    console.log("Max Timeout Set");
                     setTimeout(() => {
                         console.log("Max Timeout Reached");
-                        resolve(this.ScriptRanSuccessfully);
+                        resolve(this._scriptRanSuccessfully);
                         stream.end();
-                    }, 5000);
+                    }, this.BashCommand.MaxOutTimer);
                 }
 
                 stream
                     .on("close", (code: string, signal: string) => {
-                        resolve(this.ScriptRanSuccessfully);
+                        resolve(this._scriptRanSuccessfully);
                     })
                     .on("data", (data: string) => {
                         dataBuffer += data;
                         console.log("STDOUT: " + data);
-                        this.DetermineError(data, this.Factory);
+                        this.DetermineError(data);
                     })
                     .stderr.on("data", (data) => {
                         console.error("STDERR: " + data);
-                        this.DetermineError(data, this.Factory);
+                        this.DetermineError(data);
                     });
             });
         });
     }
-
 
     ConnectToServer(): Promise<Client> {
         return new Promise((resolve, reject) => {
@@ -68,10 +72,10 @@ class BashScriptRunner {
                 console.error('SSH Connection error:', err);
                 reject(err);
             }).connect({
-                host: process.env.SERVER_IP!,
-                port: parseInt(process.env.SERVER_PORT!),
-                username: process.env.SERVER_USER!,
-                password: process.env.SERVER_PASSWORD!
+                host: this._dataManager.SERVER_IP!,
+                port: parseInt(this._dataManager.SERVER_PORT!),
+                username: this._dataManager.SERVER_USER!,
+                password: this._dataManager.SERVER_PASSWORD!
             });
         });
     }

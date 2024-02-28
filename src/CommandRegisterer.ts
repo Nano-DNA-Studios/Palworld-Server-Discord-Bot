@@ -1,62 +1,60 @@
 import { REST, Routes } from "discord.js";
-import { GetBashCommands } from "./FileSearch";
-import IBashCommand from "./Bash/IBashCommand";
 import ICommandOption from "./ICommandOption";
+import ICommand from "./ICommand";
+import IDiscordCommand from "./IDiscordCommand";
+import BotDataManager from "./BotDataManager";
 
 /**
  * Registers the commands to the Discord Server
  */
 class CommandRegisterer {
     private rest: REST;
+    public Commands: IDiscordCommand[] = [];
+    private _dataManager: BotDataManager;
 
     /**
-     * Initializes the Command Registerer
+     * Initializes the Command Registerer, by registering the REST API
      */
-    constructor() {
-        this.rest = new REST({ version: "10" }).setToken(`${process.env.DISCORD_BOT_TOKEN}`);
+    constructor(dataManager: BotDataManager) {
+        this._dataManager = dataManager;
+        this.rest = new REST({ version: "10" }).setToken(`${this._dataManager.DISCORD_BOT_TOKEN}`);
     }
 
     /**
-     * Registers all the commands to the Discord Server
+     * Maps the Commands to be Added to Discord Commands and Adds to the List of Commands to be Registered and 
+     * @param commands Array of Commands to be Registered
      */
-    public RegisterAllCommands(): void {
-        this.RegisterBashCommands();
-    }
-
-    /**
-     * Registers the Bash Commands to the Discord Server
-     */
-    private async RegisterBashCommands(): Promise<void> {
-        const Commands: IBashCommand[] = GetBashCommands();
-
-        const CommandArray: object[] = Commands.map(element => ({
-            name: element.CommandName,
-            description: element.CommandDescription,
-            options: element.Options.map((option: ICommandOption) => ({
-                type: option.type,
-                name: option.name,
-                description: option.description,
-                required: option.required || false,
-            }))
-        }));
-
-        this.RegisterCommands(CommandArray);
+    public AddCommands(commands: ICommand[]): void {
+        this.Commands.push(...commands);
     }
 
     /**
      * Registers the commands to the Discord Server 
-     * @param Commands The commands to register
      */
-    private async RegisterCommands(Commands: object[]): Promise<void> {
+    public async RegisterCommands() {
         try {
             console.log('Registering Slash Commands');
 
+            let body =  this.Commands.map(element => ({
+                name: element.CommandName,
+                description: element.CommandDescription,
+                options: element.Options.map((option: ICommandOption) => ({
+                    type: option.type,
+                    name: option.name,
+                    description: option.description,
+                    required: option.required || false,
+                    choices: option.choices || []
+                }))
+            }));
+
             await this.rest.put(
                 Routes.applicationGuildCommands(
-                    process.env.CLIENT_ID!,
-                    process.env.GUILD_ID!
+                    this._dataManager.CLIENT_ID!,
+                    this._dataManager.GUILD_ID!
                 ),
-                { body: Commands }
+                {
+                    body: body
+                }
             );
 
             console.log('Slash Commands Registered');

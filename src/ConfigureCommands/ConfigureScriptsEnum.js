@@ -1,11 +1,11 @@
-
-//Enum for the different types of scripts that can be run for configuration
-const ConfigureScriptsEnum = 
-{
-SetGuildID : 'guildid',
-SetServerSettings : 'serversettings',
-SetRunLocally : 'runlocally',
-SetLogChannelID : 'logchannelid',
-};
-
+"use strict";
+/**
+ * Enum for all the Configure Commands
+ */
+var ConfigureScriptsEnum;
+(function (ConfigureScriptsEnum) {
+    ConfigureScriptsEnum["SetSSHSettings"] = "setsshsettings";
+    ConfigureScriptsEnum["SetRunLocally"] = "setrunlocally";
+    ConfigureScriptsEnum["SetInstallDirectory"] = "setinstalldirectory";
+})(ConfigureScriptsEnum || (ConfigureScriptsEnum = {}));
 module.exports = ConfigureScriptsEnum;

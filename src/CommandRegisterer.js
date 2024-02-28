@@ -10,51 +10,46 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
-const FileSearch_1 = require("./FileSearch");
 /**
  * Registers the commands to the Discord Server
  */
 class CommandRegisterer {
     /**
-     * Initializes the Command Registerer
+     * Initializes the Command Registerer, by registering the REST API
      */
-    constructor() {
-        this.rest = new discord_js_1.REST({ version: "10" }).setToken(`${process.env.DISCORD_BOT_TOKEN}`);
+    constructor(dataManager) {
+        this.Commands = [];
+        this._dataManager = dataManager;
+        this.rest = new discord_js_1.REST({ version: "10" }).setToken(`${this._dataManager.DISCORD_BOT_TOKEN}`);
     }
     /**
-     * Registers all the commands to the Discord Server
+     * Maps the Commands to be Added to Discord Commands and Adds to the List of Commands to be Registered and
+     * @param commands Array of Commands to be Registered
      */
-    RegisterAllCommands() {
-        this.RegisterBashCommands();
-    }
-    /**
-     * Registers the Bash Commands to the Discord Server
-     */
-    RegisterBashCommands() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const Commands = (0, FileSearch_1.GetBashCommands)();
-            const CommandArray = Commands.map(element => ({
-                name: element.CommandName,
-                description: element.CommandDescription,
-                options: element.Options.map((option) => ({
-                    type: option.type,
-                    name: option.name,
-                    description: option.description,
-                    required: option.required || false,
-                }))
-            }));
-            this.RegisterCommands(CommandArray);
-        });
+    AddCommands(commands) {
+        this.Commands.push(...commands);
     }
     /**
      * Registers the commands to the Discord Server
-     * @param Commands The commands to register
      */
-    RegisterCommands(Commands) {
+    RegisterCommands() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 console.log('Registering Slash Commands');
-                yield this.rest.put(discord_js_1.Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID), { body: Commands });
+                let body = this.Commands.map(element => ({
+                    name: element.CommandName,
+                    description: element.CommandDescription,
+                    options: element.Options.map((option) => ({
+                        type: option.type,
+                        name: option.name,
+                        description: option.description,
+                        required: option.required || false,
+                        choices: option.choices || []
+                    }))
+                }));
+                yield this.rest.put(discord_js_1.Routes.applicationGuildCommands(this._dataManager.CLIENT_ID, this._dataManager.GUILD_ID), {
+                    body: body
+                });
                 console.log('Slash Commands Registered');
             }
             catch (error) {

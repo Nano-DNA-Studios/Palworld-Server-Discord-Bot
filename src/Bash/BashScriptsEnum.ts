@@ -1,6 +1,6 @@
 
 /**
- * Enum for all the Bash Scripts
+ * Enum for all the Bash Commands
  */
 enum BashScriptsEnum {
     Start = 'start',

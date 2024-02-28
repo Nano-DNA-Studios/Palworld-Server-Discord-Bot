@@ -1,4 +1,4 @@
-import ICommand = require("../ICommand");
+import ICommand from "../ICommand";
 
 /**
  * Describes the structure of a bash command
@@ -14,6 +14,11 @@ interface IBashCommand extends ICommand
      * The subcommands of the bash command
      */
     SubCommands: string[];
+
+    /**
+     * The Maximum amount of Time the command can run for in Milliseconds
+     */
+    MaxOutTimer: number;
 }
 
 export = IBashCommand;
