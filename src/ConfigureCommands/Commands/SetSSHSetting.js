@@ -3,9 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 const ConfigureScriptsEnum_1 = __importDefault(require("../ConfigureScriptsEnum"));
-const CommandOptionTypes_1 = __importDefault(require("../../CommandOptionTypes"));
-const DefaultCommandHandler_1 = __importDefault(require("../../DefaultCommandHandler"));
-const Command_1 = __importDefault(require("../../Command"));
+const CommandOptionTypes_1 = __importDefault(require("dna-discord-framework/src/Bot/CommandOptionTypes"));
+const DefaultCommandHandler_1 = __importDefault(require("dna-discord-framework/src/Bot/DefaultCommandHandler"));
+const Command_1 = __importDefault(require("dna-discord-framework/src/Bot/Command"));
 class SetSSH extends Command_1.default {
     constructor() {
         super(...arguments);

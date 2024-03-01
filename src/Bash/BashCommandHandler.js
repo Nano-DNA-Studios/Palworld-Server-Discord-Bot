@@ -13,9 +13,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const BashScriptRunner_1 = __importDefault(require("./BashScriptRunner"));
-const CommandFactory_1 = __importDefault(require("../CommandFactory"));
+const CommandFactory_1 = __importDefault(require("dna-discord-framework/src/Bot/CommandFactory"));
 const BashScriptsEnum = require("./BashScriptsEnum");
-const CommandLogger = require("../CommandLogger");
+const CommandLogger = require("dna-discord-framework/src/Bot/CommandLogger");
 /**
  * Command Handler for Bash Commands
  */

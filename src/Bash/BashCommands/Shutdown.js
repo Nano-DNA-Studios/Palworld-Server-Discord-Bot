@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 const BashScriptsEnum_1 = __importDefault(require("../BashScriptsEnum"));
 const BashCommandHandler_1 = __importDefault(require("../BashCommandHandler"));
-const BotData_1 = __importDefault(require("../../BotData"));
+const BotData_1 = __importDefault(require("dna-discord-framework/src/Bot/BotData"));
 const PalworldBotDataManager_1 = __importDefault(require("../../PalworldBotDataManager"));
 const BashScript_1 = __importDefault(require("../BashScript"));
 class Shutdown extends BashScript_1.default {

@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const BotDataManager_1 = __importDefault(require("./BotDataManager"));
+const BotDataManager_1 = __importDefault(require("dna-discord-framework/src/Bot/BotDataManager"));
 /**
  * Class Handling Data Management
  */

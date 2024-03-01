@@ -1,7 +1,7 @@
 import BashScriptsEnum from "../BashScriptsEnum";
 import IBashCommand from "../IBashCommand";
 import BashCommandHandler from "../BashCommandHandler";
-import BotData from "../../BotData"
+import BotData from "dna-discord-framework/src/Bot/BotData";
 import PalworldBotDataManager from "../../PalworldBotDataManager"
 import BashScript from "../BashScript";
 import { DefaultUserAgent } from "discord.js";

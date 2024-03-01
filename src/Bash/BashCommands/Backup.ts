@@ -1,8 +1,8 @@
 import IBashCommand from "../IBashCommand"
-import OptionTypes from "../../CommandOptionTypes"
+import OptionTypes from "dna-discord-framework/src/Bot/CommandOptionTypes"
 import BashScriptsEnum from "../BashScriptsEnum"
 import BashCommandHandler from "../BashCommandHandler"
-import BotData from "../../BotData"
+import BotData from "dna-discord-framework/src/Bot/BotData"
 import PalworldBotDataManager from "../../PalworldBotDataManager"
 import BashScript from "../BashScript"
 

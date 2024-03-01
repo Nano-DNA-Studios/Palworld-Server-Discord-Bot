@@ -1,15 +1,16 @@
-import ICommand from "../../ICommand";
+import ICommand from "dna-discord-framework/src/Bot/ICommand";
 import ConfigureScriptsEnum from "../ConfigureScriptsEnum";
-import OptionTypes from "../../CommandOptionTypes";
-import DefaultCommandHandler from "../../DefaultCommandHandler";
-import Command from "../../Command";
+import OptionTypes from "dna-discord-framework/src/Bot/CommandOptionTypes";
+import DefaultCommandHandler from "dna-discord-framework/src/Bot/DefaultCommandHandler";
+import Command from "dna-discord-framework/src/Bot/Command";
 import { ChatInputCommandInteraction, CacheType } from "discord.js";
 import PalworldBotDataManager from "../../PalworldBotDataManager";
+import BotDataManager from "dna-discord-framework/src/Bot/BotDataManager";
 
 class SetSSH extends Command implements ICommand {
     CommandName = ConfigureScriptsEnum.SetSSHSettings;
     CommandDescription = "Sets the SSH Settings for the Server to Login and run Bash Commands";
-    CommandFunction = (interaction: ChatInputCommandInteraction<CacheType>, BotDataManager: PalworldBotDataManager) => {
+    CommandFunction = (interaction: ChatInputCommandInteraction<CacheType>, BotDataManager: BotDataManager) => {
 
         const serverIp = interaction.options.getString('serverip');
         const serverUser = interaction.options.getString('serveruser');
@@ -17,7 +18,7 @@ class SetSSH extends Command implements ICommand {
         const serverPassword = interaction.options.getString('serverpassword');
 
         if (serverIp && serverUser && serverPort && serverPassword)
-            BotDataManager.SetSSHSettings(serverIp, serverUser, serverPort, serverPassword);
+            (BotDataManager as PalworldBotDataManager).SetSSHSettings(serverIp, serverUser, serverPort, serverPassword);
         else
             throw new Error("Not all the SSH Settings were provided.");
     };

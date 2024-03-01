@@ -2,10 +2,10 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-const CommandOptionTypes_1 = __importDefault(require("../../CommandOptionTypes"));
+const CommandOptionTypes_1 = __importDefault(require("dna-discord-framework/src/Bot/CommandOptionTypes"));
 const BashScriptsEnum_1 = __importDefault(require("../BashScriptsEnum"));
 const BashCommandHandler_1 = __importDefault(require("../BashCommandHandler"));
-const BotData_1 = __importDefault(require("../../BotData"));
+const BotData_1 = __importDefault(require("dna-discord-framework/src/Bot/BotData"));
 const PalworldBotDataManager_1 = __importDefault(require("../../PalworldBotDataManager"));
 const BashScript_1 = __importDefault(require("../BashScript"));
 class Backup extends BashScript_1.default {

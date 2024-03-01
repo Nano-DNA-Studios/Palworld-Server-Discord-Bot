@@ -1,9 +1,9 @@
 import IBashCommand from "./IBashCommand";
-import ICommandOption from "../ICommandOption";
-import BotDataManager from "../PalworldBotDataManager";
+import ICommandOption from "dna-discord-framework/src/Bot/ICommandOption";
+import BotDataManager from "dna-discord-framework/src/Bot/BotDataManager";
 import { CacheType, ChatInputCommandInteraction, Client } from 'discord.js';
-import ICommandHandler from "../ICommandHandler";
-import DefaultCommandHandler from "../DefaultCommandHandler";
+import ICommandHandler from "dna-discord-framework/src/Bot/ICommandHandler";
+import DefaultCommandHandler from "dna-discord-framework/src/Bot/DefaultCommandHandler";
 
 /**
  * Class representing a Bash Script 
