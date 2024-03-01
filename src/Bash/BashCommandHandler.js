@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const BashScriptRunner_1 = __importDefault(require("./BashScriptRunner"));
 const CommandFactory_1 = __importDefault(require("dna-discord-framework/src/Bot/CommandFactory"));
 const BashScriptsEnum = require("./BashScriptsEnum");
-const CommandLogger = require("dna-discord-framework/src/Bot/CommandLogger");
+const CommandLogger_1 = __importDefault(require("dna-discord-framework/src/Bot/CommandLogger"));
 /**
  * Command Handler for Bash Commands
  */
@@ -27,20 +27,20 @@ class BashCommandHandler {
                 const Bash = Factory.CreateCommand();
                 if (Bash) {
                     let bashInstances = this.GetBashInstances(Bash, dataManager);
-                    yield CommandLogger.InitializeResponse(interaction, client, dataManager);
+                    yield CommandLogger_1.default.InitializeResponse(interaction, client, dataManager);
                     for (const bashInstance of bashInstances) {
-                        CommandLogger.LogAndRespond(bashInstance.LogMessage);
+                        CommandLogger_1.default.LogAndRespond(bashInstance.LogMessage);
                         try {
                             let BashResult = yield new BashScriptRunner_1.default(bashInstance, dataManager).RunBashScript();
                             if (BashResult)
-                                CommandLogger.LogAndRespond(bashInstance.SuccessMessage);
+                                CommandLogger_1.default.LogAndRespond(bashInstance.SuccessMessage);
                             else
-                                CommandLogger.LogAndRespond(bashInstance.ErrorMessage);
+                                CommandLogger_1.default.LogAndRespond(bashInstance.ErrorMessage);
                         }
                         catch (error) {
-                            CommandLogger.LogAndRespond(bashInstance.ErrorMessage + `  (${error})`);
+                            CommandLogger_1.default.LogAndRespond(bashInstance.ErrorMessage + `  (${error})`);
                         }
-                        dataManager.AddCommandLog(CommandLogger.GetCommandLog(interaction));
+                        dataManager.AddCommandLog(CommandLogger_1.default.GetCommandLog(interaction));
                     }
                 }
             }

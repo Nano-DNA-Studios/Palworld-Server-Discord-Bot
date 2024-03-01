@@ -5,8 +5,8 @@ import CommandFactory from 'dna-discord-framework/src/Bot/CommandFactory';
 import BashScriptsEnum = require('./BashScriptsEnum');
 import BashScript from './BashScript';
 import IBashCommand from './IBashCommand';
-import ICommandHandler = require('dna-discord-framework/src/Bot/ICommandHandler');
-import CommandLogger = require('dna-discord-framework/src/Bot/CommandLogger');
+import ICommandHandler from 'dna-discord-framework/src/Bot/ICommandHandler';
+import CommandLogger from 'dna-discord-framework/src/Bot/CommandLogger';
 
 /**
  * Command Handler for Bash Commands
