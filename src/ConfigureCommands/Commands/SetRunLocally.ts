@@ -1,11 +1,7 @@
-import OptionTypes from "dna-discord-framework/src/Bot/CommandOptionTypes";
-import BotDataManager from "dna-discord-framework/src/Bot/BotDataManager";
-import DefaultCommandHandler from "dna-discord-framework/src/Bot/DefaultCommandHandler";
-import ICommand from "dna-discord-framework/src/Bot/ICommand";
-import Command from "dna-discord-framework/src/Bot/Command";
 import ConfigureScriptsEnum from "../ConfigureScriptsEnum";
 import { ChatInputCommandInteraction, CacheType } from "discord.js";
 import PalworldBotDataManager from "../../PalworldBotDataManager";
+import { OptionTypes, Command, ICommand, DefaultCommandHandler, BotDataManager } from "dna-discord-framework";
 
 class SetRunLocally extends Command implements ICommand {
     CommandName = ConfigureScriptsEnum.SetRunLocally;

@@ -1,12 +1,10 @@
 import BashScriptRunner from './BashScriptRunner';
 import BotDataManager from '../PalworldBotDataManager';
 import { CacheType, ChatInputCommandInteraction, Client } from 'discord.js';
-import CommandFactory from 'dna-discord-framework/src/Bot/CommandFactory';
 import BashScriptsEnum = require('./BashScriptsEnum');
 import BashScript from './BashScript';
 import IBashCommand from './IBashCommand';
-import ICommandHandler from 'dna-discord-framework/src/Bot/ICommandHandler';
-import CommandLogger from 'dna-discord-framework/src/Bot/CommandLogger';
+import { CommandLogger, ICommandHandler, CommandFactory } from 'dna-discord-framework';
 
 /**
  * Command Handler for Bash Commands

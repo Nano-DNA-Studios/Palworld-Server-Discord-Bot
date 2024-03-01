@@ -1,5 +1,5 @@
 import PalworldBotDataManager from "./PalworldBotDataManager";
-import DiscordBot from "dna-discord-framework/src/Bot/DiscordBot";
+import { DiscordBot } from "dna-discord-framework";
 
 
 let Bot = new DiscordBot(PalworldBotDataManager);

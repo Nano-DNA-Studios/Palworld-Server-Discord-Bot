@@ -1,14 +1,11 @@
-import ConfigureScriptsEnum from "../ConfigureScriptsEnum";
-import OptionTypes from "dna-discord-framework/src/Bot/CommandOptionTypes";
-import BotDataManager from "dna-discord-framework/src/Bot/BotDataManager";
-import DefaultCommandHandler from "dna-discord-framework/src/Bot/DefaultCommandHandler";
-import ICommand from "dna-discord-framework/src/Bot/ICommand";
-import Command from "dna-discord-framework/src/Bot/Command";
 import { ChatInputCommandInteraction, CacheType } from "discord.js";
+import ConfigureScriptsEnum from "../ConfigureScriptsEnum";
+import { OptionTypes, Command, ICommand, DefaultCommandHandler, BotDataManager } from "dna-discord-framework";
 import PalworldBotDataManager from "../../PalworldBotDataManager";
 
-
-
+/**
+ * Sets the Install Directory for the SteamCMD Application
+ */
 class SetInstallDir extends Command implements ICommand {
     CommandName = ConfigureScriptsEnum.SetInstallDirectory;
     CommandDescription = "Sets the SteamCMD Install Directory for the Bot to use";
