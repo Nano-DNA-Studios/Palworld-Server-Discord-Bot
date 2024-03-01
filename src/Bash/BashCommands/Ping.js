@@ -6,7 +6,7 @@ const BashScriptsEnum_1 = __importDefault(require("../BashScriptsEnum"));
 const BashCommandHandler_1 = __importDefault(require("../BashCommandHandler"));
 const PalworldBotDataManager_1 = __importDefault(require("../../PalworldBotDataManager"));
 const BashScript_1 = __importDefault(require("../BashScript"));
-const dna_discord_framework_1 = require("dna-discord-framework");
+const BotData_1 = __importDefault(require("dna-discord-framework/src/Bot/BotData"));
 //Start works
 class Ping extends BashScript_1.default {
     constructor() {
@@ -14,7 +14,7 @@ class Ping extends BashScript_1.default {
         this.CommandName = BashScriptsEnum_1.default.Ping;
         this.CommandDescription = "Pings the Server to determine if it is Online";
         this.CustomCode = `
-pidof ${dna_discord_framework_1.BotData.Instance(PalworldBotDataManager_1.default).SERVER_PROCESS_NAME} && echo "Server Is Live" || echo "Server Not Live"
+pidof ${BotData_1.default.Instance(PalworldBotDataManager_1.default).SERVER_PROCESS_NAME} && echo "Server Is Live" || echo "Server Not Live"
 `;
         this.SubCommands = [BashScriptsEnum_1.default.Custom];
         this.CommandFunction = () => { console.log("Ping Command Executed"); };

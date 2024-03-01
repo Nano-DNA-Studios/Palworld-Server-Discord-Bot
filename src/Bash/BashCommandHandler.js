@@ -14,7 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const BashScriptRunner_1 = __importDefault(require("./BashScriptRunner"));
 const BashScriptsEnum = require("./BashScriptsEnum");
-const dna_discord_framework_1 = require("dna-discord-framework");
+const CommandLogger_1 = __importDefault(require("dna-discord-framework/src/Bot/CommandLogger"));
+const CommandFactory_1 = __importDefault(require("dna-discord-framework/src/Bot/CommandFactory"));
 /**
  * Command Handler for Bash Commands
  */
@@ -22,24 +23,24 @@ class BashCommandHandler {
     HandleCommand(interaction, client, dataManager) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const Factory = new dna_discord_framework_1.CommandFactory(interaction.commandName);
+                const Factory = new CommandFactory_1.default(interaction.commandName);
                 const Bash = Factory.CreateCommand();
                 if (Bash) {
                     let bashInstances = this.GetBashInstances(Bash, dataManager);
-                    yield dna_discord_framework_1.CommandLogger.InitializeResponse(interaction, client, dataManager);
+                    yield CommandLogger_1.default.InitializeResponse(interaction, client, dataManager);
                     for (const bashInstance of bashInstances) {
-                        dna_discord_framework_1.CommandLogger.LogAndRespond(bashInstance.LogMessage);
+                        CommandLogger_1.default.LogAndRespond(bashInstance.LogMessage);
                         try {
                             let BashResult = yield new BashScriptRunner_1.default(bashInstance, dataManager).RunBashScript();
                             if (BashResult)
-                                dna_discord_framework_1.CommandLogger.LogAndRespond(bashInstance.SuccessMessage);
+                                CommandLogger_1.default.LogAndRespond(bashInstance.SuccessMessage);
                             else
-                                dna_discord_framework_1.CommandLogger.LogAndRespond(bashInstance.ErrorMessage);
+                                CommandLogger_1.default.LogAndRespond(bashInstance.ErrorMessage);
                         }
                         catch (error) {
-                            dna_discord_framework_1.CommandLogger.LogAndRespond(bashInstance.ErrorMessage + `  (${error})`);
+                            CommandLogger_1.default.LogAndRespond(bashInstance.ErrorMessage + `  (${error})`);
                         }
-                        dataManager.AddCommandLog(dna_discord_framework_1.CommandLogger.GetCommandLog(interaction));
+                        dataManager.AddCommandLog(CommandLogger_1.default.GetCommandLog(interaction));
                     }
                 }
             }
@@ -62,7 +63,7 @@ class BashCommandHandler {
                 commandName = Bash.CommandName;
             else
                 commandName = subCommand;
-            const factory = new dna_discord_framework_1.CommandFactory(commandName);
+            const factory = new CommandFactory_1.default(commandName);
             const bashInstance = factory.CreateCommand();
             if (bashInstance)
                 bashInstances.push(bashInstance);

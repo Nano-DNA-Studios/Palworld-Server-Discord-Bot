@@ -3,7 +3,8 @@ import BashScriptsEnum from "../BashScriptsEnum"
 import BashCommandHandler from "../BashCommandHandler"
 import PalworldBotDataManager from "../../PalworldBotDataManager"
 import BashScript from "../BashScript"
-import { OptionTypes, BotData } from "dna-discord-framework"
+import OptionTypes from "dna-discord-framework/src/Bot/OptionTypes"
+import BotData from "dna-discord-framework/src/Bot/BotData"
 
 class Backup extends BashScript implements IBashCommand {
 

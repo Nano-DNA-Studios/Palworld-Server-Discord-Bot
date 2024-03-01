@@ -1,7 +1,11 @@
 import { ChatInputCommandInteraction, CacheType } from "discord.js";
 import ConfigureScriptsEnum from "../ConfigureScriptsEnum";
-import { OptionTypes, Command, ICommand, DefaultCommandHandler, BotDataManager } from "dna-discord-framework";
 import PalworldBotDataManager from "../../PalworldBotDataManager";
+import OptionTypes from "dna-discord-framework/src/Bot/OptionTypes";
+import Command from "dna-discord-framework/src/Bot/Command";
+import ICommand from "dna-discord-framework/src/Bot/ICommand";
+import DefaultCommandHandler from "dna-discord-framework/src/Bot/DefaultCommandHandler";
+import BotDataManager from "dna-discord-framework/src/Bot/BotDataManager";
 
 /**
  * Sets the Install Directory for the SteamCMD Application

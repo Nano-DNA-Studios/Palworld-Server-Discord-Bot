@@ -1,10 +1,13 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const dna_discord_framework_1 = require("dna-discord-framework");
+const BotDataManager_1 = __importDefault(require("dna-discord-framework/src/Bot/BotDataManager"));
 /**
  * Class Handling Data Management
  */
-class PalworldBotDataManager extends dna_discord_framework_1.BotDataManager {
+class PalworldBotDataManager extends BotDataManager_1.default {
     /**
      * Initializes the Data Manager
      * @param botDirectory The Directory that the Bot is located in

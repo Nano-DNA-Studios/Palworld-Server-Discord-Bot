@@ -6,7 +6,8 @@ const BashScriptsEnum_1 = __importDefault(require("../BashScriptsEnum"));
 const BashCommandHandler_1 = __importDefault(require("../BashCommandHandler"));
 const PalworldBotDataManager_1 = __importDefault(require("../../PalworldBotDataManager"));
 const BashScript_1 = __importDefault(require("../BashScript"));
-const dna_discord_framework_1 = require("dna-discord-framework");
+const OptionTypes_1 = __importDefault(require("dna-discord-framework/src/Bot/OptionTypes"));
+const BotData_1 = __importDefault(require("dna-discord-framework/src/Bot/BotData"));
 class Backup extends BashScript_1.default {
     constructor() {
         super(...arguments);
@@ -15,7 +16,7 @@ class Backup extends BashScript_1.default {
         this.CustomCode = `
     mkdir Backups
     
-    cp -r ${dna_discord_framework_1.BotData.Instance(PalworldBotDataManager_1.default).STEAM_INSTALL_DIR}/Pal/Saved ~/Backups/Saved-${new Date().toUTCString().replace(/ /g, '-').replace(/:/g, '-')}
+    cp -r ${BotData_1.default.Instance(PalworldBotDataManager_1.default).STEAM_INSTALL_DIR}/Pal/Saved ~/Backups/Saved-${new Date().toUTCString().replace(/ /g, '-').replace(/:/g, '-')}
     `;
         this.CommandFunction = () => { console.log("Ping Command Executed"); };
         this.SubCommands = [BashScriptsEnum_1.default.Custom];
@@ -26,7 +27,7 @@ class Backup extends BashScript_1.default {
         this.FailMessages = [];
         this.Options = [
             {
-                type: dna_discord_framework_1.OptionTypes.String,
+                type: OptionTypes_1.default.String,
                 name: "suffix",
                 description: "The suffix to the Backup File",
                 required: false,

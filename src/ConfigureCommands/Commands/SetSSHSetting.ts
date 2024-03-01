@@ -1,7 +1,13 @@
 import ConfigureScriptsEnum from "../ConfigureScriptsEnum";
 import { ChatInputCommandInteraction, CacheType } from "discord.js";
 import PalworldBotDataManager from "../../PalworldBotDataManager";
-import { OptionTypes, Command, ICommand, DefaultCommandHandler, BotDataManager } from "dna-discord-framework";
+import OptionTypes from "dna-discord-framework/src/Bot/OptionTypes";
+import Command from "dna-discord-framework/src/Bot/Command";
+import ICommand from "dna-discord-framework/src/Bot/ICommand";
+import DefaultCommandHandler from "dna-discord-framework/src/Bot/DefaultCommandHandler";
+import BotDataManager from "dna-discord-framework/src/Bot/BotDataManager";
+
+
 
 class SetSSH extends Command implements ICommand {
     CommandName = ConfigureScriptsEnum.SetSSHSettings;
