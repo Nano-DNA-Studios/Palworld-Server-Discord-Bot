@@ -10,12 +10,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const ssh2_1 = require("ssh2");
+/**
+ * Runs Bash Scripts provided from a Bash Command
+ */
 class BashScriptRunner {
+    /**
+     * Initializes the Bash Script Runner
+     * @param bashCommand The Bash Command to Run
+     * @param BotDataManager The Bot Data Manager
+     */
     constructor(bashCommand, BotDataManager) {
+        /**
+         * Result of the Bash Script Running Successfully
+         */
         this._scriptRanSuccessfully = true;
         this._dataManager = BotDataManager;
         this.BashCommand = bashCommand;
     }
+    /**
+     * Determines if the Output of the Bash Script is an Error
+     * @param data The Output of the Bash Script
+     */
     DetermineError(data) {
         let Fails = this.BashCommand.FailMessages;
         let dataStr = data.toString().replace(/\r?\n|\r/g, "");
@@ -23,6 +38,10 @@ class BashScriptRunner {
             this._scriptRanSuccessfully = false;
         }
     }
+    /**
+     * Runs the Bash Script
+     * @returns True if the Script Ran Successfully, False if it did not
+     */
     RunBashScript() {
         return __awaiter(this, void 0, void 0, function* () {
             this._scriptRanSuccessfully = true;
@@ -58,6 +77,10 @@ class BashScriptRunner {
             });
         });
     }
+    /**
+     * Connects to a Server through SSH
+     * @returns A Promise to the SSH Client
+     */
     ConnectToServer() {
         return new Promise((resolve, reject) => {
             const conn = new ssh2_1.Client();

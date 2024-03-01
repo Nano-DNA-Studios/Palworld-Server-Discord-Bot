@@ -4,7 +4,7 @@ import { CacheType, ChatInputCommandInteraction, Client } from 'discord.js';
 import CommandFactory from 'dna-discord-framework/src/Bot/CommandFactory';
 import BashScriptsEnum = require('./BashScriptsEnum');
 import BashScript from './BashScript';
-import IBashCommand = require('./IBashCommand');
+import IBashCommand from './IBashCommand';
 import ICommandHandler = require('dna-discord-framework/src/Bot/ICommandHandler');
 import CommandLogger = require('dna-discord-framework/src/Bot/CommandLogger');
 

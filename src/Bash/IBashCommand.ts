@@ -20,4 +20,4 @@ interface IBashCommand extends ICommand
     MaxOutTimer: number;
 }
 
-export = IBashCommand;
+export default IBashCommand;

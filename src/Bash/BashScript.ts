@@ -23,29 +23,6 @@ class BashScript implements IBashCommand {
     public MaxOutTimer: number = 0;
     public CommandHandler: ICommandHandler = DefaultCommandHandler.Instance();
 
-    
-    /**
-     * Initializes the Bash Script
-     * @param data
-     */
-    /*
-    constructor(data: IBashCommand) {
-        this.CommandName = data.CommandName;
-        this.CommandDescription = data.CommandDescription;
-        this.CustomCode = data.CustomCode;
-        this.CommandFunction = data.CommandFunction;
-        this.SubCommands = data.SubCommands;
-        this.ReplyMessage = data.ReplyMessage;
-        this.LogMessage = data.LogMessage;
-        this.ErrorMessage = data.ErrorMessage;
-        this.SuccessMessage = data.SuccessMessage;
-        this.FailMessages = data.FailMessages;
-        this.Options = data.Options;
-        this.MaxOutTimer = data.MaxOutTimer;
-        this.CommandHandler = data.CommandHandler;
-    }
-    */
-
     /**
      * Gets the Bash Script code to run
      * @returns The Bash Script that will run for the command
