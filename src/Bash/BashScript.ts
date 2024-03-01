@@ -73,7 +73,6 @@ class BashScript implements IBashCommand {
         else
             return false;
     }
-
 }
 
 export default BashScript;
