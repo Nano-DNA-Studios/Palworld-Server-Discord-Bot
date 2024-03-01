@@ -3,10 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 const ConfigureScriptsEnum_1 = __importDefault(require("../ConfigureScriptsEnum"));
-const CommandOptionTypes_1 = __importDefault(require("dna-discord-framework/src/Bot/CommandOptionTypes"));
-const DefaultCommandHandler_1 = __importDefault(require("dna-discord-framework/src/Bot/DefaultCommandHandler"));
-const Command_1 = __importDefault(require("dna-discord-framework/src/Bot/Command"));
-class SetSSH extends Command_1.default {
+const dna_discord_framework_1 = require("dna-discord-framework");
+class SetSSH extends dna_discord_framework_1.Command {
     constructor() {
         super(...arguments);
         this.CommandName = ConfigureScriptsEnum_1.default.SetSSHSettings;
@@ -28,31 +26,31 @@ class SetSSH extends Command_1.default {
         this.FailMessages = [];
         this.Options = [
             {
-                type: CommandOptionTypes_1.default.String,
+                type: dna_discord_framework_1.OptionTypes.String,
                 name: "serverip",
                 description: "The IP of the Server",
                 required: true
             },
             {
-                type: CommandOptionTypes_1.default.String,
+                type: dna_discord_framework_1.OptionTypes.String,
                 name: "serveruser",
                 description: "The User on the Server",
                 required: true
             },
             {
-                type: CommandOptionTypes_1.default.String,
+                type: dna_discord_framework_1.OptionTypes.String,
                 name: "serverport",
                 description: "The Servers Port",
                 required: true
             },
             {
-                type: CommandOptionTypes_1.default.String,
+                type: dna_discord_framework_1.OptionTypes.String,
                 name: "serverpassword",
                 description: "The Password for the Server",
                 required: true
             }
         ];
-        this.CommandHandler = DefaultCommandHandler_1.default.Instance();
+        this.CommandHandler = dna_discord_framework_1.DefaultCommandHandler.Instance();
     }
 }
 module.exports = SetSSH;

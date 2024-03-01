@@ -1,9 +1,6 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const DefaultCommandHandler_1 = __importDefault(require("dna-discord-framework/src/Bot/DefaultCommandHandler"));
+const dna_discord_framework_1 = require("dna-discord-framework");
 /**
  * Class representing a Bash Script
  */
@@ -21,7 +18,7 @@ class BashScript {
         this.FailMessages = [];
         this.Options = [];
         this.MaxOutTimer = 0;
-        this.CommandHandler = DefaultCommandHandler_1.default.Instance();
+        this.CommandHandler = dna_discord_framework_1.DefaultCommandHandler.Instance();
     }
     /**
      * Gets the Bash Script code to run
