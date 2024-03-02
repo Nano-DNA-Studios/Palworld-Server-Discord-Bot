@@ -3,9 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 const ConfigureScriptsEnum_1 = __importDefault(require("../ConfigureScriptsEnum"));
-const CommandOptionTypes_1 = __importDefault(require("../../CommandOptionTypes"));
-const DefaultCommandHandler_1 = __importDefault(require("../../DefaultCommandHandler"));
-const Command_1 = __importDefault(require("../../Command"));
+const OptionTypes_1 = __importDefault(require("dna-discord-framework/src/Bot/OptionTypes"));
+const Command_1 = __importDefault(require("dna-discord-framework/src/Bot/Command"));
+const DefaultCommandHandler_1 = __importDefault(require("dna-discord-framework/src/Bot/DefaultCommandHandler"));
 class SetRunLocally extends Command_1.default {
     constructor() {
         super(...arguments);
@@ -25,7 +25,7 @@ class SetRunLocally extends Command_1.default {
         this.FailMessages = [];
         this.Options = [
             {
-                type: CommandOptionTypes_1.default.Boolean,
+                type: OptionTypes_1.default.Boolean,
                 name: "runlocally",
                 description: "Boolean to determine if the Server doesn't need to be SSH'd into",
                 required: true

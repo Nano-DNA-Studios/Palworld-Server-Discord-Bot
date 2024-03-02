@@ -3,9 +3,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 const ConfigureScriptsEnum_1 = __importDefault(require("../ConfigureScriptsEnum"));
-const CommandOptionTypes_1 = __importDefault(require("../../CommandOptionTypes"));
-const DefaultCommandHandler_1 = __importDefault(require("../../DefaultCommandHandler"));
-const Command_1 = __importDefault(require("../../Command"));
+const OptionTypes_1 = __importDefault(require("dna-discord-framework/src/Bot/OptionTypes"));
+const Command_1 = __importDefault(require("dna-discord-framework/src/Bot/Command"));
+const DefaultCommandHandler_1 = __importDefault(require("dna-discord-framework/src/Bot/DefaultCommandHandler"));
+/**
+ * Sets the Install Directory for the SteamCMD Application
+ */
 class SetInstallDir extends Command_1.default {
     constructor() {
         super(...arguments);
@@ -35,7 +38,7 @@ class SetInstallDir extends Command_1.default {
         this.FailMessages = [];
         this.Options = [
             {
-                type: CommandOptionTypes_1.default.String,
+                type: OptionTypes_1.default.String,
                 name: "operatingsystem",
                 description: "Operating System of the Server (Windows/Linux)",
                 required: true,
@@ -51,13 +54,13 @@ class SetInstallDir extends Command_1.default {
                 ]
             },
             {
-                type: CommandOptionTypes_1.default.String,
+                type: OptionTypes_1.default.String,
                 name: "user",
                 description: "User hosting the Server",
                 required: true
             },
             {
-                type: CommandOptionTypes_1.default.String,
+                type: OptionTypes_1.default.String,
                 name: "installpath",
                 description: "Path to the SteamCMD Install Directory",
                 required: true

@@ -1,4 +1,4 @@
-import ICommand from "../ICommand";
+import { ICommand } from "dna-discord-framework";
 
 /**
  * Describes the structure of a bash command
@@ -21,4 +21,4 @@ interface IBashCommand extends ICommand
     MaxOutTimer: number;
 }
 
-export = IBashCommand;
+export default IBashCommand;

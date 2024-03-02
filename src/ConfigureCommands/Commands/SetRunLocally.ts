@@ -1,20 +1,21 @@
-import ICommand from "../../ICommand";
 import ConfigureScriptsEnum from "../ConfigureScriptsEnum";
-import OptionTypes from "../../CommandOptionTypes";
-import DefaultCommandHandler from "../../DefaultCommandHandler";
-import Command from "../../Command";
 import { ChatInputCommandInteraction, CacheType } from "discord.js";
 import PalworldBotDataManager from "../../PalworldBotDataManager";
+import OptionTypes from "dna-discord-framework/src/Bot/OptionTypes";
+import Command from "dna-discord-framework/src/Bot/Command";
+import ICommand from "dna-discord-framework/src/Bot/ICommand";
+import DefaultCommandHandler from "dna-discord-framework/src/Bot/DefaultCommandHandler";
+import BotDataManager from "dna-discord-framework/src/Bot/BotDataManager";
 
 class SetRunLocally extends Command implements ICommand {
     CommandName = ConfigureScriptsEnum.SetRunLocally;
     CommandDescription = "Determines if the Server doesn't need to be SSH'd into";
-    CommandFunction = (interaction: ChatInputCommandInteraction<CacheType>, BotDataManager: PalworldBotDataManager) => {
+    CommandFunction = (interaction: ChatInputCommandInteraction<CacheType>, BotDataManager: BotDataManager) => {
 
         const runLocally = interaction.options.getBoolean('runlocally');
 
         if (runLocally !== null && runLocally !== undefined)
-            BotDataManager.SetRunLocally(runLocally);
+            (BotDataManager as PalworldBotDataManager).SetRunLocally(runLocally);
         else
             throw new Error("Run Locally Value was not provided.");
 

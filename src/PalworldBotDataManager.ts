@@ -1,4 +1,5 @@
-import BotDataManager from './BotDataManager';
+import { BotDataManager } from "dna-discord-framework";
+
 
 /**
  * Class Handling Data Management
@@ -56,7 +57,7 @@ class PalworldBotDataManager extends BotDataManager {
      */
     constructor() {
         super();
-        
+
         this.SERVER_PROCESS_NAME = "PalServer-Linux-Test";
         this.SERVER_START_SCRIPT = "PalServer.sh";
     }

@@ -1,10 +1,9 @@
 import BashScriptsEnum from "../BashScriptsEnum";
 import IBashCommand from "../IBashCommand";
 import BashCommandHandler from "../BashCommandHandler";
-import BotData from "../../BotData"
 import PalworldBotDataManager from "../../PalworldBotDataManager"
 import BashScript from "../BashScript";
-import { DefaultUserAgent } from "discord.js";
+import { BotData } from "dna-discord-framework"
 
 //Start works
 class Ping extends BashScript implements IBashCommand {

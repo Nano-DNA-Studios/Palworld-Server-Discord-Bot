@@ -1,20 +1,41 @@
-import * as dotenv from "dotenv";
 import { Client } from "ssh2";
 import BashScript from "./BashScript";
 import BotDataManager from "../PalworldBotDataManager";
 
-
+/**
+ * Runs Bash Scripts provided from a Bash Command
+ */
 class BashScriptRunner {
 
+    /**
+     * Data Manager for the Bot
+     */
     private _dataManager: BotDataManager;
+
+    /**
+     * Result of the Bash Script Running Successfully
+     */
     private _scriptRanSuccessfully: boolean = true;
+
+    /**
+     * Bash Command to Run
+     */
     public BashCommand: BashScript;
 
+    /**
+     * Initializes the Bash Script Runner
+     * @param bashCommand The Bash Command to Run
+     * @param BotDataManager The Bot Data Manager
+     */
     constructor(bashCommand: BashScript, BotDataManager: BotDataManager) {
         this._dataManager = BotDataManager;
         this.BashCommand = bashCommand;
     }
 
+    /**
+     * Determines if the Output of the Bash Script is an Error
+     * @param data The Output of the Bash Script
+     */
     private DetermineError(data: any): void {
         let Fails = this.BashCommand.FailMessages;
         let dataStr = data.toString().replace(/\r?\n|\r/g, "");
@@ -23,6 +44,10 @@ class BashScriptRunner {
         }
     }
 
+    /**
+     * Runs the Bash Script
+     * @returns True if the Script Ran Successfully, False if it did not
+     */
     public async RunBashScript(): Promise<boolean> {
         this._scriptRanSuccessfully = true;
 
@@ -62,6 +87,10 @@ class BashScriptRunner {
         });
     }
 
+    /**
+     * Connects to a Server through SSH
+     * @returns A Promise to the SSH Client
+     */
     ConnectToServer(): Promise<Client> {
         return new Promise((resolve, reject) => {
             const conn = new Client();

@@ -1,9 +1,6 @@
 import IBashCommand from "./IBashCommand";
-import ICommandOption from "../ICommandOption";
-import BotDataManager from "../PalworldBotDataManager";
 import { CacheType, ChatInputCommandInteraction, Client } from 'discord.js';
-import ICommandHandler from "../ICommandHandler";
-import DefaultCommandHandler from "../DefaultCommandHandler";
+import { BotDataManager, ICommandOption, ICommandHandler, DefaultCommandHandler } from "dna-discord-framework";
 
 /**
  * Class representing a Bash Script 
@@ -22,29 +19,6 @@ class BashScript implements IBashCommand {
     public Options: ICommandOption[] = [];
     public MaxOutTimer: number = 0;
     public CommandHandler: ICommandHandler = DefaultCommandHandler.Instance();
-
-    
-    /**
-     * Initializes the Bash Script
-     * @param data
-     */
-    /*
-    constructor(data: IBashCommand) {
-        this.CommandName = data.CommandName;
-        this.CommandDescription = data.CommandDescription;
-        this.CustomCode = data.CustomCode;
-        this.CommandFunction = data.CommandFunction;
-        this.SubCommands = data.SubCommands;
-        this.ReplyMessage = data.ReplyMessage;
-        this.LogMessage = data.LogMessage;
-        this.ErrorMessage = data.ErrorMessage;
-        this.SuccessMessage = data.SuccessMessage;
-        this.FailMessages = data.FailMessages;
-        this.Options = data.Options;
-        this.MaxOutTimer = data.MaxOutTimer;
-        this.CommandHandler = data.CommandHandler;
-    }
-    */
 
     /**
      * Gets the Bash Script code to run
@@ -73,7 +47,6 @@ class BashScript implements IBashCommand {
         else
             return false;
     }
-
 }
 
 export default BashScript;

@@ -1,16 +1,19 @@
-import ConfigureScriptsEnum from "../ConfigureScriptsEnum";
-import OptionTypes from "../../CommandOptionTypes";
-import DefaultCommandHandler from "../../DefaultCommandHandler";
-import ICommand from "../../ICommand";
-import Command from "../../Command";
 import { ChatInputCommandInteraction, CacheType } from "discord.js";
+import ConfigureScriptsEnum from "../ConfigureScriptsEnum";
 import PalworldBotDataManager from "../../PalworldBotDataManager";
+import OptionTypes from "dna-discord-framework/src/Bot/OptionTypes";
+import Command from "dna-discord-framework/src/Bot/Command";
+import ICommand from "dna-discord-framework/src/Bot/ICommand";
+import DefaultCommandHandler from "dna-discord-framework/src/Bot/DefaultCommandHandler";
+import BotDataManager from "dna-discord-framework/src/Bot/BotDataManager";
 
-
+/**
+ * Sets the Install Directory for the SteamCMD Application
+ */
 class SetInstallDir extends Command implements ICommand {
     CommandName = ConfigureScriptsEnum.SetInstallDirectory;
     CommandDescription = "Sets the SteamCMD Install Directory for the Bot to use";
-    CommandFunction = (interaction: ChatInputCommandInteraction<CacheType>, BotDataManager: PalworldBotDataManager) => {
+    CommandFunction = (interaction: ChatInputCommandInteraction<CacheType>, BotDataManager: BotDataManager) => {
         const operatingSystem = interaction.options.getString('operatingsystem');
         const user = interaction.options.getString('user');
         const installPath = interaction.options.getString('installpath');
@@ -26,7 +29,7 @@ class SetInstallDir extends Command implements ICommand {
 
             path = installPath;
 
-            BotDataManager.SetSteamInstallDir(accountPath, path);
+            (BotDataManager as PalworldBotDataManager).SetSteamInstallDir(accountPath, path);
 
         } else
             throw new Error("Operating System, User or Install Path not provided");
