@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 const BashScriptsEnum_1 = __importDefault(require("../BashScriptsEnum"));
 const BashCommandHandler_1 = __importDefault(require("../BashCommandHandler"));
-const BotData_1 = __importDefault(require("dna-discord-framework/src/Bot/BotData"));
+const dna_discord_framework_1 = require("dna-discord-framework");
 const PalworldBotDataManager_1 = __importDefault(require("../../PalworldBotDataManager"));
 const BashScript_1 = __importDefault(require("../BashScript"));
 class Shutdown extends BashScript_1.default {
@@ -13,9 +13,9 @@ class Shutdown extends BashScript_1.default {
         this.CommandName = BashScriptsEnum_1.default.Shutdown;
         this.CommandDescription = "Stops the server";
         this.CustomCode = `
-pkill "${BotData_1.default.Instance(PalworldBotDataManager_1.default).SERVER_START_SCRIPT}"
+pkill "${dna_discord_framework_1.BotData.Instance(PalworldBotDataManager_1.default).SERVER_START_SCRIPT}"
 
-killall "${BotData_1.default.Instance(PalworldBotDataManager_1.default).SERVER_PROCESS_NAME}"
+killall "${dna_discord_framework_1.BotData.Instance(PalworldBotDataManager_1.default).SERVER_PROCESS_NAME}"
 
 killall "steamcmd"
 

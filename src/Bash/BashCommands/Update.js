@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 const BashScriptsEnum_1 = __importDefault(require("../BashScriptsEnum"));
 const BashCommandHandler_1 = __importDefault(require("../BashCommandHandler"));
-const BotData_1 = __importDefault(require("dna-discord-framework/src/Bot/BotData"));
+const dna_discord_framework_1 = require("dna-discord-framework");
 const PalworldBotDataManager_1 = __importDefault(require("../../PalworldBotDataManager"));
 const BashScript_1 = __importDefault(require("../BashScript"));
 //Start works
@@ -14,7 +14,7 @@ class Update extends BashScript_1.default {
         this.CommandName = BashScriptsEnum_1.default.Update;
         this.CommandDescription = "Updates the Server";
         this.CustomCode = `
-steamcmd +force_install_dir ${BotData_1.default.Instance(PalworldBotDataManager_1.default).ACCOUNT_PATH}/${BotData_1.default.Instance(PalworldBotDataManager_1.default).STEAM_INSTALL_DIR} +login anonymous +app_update 2394010 validate +quit
+steamcmd +force_install_dir ${dna_discord_framework_1.BotData.Instance(PalworldBotDataManager_1.default).ACCOUNT_PATH}/${dna_discord_framework_1.BotData.Instance(PalworldBotDataManager_1.default).STEAM_INSTALL_DIR} +login anonymous +app_update 2394010 validate +quit
 `;
         this.CommandFunction = () => { console.log("Ping Command Executed"); };
         this.SubCommands = [BashScriptsEnum_1.default.Shutdown, BashScriptsEnum_1.default.Backup, BashScriptsEnum_1.default.Custom, BashScriptsEnum_1.default.Start, BashScriptsEnum_1.default.Ping];
