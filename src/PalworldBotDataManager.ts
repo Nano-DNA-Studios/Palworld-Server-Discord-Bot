@@ -1,4 +1,4 @@
-import BotDataManager from "dna-discord-framework/src/Bot/BotDataManager";
+import { BotDataManager } from "dna-discord-framework";
 
 
 /**

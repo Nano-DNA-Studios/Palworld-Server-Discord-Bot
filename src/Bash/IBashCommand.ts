@@ -1,4 +1,4 @@
-import ICommand from "dna-discord-framework/src/Bot/ICommand";
+import { ICommand } from "dna-discord-framework";
 
 /**
  * Describes the structure of a bash command

@@ -1,7 +1,7 @@
 import IBashCommand from "../IBashCommand";
 import BashScriptsEnum from "../BashScriptsEnum";
 import BashCommandHandler from "../BashCommandHandler";
-import BotData from "dna-discord-framework/src/Bot/BotData";
+import { BotData } from "dna-discord-framework"
 import PalworldBotDataManager from "../../PalworldBotDataManager"
 import BashScript from "../BashScript";
 

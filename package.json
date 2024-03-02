@@ -16,7 +16,7 @@
   "dependencies": {
     "@types/ssh2": "^1.11.19",
     "discord.js": "^14.14.1",
-    "dna-discord-framework": "^1.0.24",
+    "dna-discord-framework": "^1.0.30",
     "dotenv": "^16.4.1",
     "ssh2": "^1.15.0"
   },
