@@ -108,6 +108,26 @@ class BashScriptRunner {
             });
         });
     }
+
+    /**
+     * Starts the SSH Client with a Local or Remote Connection
+     * @returns The SSH Client instance
+     */
+    StartSSHClient(): Promise<Client> {
+        if (this._dataManager.RUN_LOCALLY) {
+            return new Promise((resolve, reject) => {
+                const conn = new Client();
+                conn.on('ready', () => {
+                    console.log('SSH Connection ready');
+                    resolve(conn); // Resolve with the connection instance
+                }).on('error', (err) => {
+                    console.error('SSH Connection error:', err);
+                    reject(err);
+                })
+            });
+        } else
+            return this.ConnectToServer();
+    }
 }
 
 export default BashScriptRunner;
