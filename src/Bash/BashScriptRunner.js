@@ -8,8 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const ssh2_1 = require("ssh2");
+const child_process_1 = __importDefault(require("child_process"));
 /**
  * Runs Bash Scripts provided from a Bash Command
  */
@@ -45,8 +49,42 @@ class BashScriptRunner {
     RunBashScript() {
         return __awaiter(this, void 0, void 0, function* () {
             this._scriptRanSuccessfully = true;
-            const ServerConnection = yield this.ConnectToServer();
             const Script = yield this.BashCommand.GetCode();
+            if (this._dataManager.RUN_LOCALLY)
+                return this.RunLocally(Script);
+            else
+                return this.RunThroughSHH(Script);
+        });
+    }
+    /**
+     * Runs a Bash Script through a local execution
+     * @param Script Bash Script to Run
+     * @returns True if no errors occurred, False if an error occurred (Errors are defined by the Bash Command Fail Messages)
+     */
+    RunLocally(Script) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => {
+                child_process_1.default.exec(`${Script}`, (error, stdout, stderr) => {
+                    if (error) {
+                        console.error(`exec error: ${error}`);
+                    }
+                    if (stderr) {
+                        console.error(`stderr: ${stderr}`);
+                    }
+                    console.log(`STDOUT: ${stdout}`);
+                    resolve(this._scriptRanSuccessfully);
+                });
+            });
+        });
+    }
+    /**
+     * Runs a Bash Script through an SSH Connection
+     * @param Script Bash Script to Run
+     * @returns True if no errors occurred, False if an error occurred (Errors are defined by the Bash Command Fail Messages)
+     */
+    RunThroughSHH(Script) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const ServerConnection = yield this.ConnectToServer();
             return new Promise((resolve, reject) => {
                 ServerConnection.exec(`${Script}`, (err, stream) => {
                     if (err)

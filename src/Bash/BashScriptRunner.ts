@@ -1,6 +1,7 @@
 import { Client } from "ssh2";
 import BashScript from "./BashScript";
 import BotDataManager from "../PalworldBotDataManager";
+import exec from "child_process";
 
 /**
  * Runs Bash Scripts provided from a Bash Command
@@ -51,9 +52,44 @@ class BashScriptRunner {
     public async RunBashScript(): Promise<boolean> {
         this._scriptRanSuccessfully = true;
 
-        const ServerConnection = await this.ConnectToServer();
-
         const Script = await this.BashCommand.GetCode();
+
+        if (this._dataManager.RUN_LOCALLY)
+            return this.RunLocally(Script);
+        else
+            return this.RunThroughSHH(Script);
+    }
+
+    /**
+     * Runs a Bash Script through a local execution
+     * @param Script Bash Script to Run
+     * @returns True if no errors occurred, False if an error occurred (Errors are defined by the Bash Command Fail Messages)
+     */
+    async RunLocally(Script: string): Promise<boolean> {
+        return new Promise<boolean>((resolve, reject) => {
+            exec.exec(`${Script}`, (error, stdout, stderr) => {
+
+                if (error) {
+                    console.error(`exec error: ${error}`);
+                }
+                if (stderr) {
+                    console.error(`stderr: ${stderr}`);
+                }
+
+                console.log(`STDOUT: ${stdout}`);
+                resolve(this._scriptRanSuccessfully);
+            });
+        });
+    }
+
+    /**
+     * Runs a Bash Script through an SSH Connection
+     * @param Script Bash Script to Run
+     * @returns True if no errors occurred, False if an error occurred (Errors are defined by the Bash Command Fail Messages)
+     */
+    async RunThroughSHH(Script: string): Promise<boolean> {
+
+        const ServerConnection = await this.ConnectToServer();
 
         return new Promise<boolean>((resolve, reject) => {
             ServerConnection.exec(`${Script}`, (err, stream) => {
@@ -107,26 +143,6 @@ class BashScriptRunner {
                 password: this._dataManager.SERVER_PASSWORD!
             });
         });
-    }
-
-    /**
-     * Starts the SSH Client with a Local or Remote Connection
-     * @returns The SSH Client instance
-     */
-    StartSSHClient(): Promise<Client> {
-        if (this._dataManager.RUN_LOCALLY) {
-            return new Promise((resolve, reject) => {
-                const conn = new Client();
-                conn.on('ready', () => {
-                    console.log('SSH Connection ready');
-                    resolve(conn); // Resolve with the connection instance
-                }).on('error', (err) => {
-                    console.error('SSH Connection error:', err);
-                    reject(err);
-                })
-            });
-        } else
-            return this.ConnectToServer();
     }
 }
 
